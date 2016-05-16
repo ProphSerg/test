@@ -3,7 +3,11 @@
 $params = require(__DIR__ . '/params.php');
 
 $config = [
-    'id' => 'basic',
+    'id' => 'UralsibPS',
+    'name' => 'Сервисы Платежных систем',
+    'language' => 'ru_RU',
+    'sourceLanguage' => 'ru_RU',
+    'timeZone' => 'Asia/Omsk',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
@@ -37,18 +41,20 @@ $config = [
                 ],
             ],
         ],
-        'db' => require(__DIR__ . '/db.php'),
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api'],
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
+foreach (require(__DIR__ . '/db.php') as $d => $c) {
+    $config['components'][] = $d;
+    $config['components'][$d] = $c;
+}
 
 if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment

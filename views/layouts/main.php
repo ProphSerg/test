@@ -1,5 +1,4 @@
 <?php
-
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -14,65 +13,79 @@ AppAsset::register($this);
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
-<head>
-    <meta charset="<?= Yii::$app->charset ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
-</head>
-<body>
-<?php $this->beginBody() ?>
+    <head>
+        <meta charset="<?= Yii::$app->charset ?>">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <?= Html::csrfMetaTags() ?>
+        <title><?= Html::encode($this->title) ?></title>
+        <?php $this->head() ?>
+    </head>
+    <body>
+        <?php $this->beginBody() ?>
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => 'My Company',
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
-    ]);
-    NavBar::end();
-    ?>
+        <div class="wrap">
+            <?php
+            NavBar::begin([
+                'brandLabel' => 'My Company',
+                'brandUrl' => Yii::$app->homeUrl,
+                'options' => [
+                    'class' => 'navbar-inverse navbar-fixed-top',
+                ],
+            ]);
+            echo Nav::widget([
+                'options' => ['class' => 'navbar-nav navbar-right'],
+                'items' => [
+                    ['label' => 'Home', 'url' => ['/site/index']],
+                    ['label' => 'About', 'url' => ['/site/about']],
+                    ['label' => 'Contact', 'url' => ['/site/contact']],
+                    Yii::$app->user->isGuest ? (
+                            ['label' => 'Login', 'url' => ['/site/login']]
+                            ) : (
+                            '<li>'
+                            . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
+                            . Html::submitButton(
+                                    'Logout (' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-link']
+                            )
+                            . Html::endForm()
+                            . '</li>'
+                            ),
+                    YII_ENV_DEV ? (['label' => 'Gii', 'url' => ['/gii']]) : '',
+                ],
+            ]);
+            NavBar::end();
+            ?>
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= $content ?>
-    </div>
-</div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 col-lg-2">
+                        <?php
+#var_dump(isset($this->params['LeftMenuItemsURL']));
+                        if (isset($this->params['LeftMenuItemsURL'])) {
+                            echo Nav::widget([
+                                'options' => ['class' => 'nav nav-pills nav-stacked'],
+                                'items' => $this->params['LeftMenuItemsURL'],
+                            ]);
+                        }
+                        ?>
+                    </div>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+                    <div class="col-md-10 col-lg-10 container">
+                        <?= $content ?>
+                    </div>
+                </div>    
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
+            </div>
+        </div>
 
-<?php $this->endBody() ?>
-</body>
+        <footer class="footer">
+            <div class="container">
+                <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+
+                <p class="pull-right"><?= Yii::powered() ?></p>
+            </div>
+        </footer>
+
+        <?php $this->endBody() ?>
+    </body>
 </html>
 <?php $this->endPage() ?>

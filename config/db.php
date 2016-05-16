@@ -1,9 +1,7 @@
 <?php
 
-return [
-    'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
-    'username' => 'root',
-    'password' => '',
-    'charset' => 'utf8',
+return ['dbApi' => [
+        'class' => 'yii\db\Connection',
+        'dsn' => 'sqlite:' . dirname(__DIR__) . '/db/api.sqlite3',
+    ]
 ];
