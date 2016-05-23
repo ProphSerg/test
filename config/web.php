@@ -48,7 +48,7 @@ $config = [
 				[
 					'class' => 'yii\rest\UrlRule',
 					'controller' => 'api',
-					'only' => ['POST'],
+					'only' => ['create1'],
 				],
 			],
 		],
