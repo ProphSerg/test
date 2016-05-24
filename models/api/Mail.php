@@ -9,12 +9,12 @@
 namespace app\models\api;
 
 use yii\base\Model;
-/**
- * Description of Mail
- *
- * @author proph
- */
+
 class Mail extends Model
 {
-	//put your code here
+	public $mailFrom;
+	public $mailTo;
+	public $mailCC;
+	public $mailBody;
+	public $mailSubject;
 }
