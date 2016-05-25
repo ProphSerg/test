@@ -16,19 +16,53 @@ class MailAction extends \yii\base\Action {
 
 	public $checkAccess;
 
+	private function pairAttr(\SimpleXMLElement $kids) {
+		$r = [];
+		foreach ($kids->attributes() as $a => $b) {
+			$r[] = (string) $a . "=" . (string) $b;
+		}
+		return implode(', ', $r);
+	}
+
+	private function logDebug(\SimpleXMLElement $items) {
+		$fd = fopen("/Users/proph/Sites/debug.log", "a");
+
+		fwrite($fd, (string) $items->noteinfo[0]['unid'] . "\n");
+		foreach ($items->item as $item) {
+			if (((string) $item['name'] == 'Subject') || ((string) $item['name'] == 'Body')) {
+				fwrite($fd, (string) $item['name'] .
+						"\n<<<\n" . trim((string) $item) .
+						"\n===\n" . base64_decode(trim((string) $item)) .
+						"\n---------------------------------------------\n");
+				/*
+				 * 
+				  foreach ($item->children() as $kids) {
+				  fwrite($fd, (string) $item['name'] . " <" .
+				  $kids->getName() . "(" . $this->pairAttr($kids) . ")>\n" .
+				  "\n<<<\n" . trim((string) $kids) .
+				  "\n===\n" . base64_decode(trim((string) $kids)) .
+				  "\n---------------------------------------------\n");
+				  }
+				 * 
+				 */
+			}
+		}
+		fwrite($fd, "====================================================================================\n\n");
+		fclose($fd);
+	}
+
 	private function parse(\SimpleXMLElement $item) {
 		$str = '';
 		if ($item->count() > 0) {
 			foreach ($item->children() as $kids) {
-				switch ($kids->getName()){
+				switch ($kids->getName()) {
 					case 'rawitemdata':
 						#$str .= base64_decode(trim((string)$kids));
-						$str .= trim((string)$kids);
+						#$str .= trim((string) $kids);
 						break;
 					case 'richtext':
 						break;
 				}
-				
 			}
 			#echo $str . "\n";
 			return $str;
@@ -48,6 +82,8 @@ class MailAction extends \yii\base\Action {
 		if (!$XML) {
 			throw new ServerErrorHttpException('Failed to parse data. ' . implode('. ', libxml_get_errors()));
 		}
+		$this->logDebug($XML);
+
 		#var_dump($XML);
 		$mail = new Mail;
 
