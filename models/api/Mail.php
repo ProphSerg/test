@@ -10,11 +10,36 @@ namespace app\models\api;
 
 use yii\base\Model;
 
-class Mail extends Model
-{
-	public $mailFrom;
-	public $mailTo;
-	public $mailCC;
-	public $mailBody;
-	public $mailSubject;
+class Mail extends Model {
+	private $_attr = [];
+
+	public function __get($param) {
+		if (array_key_exists($param, $this->_attr))
+			return $this->_attr[$param];
+
+		return null;
+	}
+
+	public function __set($name, $value) {
+		$this->_attr[$name] = $value;
+	}
+
+	public function __isset($param) {
+		return isset($this->_attr[$param]);
+	}
+
+	public function __unset($param) {
+		unset($this->_attr[$param]);
+	}
+
+	public function fields() {
+		return [
+			'From',
+			'SendTo',
+			'CopyTo',
+			'Subject',
+			'Body',
+		];
+	}
+
 }

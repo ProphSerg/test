@@ -52,23 +52,7 @@ class MailAction extends \yii\base\Action {
 	}
 
 	private function parse(\SimpleXMLElement $item) {
-		$str = '';
-		if ($item->count() > 0) {
-			foreach ($item->children() as $kids) {
-				switch ($kids->getName()) {
-					case 'rawitemdata':
-						#$str .= base64_decode(trim((string)$kids));
-						#$str .= trim((string) $kids);
-						break;
-					case 'richtext':
-						break;
-				}
-			}
-			#echo $str . "\n";
-			return $str;
-		}
-
-		return null;
+		return mb_convert_encoding(base64_decode(trim((string) $item)), 'UTF-8', 'UTF-16LE');
 	}
 
 	public function run() {
@@ -82,20 +66,37 @@ class MailAction extends \yii\base\Action {
 		if (!$XML) {
 			throw new ServerErrorHttpException('Failed to parse data. ' . implode('. ', libxml_get_errors()));
 		}
-		$this->logDebug($XML);
+		#$this->logDebug($XML);
 
-		#var_dump($XML);
 		$mail = new Mail;
-
+		$mail->UniversalID = (string) ($XML->noteinfo[0]['unid']);
 		foreach ($XML->item as $item) {
 			#echo "|" . $item['name'] . "|\n";
 			#var_dump($item['name']);
-			if (isset($item['name']) && property_exists($mail, 'mail' . $item['name'])) {
-				$mail->{'mail' . $item['name']} = $this->parse($item);
+			$mail->{$item['name']} = $this->parse($item);
+		}
+
+		foreach (arMailPatt::find()->all() as $mp) {
+echo 'Pattern: ' . $mp->Pattern . "\n";
+			if (preg_match_all("/(\w+)\|(.+)\|/", $mp->Pattern, $matches, PREG_SET_ORDER) > 0) {
+				foreach ($matches as $out) {
+					if (!isset($mail->{$out[1]})) {
+						throw new ServerErrorHttpException('Ошибка примения шаблона. Поле ' . $out[1] . " не найдено!");
+					}
+echo "Patt: " . $out[2] . "| " . $mail->{$out[1]} . "\n";
+					if (preg_match("/" . $out[2] . "/ui", $mail->{$out[1]}) > 0) {
+						echo "Compare!\n";						
+						if (class_exists("app\\models\\api\\Parse\\" . $mp->Model) &&
+								method_exists("app\\models\\api\\Parse\\" . $mp->Model, 'import')) {
+							call_user_func("app\\models\\api\\Parse\\" . $mp->Model . '::import', $mail);
+						}
+					}
+				}
 			}
 		}
 
-		return $mail;
+		#return $mail;
+		return false;
 		/* @var $model \yii\db\ActiveRecord */
 		/*
 		  $model = new $this->modelClass([

@@ -56,9 +56,10 @@ $config = [
 	'params' => $params,
 ];
 foreach (require(__DIR__ . '/db.php') as $d => $c) {
-	$config['components'][] = $d;
+#	$config['components'][] = $d;
 	$config['components'][$d] = $c;
 }
+#var_dump($config);
 
 if (YII_ENV_DEV) {
 	// configuration adjustments for 'dev' environment
