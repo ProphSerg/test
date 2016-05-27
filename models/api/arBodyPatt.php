@@ -5,20 +5,21 @@ namespace app\models\api;
 use Yii;
 
 /**
- * This is the model class for table "MailPatt".
+ * This is the model class for table "BodyPatt".
  *
  * @property integer $ID
+ * @property string $Name
+ * @property string $Model
  * @property string $Pattern
- * @property string $BodyPattern
  */
-class arMailPatt extends \yii\db\ActiveRecord
+class arBodyPatt extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'MailPatt';
+        return 'BodyPatt';
     }
 
     /**
@@ -35,8 +36,8 @@ class arMailPatt extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Pattern', 'BodyPattern'], 'required'],
-            [['Pattern', 'BodyPattern'], 'string'],
+            [['Name', 'Model', 'Pattern'], 'required'],
+            [['Name', 'Model', 'Pattern'], 'string'],
         ];
     }
 
@@ -47,17 +48,18 @@ class arMailPatt extends \yii\db\ActiveRecord
     {
         return [
             'ID' => 'ID',
+            'Name' => 'Name',
+            'Model' => 'Model',
             'Pattern' => 'Pattern',
-            'BodyPattern' => 'Body Pattern',
         ];
     }
 
     /**
      * @inheritdoc
-     * @return aqMailPatt the active query used by this AR class.
+     * @return aqBodyPatt the active query used by this AR class.
      */
     public static function find()
     {
-        return new aqMailPatt(get_called_class());
+        return new aqBodyPatt(get_called_class());
     }
 }
