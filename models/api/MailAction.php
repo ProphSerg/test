@@ -14,6 +14,8 @@ use yii\web\ServerErrorHttpException;
  */
 class MailAction extends \yii\base\Action {
 
+    const LOG_CATEGORY = 'api';
+
     public $checkAccess;
 
     private function pairAttr(\SimpleXMLElement $kids) {
@@ -66,6 +68,8 @@ class MailAction extends \yii\base\Action {
 
 	$mail = new Mail;
 	$mail->UniversalID = (string) ($XML->noteinfo[0]['unid']);
+	Yii::info('Обработка входящей почты (UNID:' . $mail->UniversalID . ')', self::LOG_CATEGORY);
+
 	foreach ($XML->item as $item) {
 	    #echo "|" . $item['name'] . "|\n";
 	    #var_dump($item['name']);
@@ -77,19 +81,48 @@ class MailAction extends \yii\base\Action {
 	    if (preg_match_all("/(\w+)\|(.+)\|/", $mp->Pattern, $matches, PREG_SET_ORDER) > 0) {
 		foreach ($matches as $out) {
 		    if (!isset($mail->{$out[1]})) {
+			Yii::error('Ошибка применения шаблона (ID:' . $mp->ID . ')! Поле ' . $out[1] . ' не найдено!', self::LOG_CATEGORY);
 			throw new ServerErrorHttpException('Ошибка примения шаблона. Поле ' . $out[1] . " не найдено!");
 		    }
 		    #echo "Patt: " . $out[2] . "| " . $mail->{$out[1]} . "\n";
 		    if (preg_match($out[2], $mail->{$out[1]}) > 0) {
+			Yii::info('Применился первичный шаблон (ID:' . $mp->ID . ', <' . $out[0] . '>)', self::LOG_CATEGORY);
+			if ($mp->BodyPattern == 'IGNORE') {
+			    Yii::info('Письмо игнорируется!', self::LOG_CATEGORY);
+			    return true;
+			}
 			$bp = arBodyPatt::find()->BP($mp)->one();
 			#echo "Patt:\n" . trim(str_replace("\r", "", $bp->Pattern)) . "\n";
 			#echo "Body:\n" . trim(str_replace("\r", "", $mail->Body)) . "\n";
 
 			if (preg_match(trim(str_replace("\r", "", $bp->Pattern)), trim(str_replace("\r", "", $mail->Body)), $bmatch) > 0) {
 			    $this->logDebugMail($mail, false);
+			    Yii::info('Применился Body-шаблон (ID:' . $bp->ID . ', Name:' . $bp->Name . ')', self::LOG_CATEGORY);
 			    #var_dump($bmatch);
+
+			    $cln = "app\\models\\api\\" . $bp->Model;
+			    if (!class_exists($cln)) {
+				Yii::warning('Ошибка обработки!Не найден класс:' . $bp->Model, self::LOG_CATEGORY);
+				Yii::error('Ошибка обработки!Не найден класс:' . $bp->Model, self::LOG_CATEGORY);
+				throw new ServerErrorHttpException('Ошибка обработки!Не найден класс:' . $bp->Model);
+			    }
+
+			    $cl = new $cln();
+			    foreach ($bmatch as $bk => $bv) {
+				if (preg_match('/^\d/', $bk) == 0) {
+				    $cl->SetField($bk, $bv);
+				}
+			    }
+			    #$cl->save();
+
+			    return true;
 			} else {
+			    Yii::warning('Ошибка обработки!Body-шаблон (ID:' . $bp->ID . ')', self::LOG_CATEGORY);
+			    Yii::error('Ошибка обработки входящей почты (UNID:' . $mail->UniversalID . ')', self::LOG_CATEGORY);
+			    Yii::error($bp, self::LOG_CATEGORY);
+			    Yii::error($mail, self::LOG_CATEGORY);
 			    $this->logDebugMail($mail);
+			    throw new ServerErrorHttpException('Ошибка обработки входящей почты!');
 			}
 			/*
 			  if (class_exists("app\\models\\api\\Parse\\" . $mp->Model) &&
@@ -101,6 +134,7 @@ class MailAction extends \yii\base\Action {
 		}
 	    }
 	}
+	Yii::warning('Не найден шаблон для обработки почты (UNID:' . $mail->UniversalID . ', Subject:' . $mail->Subject . ')', self::LOG_CATEGORY);
 	#return $mail;
 	return false;
     }
