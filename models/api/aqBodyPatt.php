@@ -11,7 +11,9 @@ class aqBodyPatt extends \yii\db\ActiveQuery
 {
     public function BP(arMailPatt $mp)
     {
-        return $this->andWhere(['name' => $mp->BodyPattern]);
+        return $this
+			->andWhere(['name' => $mp->BodyPattern])
+			->orderBy('priority');
     }
 
     /**
