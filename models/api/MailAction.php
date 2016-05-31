@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\helpers\Url;
 use yii\web\ServerErrorHttpException;
+use app\models\api\arBodyPatt;
 
 /**
  * Description of PostMail
@@ -91,8 +92,7 @@ class MailAction extends \yii\base\Action {
 							Yii::info('Письмо игнорируется!', self::LOG_CATEGORY);
 							return true;
 						}
-						$result = [];
-						$this->BodyParse($mp->bodyPatt, trim(str_replace("\r", "", $mail->Body)), $result);
+						$result = $this->BodyParse($mp->bodyPatt, trim(str_replace("\r", "", $mail->Body)));
 						Yii::trace($result, self::LOG_CATEGORY);
 						/*
 						  if (class_exists("app\\models\\api\\Parse\\" . $mp->Model) &&
@@ -110,7 +110,8 @@ class MailAction extends \yii\base\Action {
 		return false;
 	}
 
-	private function BodyParse($BPs, $Body, &$result, $repiter = false) {
+	private function BodyParse($BPs, $Body) {
+		$result = [];
 		foreach ($BPs as $bp) {
 			#Yii::trace('Шаблон (' . $bp->Pattern . ')', self::LOG_CATEGORY);
 			#echo "Patt:\n" . trim(str_replace("\r", "", $bp->Pattern)) . "\n";
@@ -118,19 +119,25 @@ class MailAction extends \yii\base\Action {
 
 			preg_match_all(trim(str_replace("\r", "", $bp->Pattern)), $Body, $bmatch, PREG_SET_ORDER);
 			foreach ($bmatch as $val) {
-				Yii::trace($val, self::LOG_CATEGORY);
-				$res = [];
+				#Yii::trace($val, self::LOG_CATEGORY);
 				foreach ($val as $bk => $bv) {
 					if (preg_match('/^\d+$/', $bk) == 0) {
-						$res[$bk] = $bv;
+						if (preg_match('/^repit\.(.+)$/i', $bk, $rmach) > 0) {
+							$result[$bk][] = $this->BodyParse(arBodyPatt::find()->BP($rmach[1]), $bv);
+						} else {
+							$result[$bk] = $bv;
+						}
 					}
 				}
+				/*
 				Yii::trace($res, self::LOG_CATEGORY);
 				if ($repiter == false) {
 					$result = array_merge($result, $res);
 				} else {
 					$result[] = $res;
 				}
+				 * 
+				 */
 				/*
 				  #$this->logDebugMail($mail, false);
 				  Yii::trace('Применился Body-шаблон (ID:' . $bp->ID . ', Name:' . $bp->Name . ')', self::LOG_CATEGORY);
@@ -166,6 +173,7 @@ class MailAction extends \yii\base\Action {
 				 */
 			}
 		}
+		return $result;
 	}
 
 }
