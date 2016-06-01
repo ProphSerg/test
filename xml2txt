@@ -1,0 +1,9 @@
+#!/usr/bin/env php
+<?php
+$XML = new \SimpleXMLElement($argv[1], null, true);
+$fd = fopen($argv[1].'.txt', 'w');
+foreach ($XML->item as $item) {
+    fwrite($fd, '>>>' . (string)$item['name'] . "<<<\n" .
+	mb_convert_encoding(base64_decode(trim((string) $item)), 'UTF-8', 'UTF-16LE') . "\n");
+}
+fclose($fd);
