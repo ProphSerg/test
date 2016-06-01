@@ -5,35 +5,33 @@ namespace app\models\api;
 use Yii;
 use yii\base\Model;
 use app\models\request\arRequest;
+use app\models\request\arReqText;
+use app\common\toStr;
 
 class Request extends Model {
 
-	private $AR;
+	public function save($fields) {
 
-	public function __construct() {
-		$this->AR = new arRequest();
-		parent::__construct();
-	}
+		$trans = arRequest::getDb()->beginTransaction();
+		try {
+			#Yii::info("Save!", 'parse');
+			$rq = new arRequest();
+			$rq->attributes = $fields;
+			$rq->{'Type'} = 0;
+			$rq->save();
+			#Yii::info($rq->attributes, 'parse');
 
-	public function SetField($field, $val) {
-		if ($field == 'Text') {
-			
-		} else {
-		Yii::info("SetField ($field => $val)", 'parse');
-			$this->AR->{$field} = $val;
+			$rt = new arReqText();
+			$rt->attributes = $fields;
+			$rt->link('request', $rq);
+			$trans->commit();
+		} catch (\Exception $e) {
+			$trans->rollback();
+			Yii::warning("Ошибка записи в базу. " . toStr::Exception($e), \app\models\api\MailAction::LOG_CATEGORY);
+			Yii::error("Ошибка записи в базу. " . toStr::Exception($e), \app\models\api\MailAction::LOG_CATEGORY);
+			Yii::error(['arRequest', $rq->attributes, 'arReqText', $rt->attributes], \app\models\api\MailAction::LOG_CATEGORY);
+			throw new ServerErrorHttpException("Ошибка записи в базу. " . toStr::Exception($e));
 		}
-	}
-
-	public function save() {
-		Yii::info("Save!", 'parse');
-		$this->AR->Type = 0;
-		$this->AR->save();
-	}
-
-	public static function import(\app\models\api\Mail $mail) {
-		echo "RUN " . __CLASS__ . ", Metod: " . __METHOD__ . "\n";
-
-		return true;
 	}
 
 }

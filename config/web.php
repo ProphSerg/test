@@ -48,7 +48,8 @@ $config = [
 				],
 				[
 					'exportInterval' => 10,
-					'class' => 'yii\log\FileTarget',
+					#'class' => 'yii\log\FileTarget',
+					'class' => 'app\common\myFileTarget',
 					'categories' => ['api'],
 					'levels' => ['info', 'warning'],
 					'logFile' => '@app/runtime/logs/api.log',
@@ -58,9 +59,10 @@ $config = [
 				],
 				[
 					'exportInterval' => 10,
-					'class' => 'yii\log\FileTarget',
+					'prefix' => false,
+					'class' => 'app\common\myFileTarget',
 					'categories' => ['api'],
-					'levels' => [ 'trace'],
+					'levels' => ['trace'],
 					'logFile' => '@app/runtime/logs/apiTrace.log',
 					'logVars' => [],
 					'maxFileSize' => 1024 * 2,
@@ -68,7 +70,8 @@ $config = [
 				],
 				[
 					'exportInterval' => 10,
-					'class' => 'yii\log\FileTarget',
+					'prefix' => false,
+					'class' => 'app\common\myFileTarget',
 					'categories' => ['parse'],
 					'levels' => ['info', 'warning'],
 					'logFile' => '@app/runtime/logs/parse.log',

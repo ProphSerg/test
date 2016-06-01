@@ -32,8 +32,8 @@ class arMailPatt extends \yii\db\ActiveRecord {
 	 */
 	public function rules() {
 		return [
-			[['Pattern', 'BodyPattern'], 'required'],
-			[['Pattern', 'BodyPattern'], 'string'],
+			[['Pattern', 'BodyPattern', 'Model'], 'required'],
+			[['Pattern', 'BodyPattern', 'Model'], 'string'],
 		];
 	}
 
@@ -45,6 +45,7 @@ class arMailPatt extends \yii\db\ActiveRecord {
 			'ID' => 'ID',
 			'Pattern' => 'Pattern',
 			'BodyPattern' => 'Body Pattern',
+			'Model' => 'Model',
 		];
 	}
 

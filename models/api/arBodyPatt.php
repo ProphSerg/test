@@ -36,8 +36,8 @@ class arBodyPatt extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Name', 'Model', 'Pattern'], 'required'],
-            [['Name', 'Model', 'Pattern'], 'string'],
+            [['Name', 'Pattern'], 'required'],
+            [['Name', 'Pattern'], 'string'],
         ];
     }
 
@@ -49,7 +49,6 @@ class arBodyPatt extends \yii\db\ActiveRecord
         return [
             'ID' => 'ID',
             'Name' => 'Name',
-            'Model' => 'Model',
             'Pattern' => 'Pattern',
         ];
     }

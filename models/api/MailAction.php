@@ -93,13 +93,27 @@ class MailAction extends \yii\base\Action {
 							return true;
 						}
 						$result = $this->BodyParse($mp->bodyPatt, trim(str_replace("\r", "", $mail->Body)));
-						Yii::trace($result, self::LOG_CATEGORY);
-						/*
-						  if (class_exists("app\\models\\api\\Parse\\" . $mp->Model) &&
-						  method_exists("app\\models\\api\\Parse\\" . $mp->Model, 'import')) {
-						  call_user_func("app\\models\\api\\Parse\\" . $mp->Model . '::import', $mail);
-						 *
-						 */
+						if (count($result) == 0) {
+							Yii::warning('Ошибка обработки!Body-шаблон (ID:' . $bp->ID . ')', self::LOG_CATEGORY);
+							Yii::error('Ошибка обработки входящей почты (UNID:' . $mail->UniversalID . ')', self::LOG_CATEGORY);
+							Yii::error($bp, self::LOG_CATEGORY);
+							Yii::error($mail, self::LOG_CATEGORY);
+							#$this->logDebugMail($mail);
+							throw new ServerErrorHttpException('Ошибка обработки входящей почты!');
+						}
+
+						#Yii::trace($result, self::LOG_CATEGORY);
+
+						$cln = "app\\models\\api\\" . $mp->Model;
+						if (!class_exists($cln)) {
+							Yii::warning('Ошибка обработки!Не найден класс:' . $bp->Model, self::LOG_CATEGORY);
+							Yii::error('Ошибка обработки!Не найден класс:' . $bp->Model, self::LOG_CATEGORY);
+							throw new ServerErrorHttpException('Ошибка обработки!Не найден класс:' . $bp->Model);
+						}
+
+						$cl = new $cln();
+						$cl->save($result);
+
 						return true;
 					}
 				}
@@ -129,48 +143,6 @@ class MailAction extends \yii\base\Action {
 						}
 					}
 				}
-				/*
-				Yii::trace($res, self::LOG_CATEGORY);
-				if ($repiter == false) {
-					$result = array_merge($result, $res);
-				} else {
-					$result[] = $res;
-				}
-				 * 
-				 */
-				/*
-				  #$this->logDebugMail($mail, false);
-				  Yii::trace('Применился Body-шаблон (ID:' . $bp->ID . ', Name:' . $bp->Name . ')', self::LOG_CATEGORY);
-				  #var_dump($bmatch);
-
-				  $cln = "app\\models\\api\\" . $bp->Model;
-				  if (!class_exists($cln)) {
-				  Yii::warning('Ошибка обработки!Не найден класс:' . $bp->Model, self::LOG_CATEGORY);
-				  Yii::error('Ошибка обработки!Не найден класс:' . $bp->Model, self::LOG_CATEGORY);
-				  throw new ServerErrorHttpException('Ошибка обработки!Не найден класс:' . $bp->Model);
-				  }
-
-				  $cl = new $cln();
-				  foreach ($bmatch as $bk => $bv) {
-				  if (preg_match('/^\d/', $bk) == 0) {
-				  $cl->SetField($bk, $bv);
-				  }
-				  }
-				  $cl->save();
-
-				  return true;
-				  } else {
-				  Yii::warning('Ошибка обработки!Body-шаблон (ID:' . $bp->ID . ')', self::LOG_CATEGORY);
-				  Yii::error('Ошибка обработки входящей почты (UNID:' . $mail->UniversalID . ')', self::LOG_CATEGORY);
-				  Yii::error($bp, self::LOG_CATEGORY);
-				  Yii::error($mail, self::LOG_CATEGORY);
-				  $this->logDebugMail($mail);
-				  throw new ServerErrorHttpException('Ошибка обработки входящей почты!');
-				  }
-				 * 
-				 *
-				  }
-				 */
 			}
 		}
 		return $result;
