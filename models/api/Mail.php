@@ -39,6 +39,7 @@ class Mail extends Model {
 			'CopyTo',
 			'Subject',
 			'Body',
+			'PostedDate'
 		];
 	}
 

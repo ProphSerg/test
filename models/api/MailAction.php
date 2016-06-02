@@ -112,7 +112,7 @@ class MailAction extends \yii\base\Action {
 						}
 
 						$cl = new $cln();
-						$cl->save($result);
+						$cl->save($result, $mail);
 
 						return true;
 					}
