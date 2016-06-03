@@ -77,7 +77,7 @@ class MailAction extends \yii\base\Action {
 			$mail->{$item['name']} = $this->parse($item);
 		}
 
-		foreach (arMailPatt::find()->all() as $mp) {
+		foreach (arMailPatt::find()->orderBy('Priority')->all() as $mp) {
 			#echo 'Pattern: ' . $mp->Pattern . "\n";
 			if (preg_match_all("/(\w+)\|(.+)\|/", $mp->Pattern, $matches, PREG_SET_ORDER) > 0) {
 				foreach ($matches as $out) {
@@ -137,7 +137,7 @@ class MailAction extends \yii\base\Action {
 				foreach ($val as $bk => $bv) {
 					if (preg_match('/^\d+$/', $bk) == 0) {
 						if (preg_match('/^repit\.(.+)$/i', $bk, $rmach) > 0) {
-							$result[$bk][] = $this->BodyParse(arBodyPatt::find()->BP($rmach[1]), $bv);
+							$result[$rmach[1]][] = $this->BodyParse(arBodyPatt::find()->BP($rmach[1]), $bv);
 						} else {
 							$result[$bk] = $bv;
 						}
