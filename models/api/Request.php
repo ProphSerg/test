@@ -3,6 +3,7 @@
 namespace app\models\api;
 
 use Yii;
+use yii\web\ServerErrorHttpException;
 use yii\base\Model;
 use app\models\request\arRequest;
 use app\models\request\arReqText;
@@ -19,17 +20,17 @@ class Request extends Model {
 			$rq = new arRequest();
 			$rq->attributes = $fields;
 			$rq->{'Type'} = 0;
-			$rq->Date = Convert::MailDate2SQLiteDate($rq->Date);
+			$rq->Date = Convert::Date2SQLiteDate($rq->Date);
 			if($rq->save() === false){
 				if(($rq = arRequest::find()->Where(['Type' => 0, 'Number' => $fields['Number']])->one()) === null){
-					throw new Exception('Ошибка записи и поиска имеющейся записи.');
+					throw new Exception('Request: Ошибка записи и поиска имеющейся записи.');
 				}
 			}
 			#Yii::info($rq->attributes, 'parse');
 
 			$rt = new arReqText();
 			$rt->attributes = $fields;
-			$rt->Date = Convert::MailDate2SQLiteDate($mail->PostedDate);
+			$rt->Date = Convert::Date2SQLiteDate($mail->PostedDate);
 			$rt->link('request', $rq);
 			$trans->commit();
 		} catch (\Exception $e) {
@@ -37,7 +38,7 @@ class Request extends Model {
 			Yii::warning("Ошибка записи в базу. " . Convert::Exception2Str($e), \app\models\api\MailAction::LOG_CATEGORY);
 			Yii::error("Ошибка записи в базу. " . Convert::Exception2Str($e), \app\models\api\MailAction::LOG_CATEGORY);
 			Yii::error(['arRequest', $rq->attributes, 'arReqText', $rt->attributes], \app\models\api\MailAction::LOG_CATEGORY);
-			throw new ServerErrorHttpException("Ошибка записи в базу. " . Convert::Exception2Str($e));
+			throw new ServerErrorHttpException("Request: Ошибка записи в базу. " . Convert::Exception2Str($e));
 		}
 	}
 

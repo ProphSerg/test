@@ -94,9 +94,9 @@ class MailAction extends \yii\base\Action {
 						}
 						$result = $this->BodyParse($mp->bodyPatt, trim(str_replace("\r", "", $mail->Body)));
 						if (count($result) == 0) {
-							Yii::warning('Ошибка обработки!Body-шаблон (ID:' . $bp->ID . ')', self::LOG_CATEGORY);
+							Yii::warning('Ошибка обработки!Body-шаблон (ID:' . $mp->ID . ')', self::LOG_CATEGORY);
 							Yii::error('Ошибка обработки входящей почты (UNID:' . $mail->UniversalID . ')', self::LOG_CATEGORY);
-							Yii::error($bp, self::LOG_CATEGORY);
+							Yii::error($mp, self::LOG_CATEGORY);
 							Yii::error($mail, self::LOG_CATEGORY);
 							#$this->logDebugMail($mail);
 							throw new ServerErrorHttpException('Ошибка обработки входящей почты!');
@@ -124,22 +124,42 @@ class MailAction extends \yii\base\Action {
 		return false;
 	}
 
-	private function BodyParse($BPs, $Body) {
+	private function BodyParse($BPs, $Body, $repit = false) {
+		#Yii::trace(['BodyParse. BPs', $BPs, 'Body', $Body], self::LOG_CATEGORY);
+		$isFirst = true;
 		$result = [];
 		foreach ($BPs as $bp) {
-			#Yii::trace('Шаблон (' . $bp->Pattern . ')', self::LOG_CATEGORY);
+			#Yii::trace('Шаблон (' . $bp->attributes . ')', self::LOG_CATEGORY);
 			#echo "Patt:\n" . trim(str_replace("\r", "", $bp->Pattern)) . "\n";
 			#echo "Body:\n" . trim(str_replace("\r", "", $mail->Body)) . "\n";
-
+			
+			if ($isFirst) {
+				foreach (arBodyPatt::find()->BPreplace($bp->Name) as $bpr) {
+					if (preg_match('/^(.+?)\|(.+)$/i', $bpr->Pattern, $rmach) > 0) {
+						$Body = str_replace((string)$rmach[1], (string)$rmach[2], $Body);
+					}
+				}
+			}
+			$isFirst = false;
+			#Yii::trace('Body>>>>>' . $Body, self::LOG_CATEGORY);
+			
 			preg_match_all(trim(str_replace("\r", "", $bp->Pattern)), $Body, $bmatch, PREG_SET_ORDER);
+			$i = -1;
 			foreach ($bmatch as $val) {
+				$i++;
 				#Yii::trace($val, self::LOG_CATEGORY);
 				foreach ($val as $bk => $bv) {
 					if (preg_match('/^\d+$/', $bk) == 0) {
-						if (preg_match('/^repit\.(.+)$/i', $bk, $rmach) > 0) {
-							$result[$rmach[1]][] = $this->BodyParse(arBodyPatt::find()->BP($rmach[1]), $bv);
+						if (preg_match('/^repit(.+)$/i', $bk, $rmach) > 0) {
+							#echo 'REPIT: <' . $rmach[1] . '>';
+							#Yii::trace('REPIT: <' . $rmach[1] . '>', self::LOG_CATEGORY);
+							$result[$rmach[1]] = $this->BodyParse(arBodyPatt::find()->BP($rmach[1]), $bv, true);
 						} else {
-							$result[$bk] = $bv;
+							if ($repit) {
+								$result[$i][$bk] = $bv;
+							} else {
+								$result[$bk] = $bv;
+							}
 						}
 					}
 				}

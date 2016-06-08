@@ -13,7 +13,16 @@ class aqBodyPatt extends \yii\db\ActiveQuery
     {
         return $this
 			->andWhere(['name' => $name])
-			->orderBy('priority');
+			->orderBy('Priority')
+			->all();
+    }
+
+    public function BPreplace($name)
+    {
+        return $this
+			->andWhere(['name' => $name . '.replace'])
+			->orderBy('Priority')
+			->all();
     }
 
     /**
