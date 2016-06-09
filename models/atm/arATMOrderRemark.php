@@ -38,7 +38,8 @@ class arATMOrderRemark extends \yii\db\ActiveRecord {
 			[['ATMOrder_ID'], 'integer'],
 			[['Date'], 'safe'],
 			[['Autor', 'Text'], 'string'],
-			[['ATMOrder_ID', 'Date'], 'unique'],
+			#[['ATMOrder_ID', 'Date'], 'unique'],
+			[['ATMOrder_ID', 'Date'], 'unique', 'targetAttribute' => ['ATMOrder_ID', 'Date'], 'message' => 'The combination of Atmorder  ID and Date has already been taken.'],
 		];
 	}
 

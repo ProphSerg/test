@@ -9,8 +9,8 @@ use Yii;
  *
  * @property integer $ID
  * @property integer $ATMOrder_ID
+ * @property string $Date
  * @property string $Code
- * @property string $Name
  */
 class arATMOrderTech extends \yii\db\ActiveRecord {
 
@@ -33,11 +33,11 @@ class arATMOrderTech extends \yii\db\ActiveRecord {
 	 */
 	public function rules() {
 		return [
-			[['ATMOrder_ID', 'Date, Code', 'Name'], 'required'],
+			[['ATMOrder_ID', 'Date', 'Code'], 'required'],
 			[['ATMOrder_ID'], 'integer'],
 			[['Date'], 'safe'],
-			[['Code', 'Name'], 'string'],
-			[['ATMOrder_ID', 'Date'], 'unique'],
+			[['Code'], 'string'],
+			[['ATMOrder_ID', 'Date'], 'unique', 'targetAttribute' => ['ATMOrder_ID', 'Date'], 'message' => 'The combination of Atmorder  ID and Date has already been taken.'],
 		];
 	}
 
@@ -50,13 +50,12 @@ class arATMOrderTech extends \yii\db\ActiveRecord {
 			'ATMOrder_ID' => 'Atmorder  ID',
 			'Date' => 'Date',
 			'Code' => 'Code',
-			'Name' => 'Name',
 		];
 	}
 
 	/**
 	 * @inheritdoc
-	 * @return ATMOrderTechQuery the active query used by this AR class.
+	 * @return aqATMOrderTech the active query used by this AR class.
 	 */
 	public static function find() {
 		return new aqATMOrderTech(get_called_class());
