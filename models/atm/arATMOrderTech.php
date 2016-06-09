@@ -65,4 +65,8 @@ class arATMOrderTech extends \yii\db\ActiveRecord {
 		return $this->hasOne(arATMOrder::className(), ['ID' => 'ATMOrder_ID']);
 	}
 
+	public function getTechName() {
+		return $this->hasOne(arSprATMOrderTech::className(), ['Code' => 'Code']);
+	}
+
 }

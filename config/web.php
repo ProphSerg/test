@@ -80,7 +80,21 @@ $config = [
 					'maxLogFiles' => 2,
 				],
 			],
+			/*
+			'authManager' => [
+				'class' => 'yii\rbac\DbManager',
+				'db' => 'dbApi'
+			],
+			*/
 		],
+		/*
+		'as access' => [
+			'class' => 'mdm\admin\components\AccessControl',
+			'allowActions' => [
+				'admin/*',
+			],
+		],
+		*/
 		'urlManager' => [
 			'enablePrettyUrl' => true,
 			'showScriptName' => false,
@@ -94,6 +108,11 @@ $config = [
 		],
 	],
 	'params' => $params,
+	'modules' => [
+		'admin' => [
+			'class' => 'mdm\admin\Module'
+		],
+	],
 ];
 foreach (require(__DIR__ . '/db.php') as $d => $c) {
 #	$config['components'][] = $d;

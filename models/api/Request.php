@@ -20,9 +20,11 @@ class Request extends Model {
 			$rq = new arRequest();
 			$rq->attributes = $fields;
 			$rq->{'Type'} = 0;
+			$rq->Append = trim(str_replace("ФИО:", '', $rq->Append));
+			$rq->Desc = trim(str_replace("Звонок от ТСП", '', $rq->Desc));
 			$rq->Date = Convert::Date2SQLiteDate($rq->Date);
 			if($rq->save() === false){
-				if(($rq = arRequest::find()->Where(['Type' => 0, 'Number' => $fields['Number']])->one()) === null){
+				if(($rq = arRequest::find()->getRequest($fields['Number'])) === null){
 					throw new Exception('Request: Ошибка записи и поиска имеющейся записи.');
 				}
 			}

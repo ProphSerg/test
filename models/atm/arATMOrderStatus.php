@@ -66,4 +66,8 @@ class arATMOrderStatus extends \yii\db\ActiveRecord {
 		return $this->hasOne(arATMOrder::className(), ['ID' => 'ATMOrder_ID']);
 	}
 
+	public function getSatusName() {
+		return $this->hasOne(arSprATMOrderStatus::className(), ['Status' => 'Status']);
+	}
+
 }

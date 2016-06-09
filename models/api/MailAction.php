@@ -96,8 +96,8 @@ class MailAction extends \yii\base\Action {
 						if (count($result) == 0) {
 							Yii::warning('Ошибка обработки!Body-шаблон (ID:' . $mp->ID . ')', self::LOG_CATEGORY);
 							Yii::error('Ошибка обработки входящей почты (UNID:' . $mail->UniversalID . ')', self::LOG_CATEGORY);
-							Yii::error($mp, self::LOG_CATEGORY);
-							Yii::error($mail, self::LOG_CATEGORY);
+							Yii::error($mp->attributes, self::LOG_CATEGORY);
+							Yii::error($mail->attributes, self::LOG_CATEGORY);
 							#$this->logDebugMail($mail);
 							throw new ServerErrorHttpException('Ошибка обработки входящей почты!');
 						}

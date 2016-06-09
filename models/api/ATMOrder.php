@@ -9,6 +9,7 @@ use app\models\atm\arATMOrder;
 use app\models\atm\arATMOrderStatus;
 use app\models\atm\arATMOrderTech;
 use app\models\atm\arATMOrderRemark;
+use app\models\atm\arSprATMOrderTech;
 use app\common\Convert;
 use app\models\api\Mail;
 
@@ -23,7 +24,8 @@ class ATMOrder extends Model {
 			$atm = new arATMOrder();
 			$ast = new arATMOrderStatus();
 			$atc = new arATMOrderTech();
-
+			$tech = new arSprATMOrderTech();
+			
 			$atm->attributes = $fields;
 			$atm->Serial = trim(str_replace('-', '', $atm->Serial));
 			$atm->EnterDate = Convert::Date2SQLiteDate($atm->EnterDate);
@@ -41,8 +43,11 @@ class ATMOrder extends Model {
 			$ast->save();
 
  			if (isset($fields['TNameCode']) && trim($fields['TNameCode']) !== '') {
-				$atc->Code = $fields['TNameCode'];
-				$atc->Name = $fields['TName'];
+				$tech->Code = strtolower($fields['TNameCode']);
+				$tech->Name = $fields['TName'];
+				$tech->save();
+				
+				$atc->Code = strtolower($fields['TNameCode']);
 				$atc->Date = Convert::Date2SQLiteDate($mail->PostedDate);
 				#$atc->link('order', $atm);
 				$atc->ATMOrder_ID = $atm->ID;

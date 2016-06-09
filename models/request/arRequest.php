@@ -11,11 +11,13 @@ use Yii;
  * @property integer $Type
  * @property integer $Number
  * @property string $Date
+ * @property string $DateClose
  * @property string $Desc
  * @property string $Append
  * @property string $Contact
  * @property string $Name
  * @property string $Addr
+ * @property boolean $Overdue
  */
 class arRequest extends \yii\db\ActiveRecord {
 
@@ -40,8 +42,9 @@ class arRequest extends \yii\db\ActiveRecord {
 		return [
 			[['Type', 'Number'], 'required'],
 			[['Type', 'Number'], 'integer'],
-			[['Date'], 'safe'],
+			[['Date', 'DateClose'], 'safe'],
 			[['Desc', 'Append', 'Contact', 'Name', 'Addr'], 'string'],
+			[['Overdue'], 'boolean'],
 			[['Type', 'Number'], 'unique', 'targetAttribute' => ['Type', 'Number'], 'message' => 'The combination of Type and Number has already been taken.'],
 		];
 	}
@@ -55,11 +58,13 @@ class arRequest extends \yii\db\ActiveRecord {
 			'Type' => 'Type',
 			'Number' => 'Number',
 			'Date' => 'Date',
+			'DateClose' => 'Date Close',
 			'Desc' => 'Desc',
 			'Append' => 'Append',
 			'Contact' => 'Contact',
 			'Name' => 'Name',
 			'Addr' => 'Addr',
+			'Overdue' => 'Overdue',
 		];
 	}
 

@@ -12,7 +12,8 @@ use Yii;
  * @property string $EnterDate
  * @property string $EnterBy
  * @property string $Serial
- */
+ *
+ **/
 class arATMOrder extends \yii\db\ActiveRecord {
 
 	/**
@@ -82,7 +83,11 @@ class arATMOrder extends \yii\db\ActiveRecord {
 
 	public function getRemark() {
 		return $this->hasMany(arATMOrderRemark::className(), ['ATMOrder_ID' => 'ID'])
-			->orderBy('Date');
+				->orderBy('Date');
+	}
+
+	public function getSerial() {
+		return $this->hasOne(arSprATM::className(), ['Serial' => 'Serial']);
 	}
 
 }

@@ -7,28 +7,26 @@ namespace app\models\request;
  *
  * @see arRequest
  */
-class aqRequest extends \yii\db\ActiveQuery
-{
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
+class aqRequest extends \yii\db\ActiveQuery {
 
-    /**
-     * @inheritdoc
-     * @return arRequest[]|array
-     */
-    public function all($db = null)
-    {
-        return parent::all($db);
-    }
+	public function getRequest($num, $type = 0) {
+		return $this->andWhere(['Number' => $num, 'Type' => $type])->one();
+	}
 
-    /**
-     * @inheritdoc
-     * @return arRequest|array|null
-     */
-    public function one($db = null)
-    {
-        return parent::one($db);
-    }
+	/**
+	 * @inheritdoc
+	 * @return arRequest[]|array
+	 */
+	public function all($db = null) {
+		return parent::all($db);
+	}
+
+	/**
+	 * @inheritdoc
+	 * @return arRequest|array|null
+	 */
+	public function one($db = null) {
+		return parent::one($db);
+	}
+
 }

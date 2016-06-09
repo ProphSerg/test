@@ -14,57 +14,57 @@ use Yii;
  * @property string $Addres
  * @property string $Type
  */
-class aqSprATM extends \yii\db\ActiveRecord
-{
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'sprATM';
-    }
+class arSprATM extends \yii\db\ActiveRecord {
 
-    /**
-     * @return \yii\db\Connection the database connection used by this AR class.
-     */
-    public static function getDb()
-    {
-        return Yii::$app->get('dbATM');
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public static function tableName() {
+		return 'sprATM';
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function rules()
-    {
-        return [
-            [['Model', 'Serial', 'Addres'], 'required'],
-            [['Model', 'Serial', 'TerminalID', 'Addres', 'Type'], 'string'],
-            [['Serial'], 'unique'],
-        ];
-    }
+	/**
+	 * @return \yii\db\Connection the database connection used by this AR class.
+	 */
+	public static function getDb() {
+		return Yii::$app->get('dbATM');
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'ID' => 'ID',
-            'Model' => 'Model',
-            'Serial' => 'Serial',
-            'TerminalID' => 'Terminal ID',
-            'Addres' => 'Addres',
-            'Type' => 'Type',
-        ];
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function rules() {
+		return [
+			[['Model', 'Serial', 'Addres'], 'required'],
+			[['Model', 'Serial', 'TerminalID', 'Addres', 'Type'], 'string'],
+			[['Serial'], 'unique'],
+		];
+	}
 
-    /**
-     * @inheritdoc
-     * @return SprATMQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new aqSprATM(get_called_class());
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function attributeLabels() {
+		return [
+			'ID' => 'ID',
+			'Model' => 'Model',
+			'Serial' => 'Serial',
+			'TerminalID' => 'Terminal ID',
+			'Addres' => 'Addres',
+			'Type' => 'Type',
+		];
+	}
+
+	/**
+	 * @inheritdoc
+	 * @return SprATMQuery the active query used by this AR class.
+	 */
+	public static function find() {
+		return new aqSprATM(get_called_class());
+	}
+
+	public function getOrder() {
+		return $this->hasMany(arATMOrder::className(), ['Serial' => 'Serial']);
+	}
+
 }
