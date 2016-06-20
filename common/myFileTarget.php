@@ -4,7 +4,7 @@ namespace app\common;
 
 use Yii;
 
-class myFileTarget extends \yii\log\FileTarget {
+class myFileTarget extends yii\log\FileTarget {
 
 	/**
 	 * Formats a log message for display as a string.

@@ -27,7 +27,7 @@ class arBodyPatt extends \yii\db\ActiveRecord
      */
     public static function getDb()
     {
-        return Yii::$app->get('dbApi');
+        return Yii::$app->get('dbSys');
     }
 
     /**

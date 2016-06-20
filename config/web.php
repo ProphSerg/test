@@ -9,7 +9,7 @@ $config = [
 	'sourceLanguage' => 'ru_RU',
 	'timeZone' => 'Asia/Omsk',
 	'basePath' => dirname(__DIR__),
-	'bootstrap' => ['log'],
+	'bootstrap' => ['log', 'admin'],
 	'components' => [
 		'request' => [
 			// !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -19,8 +19,11 @@ $config = [
 			'class' => 'yii\caching\FileCache',
 		],
 		'user' => [
-			'identityClass' => 'app\models\User',
+			#'identityClass' => 'app\models\User',
 			'enableAutoLogin' => true,
+			'identityClass' => 'mdm\admin\models\User',
+			'loginUrl' => ['admin/user/login'],
+			#'db' => 'dbSys',
 		],
 		'errorHandler' => [
 			'errorAction' => 'site/error',
@@ -39,9 +42,9 @@ $config = [
 				[
 					'exportInterval' => 10,
 					'class' => 'yii\log\FileTarget',
-					'levels' => ['error'],
-					'categories' => ['api'],
-					'logFile' => '@app/runtime/logs/apiError.log',
+					'levels' => [],
+					'categories' => [],
+					'logFile' => '@app/runtime/logs/error.log',
 					'logVars' => [],
 					'maxFileSize' => 1024 * 2,
 					'maxLogFiles' => 10,
@@ -80,21 +83,20 @@ $config = [
 					'maxLogFiles' => 2,
 				],
 			],
-			/*
-			'authManager' => [
-				'class' => 'yii\rbac\DbManager',
-				'db' => 'dbApi'
-			],
-			*/
+		],
+		'authManager' => [
+			'class' => 'yii\rbac\DbManager',
+			'db' => 'dbSys',
 		],
 		/*
-		'as access' => [
-			'class' => 'mdm\admin\components\AccessControl',
-			'allowActions' => [
-				'admin/*',
-			],
-		],
-		*/
+		  'as access' => [
+		  'class' => 'mdm\admin\components\AccessControl',
+		  'allowActions' => [
+		  'admin/*',
+		  ],
+		  ],
+
+		 */
 		'urlManager' => [
 			'enablePrettyUrl' => true,
 			'showScriptName' => false,
@@ -110,7 +112,8 @@ $config = [
 	'params' => $params,
 	'modules' => [
 		'admin' => [
-			'class' => 'mdm\admin\Module'
+			'class' => 'mdm\admin\Module',
+			'layout' => '@app/views/layouts/rbac.php',
 		],
 	],
 ];
