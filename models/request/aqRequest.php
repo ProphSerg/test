@@ -13,6 +13,14 @@ class aqRequest extends \yii\db\ActiveQuery {
 		return $this->andWhere(['Number' => $num, 'Type' => $type])->one();
 	}
 
+	public function actived() {
+		return $this->andWhere(['DateClose' => null]);
+	}
+
+	public function closed() {
+		return $this->andWhere(['not', ['DateClose' => null]]);
+	}
+
 	/**
 	 * @inheritdoc
 	 * @return arRequest[]|array

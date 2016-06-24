@@ -14,6 +14,8 @@ use Yii;
  */
 class arReqText extends \yii\db\ActiveRecord {
 
+	#public $fullDesc;
+
 	/**
 	 * @inheritdoc
 	 */
@@ -26,6 +28,10 @@ class arReqText extends \yii\db\ActiveRecord {
 	 */
 	public static function getDb() {
 		return Yii::$app->get('dbRequest');
+	}
+
+	public function getFullDesc() {
+		return Yii::$app->formatter->asDatetime($this->Date, 'php:d/m/Y H:i') . ' ' . $this->Text;
 	}
 
 	/**
@@ -47,8 +53,9 @@ class arReqText extends \yii\db\ActiveRecord {
 		return [
 			'ID' => 'ID',
 			'RequestID' => 'Request ID',
-			'Date' => 'Date',
-			'Text' => 'Text',
+			'Date' => 'Дата',
+			'Text' => 'Описание',
+			'FullDesc' => 'Описание',
 		];
 	}
 

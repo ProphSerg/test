@@ -21,7 +21,7 @@ AppAsset::register($this);
         <title><?= Html::encode($this->title) ?></title>
 		<?php $this->head() ?>
     </head>
-    <body>
+    <body data-spy="scroll">
 		<?php $this->beginBody() ?>
 
 		<?php
@@ -33,12 +33,12 @@ AppAsset::register($this);
 			],
 			'innerContainerOptions' => ['class' => 'container-fluid'],
 		]);
-		$items = MenuHelper::getAssignedMenu(Yii::$app->user->id, 2);
+		$items = app\common\myMenuHelper::getAssignedMenuByName(Yii::$app->user->id, 'TopMenu');
 		if (Yii::$app->user->isGuest) {
 			$items[] = ['label' => 'Login', 'url' => ['admin/user/login']];
 		}
 		echo Nav::widget([
-			'options' => ['class' => 'navbar-nav navbar-left'],
+			'options' => ['class' => 'navbar-nav navbar-right'],
 			'items' => $items
 			/*
 			  [
@@ -68,8 +68,12 @@ AppAsset::register($this);
 			<div class="row">
 				<div class="col-xs-2">
 					<?php
-#var_dump(isset($this->params['LeftMenuItemsURL']));
-					if (isset($this->params['LeftMenuItemsURL'])) {
+					if (isset(Yii::$app->controller->ControllerMenu)) {
+						echo Nav::widget([
+							'options' => ['class' => 'nav nav-pills nav-stacked'],
+							'items' => app\common\myMenuHelper::getAssignedMenuByName(Yii::$app->user->id, Yii::$app->controller->ControllerMenu),
+						]);
+					} elseif (isset($this->params['LeftMenuItemsURL'])) {
 						echo Nav::widget([
 							'options' => ['class' => 'nav nav-pills nav-stacked'],
 							'items' => $this->params['LeftMenuItemsURL'],

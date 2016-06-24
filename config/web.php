@@ -23,7 +23,7 @@ $config = [
 			'enableAutoLogin' => true,
 			'identityClass' => 'mdm\admin\models\User',
 			'loginUrl' => ['admin/user/login'],
-			#'db' => 'dbSys',
+		#'db' => 'dbSys',
 		],
 		'errorHandler' => [
 			'errorAction' => 'site/error',
@@ -42,7 +42,7 @@ $config = [
 				[
 					'exportInterval' => 10,
 					'class' => 'yii\log\FileTarget',
-					'levels' => [],
+					'levels' => ['error'],
 					'categories' => [],
 					'logFile' => '@app/runtime/logs/error.log',
 					'logVars' => [],
@@ -114,6 +114,9 @@ $config = [
 		'admin' => [
 			'class' => 'mdm\admin\Module',
 			'layout' => '@app/views/layouts/rbac.php',
+		],
+		'gridview' => [
+			'class' => '\kartik\grid\Module',
 		],
 	],
 ];

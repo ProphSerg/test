@@ -56,15 +56,15 @@ class arRequest extends \yii\db\ActiveRecord {
 		return [
 			'ID' => 'ID',
 			'Type' => 'Type',
-			'Number' => 'Number',
-			'Date' => 'Date',
-			'DateClose' => 'Date Close',
-			'Desc' => 'Desc',
-			'Append' => 'Append',
-			'Contact' => 'Contact',
-			'Name' => 'Name',
-			'Addr' => 'Addr',
-			'Overdue' => 'Overdue',
+			'Number' => 'Номер',
+			'Date' => 'Дата заявки',
+			'DateClose' => 'Дата закрытия',
+			'Desc' => 'Описание',
+			'Append' => 'Доп.информация',
+			'Contact' => 'Контактный телефон',
+			'Name' => 'Название',
+			'Addr' => 'Адрес',
+			'Overdue' => 'Просрочена?',
 		];
 	}
 
@@ -76,9 +76,10 @@ class arRequest extends \yii\db\ActiveRecord {
 		return new aqRequest(get_called_class());
 	}
 
-	public function getText() {
-		return $this->hasMany(arReqText::className(), ['RequestID' => 'ID'])
-				->orderBy('Date');
+	public function getTexts() {
+		return $this->hasMany(arReqText::className(), ['RequestID' => 'ID'])->inverseOf('request')
+		#->orderBy('Date');
+		;
 	}
 
 }
