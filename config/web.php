@@ -106,6 +106,7 @@ $config = [
 					'controller' => 'api',
 					'only' => ['create'],
 				],
+				'request/detail/<id:\d+>' => 'request/detail'
 			],
 		],
 	],
