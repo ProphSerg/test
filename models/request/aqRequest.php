@@ -13,6 +13,10 @@ class aqRequest extends \yii\db\ActiveQuery {
 		return $this->andWhere(['Number' => $num, 'Type' => $type])->one();
 	}
 
+	public function getRequestID($id) {
+		return $this->andWhere(['ID' => $id])->one();
+	}
+
 	public function actived() {
 		return $this->andWhere(['DateClose' => null]);
 	}

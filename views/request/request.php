@@ -1,9 +1,7 @@
 <?php
 
 use kartik\grid\GridView;
-use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
-use yii\helpers\Url;
 
 $this->title = 'Заявки';
 /*
@@ -26,7 +24,11 @@ echo GridView::widget([
 			'attribute' => 'Number',
 			'format' => 'raw',
 			'value' => function ($data) {
-				return Html::a($data->Number, ['request/detail', 'id' => $data->ID]);
+				return Html::a($data->Number, [
+						'request/detail',
+						'id' => $data->ID
+						]
+				);
 			}
 			],
 			[

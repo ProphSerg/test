@@ -78,7 +78,7 @@ class arRequest extends \yii\db\ActiveRecord {
 
 	public function getTexts() {
 		return $this->hasMany(arReqText::className(), ['RequestID' => 'ID'])->inverseOf('request')
-		#->orderBy('Date');
+			->orderBy('Date');
 		;
 	}
 
