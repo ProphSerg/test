@@ -81,7 +81,7 @@ class arReqText extends \yii\db\ActiveRecord {
 
 		$req->DateClose = Convert::Date2SQLiteDate($this->Date, Convert::DateOnlyFormat);
 		$this->Date = Convert::SQLiteDateNow();
-		var_dump($this);
+		#var_dump($this);
 		$trans = arRequest::getDb()->beginTransaction();
 		try {
 			if ($req->save() === false) {

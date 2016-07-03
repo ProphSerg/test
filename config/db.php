@@ -9,14 +9,14 @@ return [
 	*/ 
 	'dbSys' => [
 		'class' => 'yii\db\Connection',
-		'dsn' => 'sqlite:' . dirname(__DIR__) . '/db/system.sqlite',
+		'dsn' => 'sqlite:@dbs/system.sqlite',
 	],
 	'dbRequest' => [
 		'class' => 'yii\db\Connection',
-		'dsn' => 'sqlite:' . dirname(__DIR__) . '/db/request.sqlite',
+		'dsn' => 'sqlite:@dbs/request.sqlite',
 	],
 	'dbATM' => [
 		'class' => 'yii\db\Connection',
-		'dsn' => 'sqlite:' . dirname(__DIR__) . '/db/atm.sqlite',
+		'dsn' => 'sqlite:@dbs/atm.sqlite',
 	],
 ];
