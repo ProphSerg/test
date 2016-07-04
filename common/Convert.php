@@ -43,7 +43,9 @@ class Convert {
 	}
 
 	static public function SQLiteDateNow() {
-		return date('Y-m-d H:i:s');
+		$date = new \DateTime();
+		var_dump($date->getTimezone()->getName());
+		return gmdate(\DateTime::ISO8601);
 	}
 
 }

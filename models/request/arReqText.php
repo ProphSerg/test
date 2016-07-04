@@ -84,12 +84,13 @@ class arReqText extends \yii\db\ActiveRecord {
 		#var_dump($this);
 		$trans = arRequest::getDb()->beginTransaction();
 		try {
+			/*
 			if ($req->save() === false) {
 				if (($rq = arRequest::find()->getRequest($fields['Number'])) === null) {
 					throw new Exception('Request: Ошибка записи и поиска имеющейся записи.');
 				}
 			}
-
+			*/
 			$this->save();
 			$trans->commit();
 		} catch (\Exception $e) {
