@@ -71,11 +71,6 @@ class arReqText extends \yii\db\ActiveRecord {
 		return $this->hasOne(arRequest::className(), ['ID' => 'RequestID']);
 	}
 
-	public function addComment() {
-		$this->Date = null;
-		$this->save();
-	}
-
 	public function closeRequest() {
 		$req = arRequest::find()->getRequestID($this->RequestID);
 
@@ -84,13 +79,13 @@ class arReqText extends \yii\db\ActiveRecord {
 		#var_dump($this);
 		$trans = arRequest::getDb()->beginTransaction();
 		try {
-			
+
 			if ($req->save() === false) {
 				if (($rq = arRequest::find()->getRequest($fields['Number'])) === null) {
 					throw new Exception('Request: Ошибка записи и поиска имеющейся записи.');
 				}
 			}
-			
+
 			$this->save();
 			$trans->commit();
 		} catch (\Exception $e) {
@@ -99,6 +94,24 @@ class arReqText extends \yii\db\ActiveRecord {
 			#Yii::error("Ошибка записи в базу. " . Convert::Exception2Str($e), \app\models\api\MailAction::LOG_CATEGORY);
 			#Yii::error(['arRequest', $rq->attributes, 'arReqText', $rt->attributes], \app\models\api\MailAction::LOG_CATEGORY);
 			throw new ServerErrorHttpException("Request: Ошибка записи в базу. " . Convert::Exception2Str($e));
+		}
+	}
+
+	public function addComment() {
+		if ($this->Date === null) {
+			$this->Date = Convert::SQLiteDateNow();
+		}
+		#var_dump($this);
+		$trans = arReqText::getDb()->beginTransaction();
+		try {
+			$this->save();
+			$trans->commit();
+		} catch (\Exception $e) {
+			$trans->rollback();
+			#Yii::warning("Ошибка записи в базу. " . Convert::Exception2Str($e), \app\models\api\MailAction::LOG_CATEGORY);
+			#Yii::error("Ошибка записи в базу. " . Convert::Exception2Str($e), \app\models\api\MailAction::LOG_CATEGORY);
+			#Yii::error(['arRequest', $rq->attributes, 'arReqText', $rt->attributes], \app\models\api\MailAction::LOG_CATEGORY);
+			throw new ServerErrorHttpException("ReqText: Ошибка записи в базу. " . Convert::Exception2Str($e));
 		}
 	}
 
