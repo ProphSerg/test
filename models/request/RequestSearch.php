@@ -40,6 +40,11 @@ class RequestSearch extends arRequest {
 
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
+			'sort' => [
+				'defaultOrder' => [
+					'Date' => SORT_DESC,
+				],
+			],
 		]);
 
 		if (!($this->load($param) && $this->validate())) {
@@ -47,14 +52,14 @@ class RequestSearch extends arRequest {
 		}
 
 		$query->andFilterWhere([
-			'and', 
-				['Number' => $this->Number],
-				['like', 'Desc', $this->Desc],
-				['like', 'Name', $this->Name],
-				['like', 'Addr', $this->Addr],
-			
+			'and',
+			['like', 'Number', $this->Number],
+			['like', 'Desc', $this->Desc],
+			['like', 'Name', $this->Name],
+			['like', 'Addr', $this->Addr],
+			['strftime("%d/%m/%Y", Date, "localtime")' => $this->Date],
 		]);
-
+		#var_dump($query->where);
 		return $dataProvider;
 	}
 

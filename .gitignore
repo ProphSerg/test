@@ -27,5 +27,4 @@ phpunit.phar
 /phpunit.xml
 
 db/*.sqlite-journal
-
-!/vendor/mdmsoft/yii2-admin/models/User.php
+/web/.htaccess

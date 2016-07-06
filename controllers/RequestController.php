@@ -31,13 +31,13 @@ class RequestController extends Controller {
 	}
 
 	public function actionDetail($id) {
-		$model = $this->findModel($id);
 		$modelComment = new arReqText();
 		$post = Yii::$app->request->post();
 		if(isset($post['reqCloseBtn']) && $modelComment->load($post)){
 			$modelComment->RequestID = $id;
 			$modelComment->closeRequest();
 		}
+		$model = $this->findModel($id);
 		return $this->render('detail', [
 				'model' => $model,
 				]
