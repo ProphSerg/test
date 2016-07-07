@@ -7,12 +7,11 @@ use yii\helpers\Html;
 
 $this->title = 'Заявка №' . $model->Number;
 
-$TextDetail = '<table cellspacing="5" border="1">';
+$TextDetail = '';
+$i = 0;
 foreach ($model->texts as $text) {
-	$TextDetail .='<tr><td nowrap>' . Yii::$app->formatter->asDatetime($text->Date, 'php:d/m/Y H:i') . '</td><td>' .
-		$text->Text . '</td></tr>';
+	$TextDetail.='<p class="reqTableComent' . ($i++ % 2 == 0 ? 'Even' : 'Odd') . '">' . $text->FullDesc;
 }
-$TextDetail .= '</table>';
 
 echo DetailView::widget([
 	'model' => $model,
@@ -61,14 +60,28 @@ echo DetailView::widget([
 			'format' => 'text',
 		],
 		[
-			'label' => 'Вопрос/Проблема',
+			'label' => 'Вопрос/Проблема' .
+			($model->DateClose === null ? ' ' .
+				Html::a('', '', [
+					'class' => 'btn glyphicon glyphicon-pencil',
+					'data-toggle' => 'modal',
+					'data-target' => '#addComment',
+					'title' => 'Добавить комментарий',
+				]) : ''),
 			'format' => 'html',
-			#'value' => $TextDetail,
-			'value' => implode('<p>', ArrayHelper::map($model->texts, 'ID', 'FullDesc')),
+			'value' => $TextDetail,
+		#'value' => implode('<p>', ArrayHelper::map($model->texts, 'ID', 'FullDesc')),
 		]
 	],
 ]);
 
+Modal::begin([
+	'header' => 'Model',
+	#'toggleButton' => ['label' => 'Modal click'],
+	'id' => 'addComment',
+]);
+echo 'Hello MODAL!!';
+Modal::end();
 
 if ($model->DateClose === null) {
 	$closed = new \app\models\request\arReqText();

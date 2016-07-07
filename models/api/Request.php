@@ -19,7 +19,7 @@ class Request extends Model {
 			#Yii::info(['Save!', 'mail', $mail], 'parse');
 			$rq = new arRequest();
 			$rq->attributes = $fields;
-			$rq->{'Type'} = 0;
+			$rq->{'Type'} = arRequest::REQUEST_SD;
 			$rq->Append = trim(str_replace("ФИО:", '', $rq->Append));
 			$rq->Desc = trim(str_replace("Звонок от ТСП", '', $rq->Desc));
 			$rq->Date = Convert::Date2SQLiteDate($rq->Date);

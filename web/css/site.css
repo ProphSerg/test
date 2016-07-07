@@ -1,7 +1,63 @@
+.navbar {
+	background-image: url(../images/nav-bg.png);
+	/*border-color: #3a7dac;*/
+}
+
+.navbar-default
+{background-color:#468ec1;border-color:#3a7dac}
+.navbar-default .navbar-brand
+{color:white}
+.navbar-default .navbar-brand:hover,.navbar-default .navbar-brand:focus
+{color:#e6e6e6;background-color:transparent}
+.navbar-default .navbar-text
+{color:#777777}
+.navbar-default .navbar-nav>li>a
+{color:white}
+.navbar-default .navbar-nav>li>a:hover,.navbar-default .navbar-nav>li>a:focus
+{color:white;background-color:transparent}
+.navbar-default .navbar-nav>.active>a,.navbar-default .navbar-nav>.active>a:hover,.navbar-default .navbar-nav>.active>a:focus
+{color:white;background-color:#3a7dac}
+.navbar-default .navbar-nav>.disabled>a,.navbar-default .navbar-nav>.disabled>a:hover,.navbar-default .navbar-nav>.disabled>a:focus
+{color:#cccccc;background-color:transparent}
+.navbar-default .navbar-toggle
+{border-color:#dddddd}
+.navbar-default .navbar-toggle:hover,.navbar-default .navbar-toggle:focus
+{background-color:#dddddd}
+.navbar-default .navbar-toggle .icon-bar
+{background-color:#888888}
+.navbar-default .navbar-collapse,.navbar-default .navbar-form
+{border-color:#3a7dac}
+.navbar-default .navbar-nav>.open>a,.navbar-default .navbar-nav>.open>a:hover,.navbar-default .navbar-nav>.open>a:focus
+{background-color:#3a7dac;color:white}
+
+.navbar-default .navbar-link
+{color:white}
+.navbar-default .navbar-link:hover
+{color:white}
+.navbar-default .btn-link
+{color:white}
+.navbar-default .btn-link:hover,.navbar-default .btn-link:focus
+{color:white}
+.navbar-default .btn-link[disabled]:hover,.navbar-default .btn-link[disabled]:focus,fieldset[disabled] .navbar-default .btn-link:hover,fieldset[disabled] .navbar-default .btn-link:focus
+{color:#cccccc}
+
+.b-yellow-strip {
+	background: #ffdd00;
+	height: 5px;
+	line-height: 5px;
+	font-size: 0px;
+}
+.b-green-strip {
+	background: #54b948;
+	height: 5px;
+	line-height: 5px;
+	font-size: 0px;
+}
+
 html,
 body {
     height: 100%;
-	padding-top: 30px;
+	padding-top: 35px;
 }
 
 .wrap {

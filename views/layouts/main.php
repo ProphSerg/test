@@ -23,63 +23,12 @@ AppAsset::register($this);
     </head>
     <body data-spy="scroll">
 		<?php $this->beginBody() ?>
-
-		<?php
-		NavBar::begin([
-			'brandLabel' => 'УРАЛСИБ',
-			'brandUrl' => Yii::$app->homeUrl,
-			'options' => [
-				'class' => 'navbar-inverse navbar-fixed-top',
-			],
-			'innerContainerOptions' => ['class' => 'container-fluid'],
-		]);
-		$items = app\common\myMenuHelper::getAssignedMenuByName(Yii::$app->user->id, 'TopMenu');
-		if (Yii::$app->user->isGuest) {
-			$items[] = ['label' => 'Login', 'url' => ['admin/user/login']];
-		}
-		echo Nav::widget([
-			'options' => ['class' => 'navbar-nav navbar-right'],
-			'items' => $items
-			/*
-			  [
-			  ['label' => 'Home', 'url' => ['/site/index']],
-			  ['label' => 'About', 'url' => ['/site/about']],
-			  ['label' => 'Contact', 'url' => ['/site/contact']],
-			  Yii::$app->user->isGuest ? (
-			  ['label' => 'Login', 'url' => ['/site/login']]
-			  ) : (
-			  '<li>'
-			  . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
-			  . Html::submitButton(
-			  'Logout (' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-link']
-			  )
-			  . Html::endForm()
-			  . '</li>'
-			  ),
-			  YII_ENV_DEV ? (['label' => 'Gii', 'url' => ['/gii']]) : '',
-			  ],
-			 * 
-			 */
-		]);
-		NavBar::end();
-		?>
+		<?= $this->render('/layouts/_navbar'); ?>
 
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-2">
-					<?php
-					if (isset(Yii::$app->controller->ControllerMenu)) {
-						echo Nav::widget([
-							'options' => ['class' => 'nav nav-pills nav-stacked'],
-							'items' => app\common\myMenuHelper::getAssignedMenuByName(Yii::$app->user->id, Yii::$app->controller->ControllerMenu),
-						]);
-					} elseif (isset($this->params['LeftMenuItemsURL'])) {
-						echo Nav::widget([
-							'options' => ['class' => 'nav nav-pills nav-stacked'],
-							'items' => $this->params['LeftMenuItemsURL'],
-						]);
-					}
-					?>
+					<?= $this->render('/layouts/_leftmenu'); ?>
 				</div>
 				<div class="col-xs-10">
 					<!--					<div class="jumbotron">

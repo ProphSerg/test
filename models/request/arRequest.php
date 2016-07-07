@@ -21,6 +21,10 @@ use Yii;
  */
 class arRequest extends \yii\db\ActiveRecord {
 
+	const REQUEST_SD = 0;
+	const REQUEST_TS = 1;
+	const REQUEST_ATM = 2;
+
 	/**
 	 * @inheritdoc
 	 */
@@ -78,7 +82,7 @@ class arRequest extends \yii\db\ActiveRecord {
 
 	public function getTexts() {
 		return $this->hasMany(arReqText::className(), ['RequestID' => 'ID'])->inverseOf('request')
-			->orderBy('Date');
+				->orderBy('Date');
 		;
 	}
 
