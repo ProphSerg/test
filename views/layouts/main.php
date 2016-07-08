@@ -23,12 +23,12 @@ AppAsset::register($this);
     </head>
     <body data-spy="scroll">
 		<?php $this->beginBody() ?>
-		<?= $this->render('/layouts/_navbar'); ?>
+		<?= $this->render('@app/views/layouts/_navbar'); ?>
 
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-2">
-					<?= $this->render('/layouts/_leftmenu'); ?>
+					<?= $this->render('@app/views/layouts/_leftmenu'); ?>
 				</div>
 				<div class="col-xs-10">
 					<!--					<div class="jumbotron">
