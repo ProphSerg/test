@@ -100,7 +100,10 @@ class arReqText extends \yii\db\ActiveRecord {
 	public function addComment() {
 		if ($this->Date === null) {
 			$this->Date = Convert::SQLiteDateNow();
+		}else {
+			$this->Date = Convert::Date2SQLiteDate($this->Date);
 		}
+		
 		#var_dump($this);
 		$trans = arReqText::getDb()->beginTransaction();
 		try {

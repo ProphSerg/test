@@ -36,7 +36,12 @@ class RequestController extends Controller {
 		if(isset($post['reqCloseBtn']) && $modelComment->load($post)){
 			$modelComment->RequestID = $id;
 			$modelComment->closeRequest();
+		} elseif(isset($post['reqAddCommentBtn']) && $modelComment->load($post)){
+			$modelComment->RequestID = $id;
+			$modelComment->Date = null;
+			$modelComment->addComment();
 		}
+		
 		$model = $this->findModel($id);
 		return $this->render('detail', [
 				'model' => $model,

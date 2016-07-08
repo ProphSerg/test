@@ -2,6 +2,7 @@
 
 use kartik\detail\DetailView;
 use yii\bootstrap\Modal;
+use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
@@ -75,20 +76,33 @@ echo DetailView::widget([
 	],
 ]);
 
+$reqText = new \app\models\request\arReqText();
+$reqText->RequestID = $model->ID;
+$reqText->Date = date('d/m/Y');
+
 Modal::begin([
-	'header' => 'Model',
+	'header' => 'Добавить комментарий',
 	#'toggleButton' => ['label' => 'Modal click'],
 	'id' => 'addComment',
 ]);
-echo 'Hello MODAL!!';
+
+$aForm = ActiveForm::begin([]);
+?>
+
+<?= $aForm->field($reqText, 'Text')->textArea(['rows' => 6]); ?>
+
+<div class="form-group">
+	<?= Html::submitButton('Добавить', [ 'class' => 'btn btn-default btn-primary', 'name' => 'reqAddCommentBtn',]); ?>
+</div>
+
+<?php
+#echo 'Hello MODAL!!';
+ActiveForm::end();
 Modal::end();
 
 if ($model->DateClose === null) {
-	$closed = new \app\models\request\arReqText();
-	$closed->RequestID = $model->ID;
-	$closed->Date = date('d/m/Y');
 	echo DetailView::widget([
-		'model' => $closed,
+		'model' => $reqText,
 		'mode' => DetailView::MODE_EDIT,
 		'hideIfEmpty' => true,
 		#'enableEditMode' => false,

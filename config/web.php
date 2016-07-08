@@ -13,6 +13,7 @@ $config = [
 	'aliases' => [
         '@dbs' => '@app/db',
     ],
+	'defaultRoute' => 'request',
 	'components' => [
 		'request' => [
 			// !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
