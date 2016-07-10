@@ -44,7 +44,7 @@ class arRequest extends \yii\db\ActiveRecord {
 	 */
 	public function rules() {
 		return [
-			[['Type', 'Number'], 'required'],
+			[['Type', 'Number', 'Date'], 'required'],
 			[['Type', 'Number'], 'integer'],
 			[['Date', 'DateClose'], 'safe'],
 			[['Desc', 'Append', 'Contact', 'Name', 'Addr'], 'string'],
@@ -84,6 +84,11 @@ class arRequest extends \yii\db\ActiveRecord {
 		return $this->hasMany(arReqText::className(), ['RequestID' => 'ID'])->inverseOf('request')
 				->orderBy('Date');
 		;
+	}
+
+	public static function getNextNumber($Type) {
+		$num = self::find()->where(['Type' => $Type])->max('Number');
+		return ($num === null ? 1 : $num + 1);
 	}
 
 }
