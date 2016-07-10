@@ -7,6 +7,7 @@ use yii\web\Controller;
 use app\models\request\RequestSearch;
 use app\models\request\arRequest;
 use app\models\request\arReqText;
+use app\models\request\RequestTS;
 
 class RequestController extends Controller {
 
@@ -56,6 +57,20 @@ class RequestController extends Controller {
 		} else {
 			throw new NotFoundHttpException('The requested page does not exist.');
 		}
+	}
+
+	public function actionAddts() {
+		$model = new RequestTS();
+		$post = Yii::$app->request->post();
+		if($model->load($post)){
+			$model->addReqTS();
+			$model->closeRequest();
+		}
+		
+		return $this->render('addts', [
+				'model' => $model,
+				]
+		);
 	}
 
 }
