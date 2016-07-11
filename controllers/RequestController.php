@@ -7,7 +7,7 @@ use yii\web\Controller;
 use app\models\request\RequestSearch;
 use app\models\request\arRequest;
 use app\models\request\arReqText;
-use app\models\request\RequestTS;
+use app\models\request\RequestMan;
 
 class RequestController extends Controller {
 
@@ -59,15 +59,15 @@ class RequestController extends Controller {
 		}
 	}
 
-	public function actionAddts() {
-		$model = new RequestTS();
+	public function actionAdd($type) {
+		$model = new RequestMan($type);
 		$post = Yii::$app->request->post();
 		if($model->load($post)){
-			$model->addReqTS();
-			$model->closeRequest();
+			$model->addReq();
+			$this->redirect(['detail', 'id' => $model->ID]);
 		}
 		
-		return $this->render('addts', [
+		return $this->render('add', [
 				'model' => $model,
 				]
 		);

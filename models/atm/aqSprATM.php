@@ -7,28 +7,26 @@ namespace app\models\atm;
  *
  * @see SprATM
  */
-class aqSprATM extends \yii\db\ActiveQuery
-{
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
+class aqSprATM extends \yii\db\ActiveQuery {
 
-    /**
-     * @inheritdoc
-     * @return SprATM[]|array
-     */
-    public function all($db = null)
-    {
-        return parent::all($db);
-    }
+	public function byID($id) {
+		return $this->Where(['ID' => $id])->one();
+	}
 
-    /**
-     * @inheritdoc
-     * @return SprATM|array|null
-     */
-    public function one($db = null)
-    {
-        return parent::one($db);
-    }
+	/**
+	 * @inheritdoc
+	 * @return SprATM[]|array
+	 */
+	public function all($db = null) {
+		return parent::all($db);
+	}
+
+	/**
+	 * @inheritdoc
+	 * @return SprATM|array|null
+	 */
+	public function one($db = null) {
+		return parent::one($db);
+	}
+
 }

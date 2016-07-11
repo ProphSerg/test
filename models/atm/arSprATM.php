@@ -36,7 +36,7 @@ class arSprATM extends \yii\db\ActiveRecord {
 	public function rules() {
 		return [
 			[['Model', 'Serial', 'Addres'], 'required'],
-			[['Model', 'Serial', 'TerminalID', 'Addres', 'Type'], 'string'],
+			[['Model', 'Serial', 'TerminalID', 'Addres', 'Type', 'InvNum'], 'string'],
 			[['Serial'], 'unique'],
 		];
 	}
@@ -47,11 +47,12 @@ class arSprATM extends \yii\db\ActiveRecord {
 	public function attributeLabels() {
 		return [
 			'ID' => 'ID',
-			'Model' => 'Model',
-			'Serial' => 'Serial',
-			'TerminalID' => 'Terminal ID',
-			'Addres' => 'Addres',
-			'Type' => 'Type',
+			'Model' => 'Модель',
+			'Serial' => 'Серийный №',
+			'TerminalID' => 'TerminalID',
+			'Addres' => 'Адрес ',
+			'Type' => 'Тип',
+			'InvNum' => 'Инв. №'
 		];
 	}
 
@@ -65,6 +66,10 @@ class arSprATM extends \yii\db\ActiveRecord {
 
 	public function getOrder() {
 		return $this->hasMany(arATMOrder::className(), ['Serial' => 'Serial']);
+	}
+
+	public function getFullName() {
+		return $this->TerminalID . ' ' . $this->Addres;
 	}
 
 }

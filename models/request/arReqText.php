@@ -4,6 +4,7 @@ namespace app\models\request;
 
 use Yii;
 use app\common\Convert;
+use yii\web\ServerErrorHttpException;
 
 /**
  * This is the model class for table "ReqText".
@@ -87,6 +88,14 @@ class arReqText extends \yii\db\ActiveRecord {
 			}
 
 			$this->save();
+			if($req->Type == arRequest::REQUEST_SD){
+				$msg = Yii::$app->mailer->compose();
+				$msg->setFrom('tsp_it_omsk@oms.uralsib.ru')
+					->setTo('S.Rotar@oms.uralsib.ru')
+					->setSubject('Recall ' . $req->Number)
+					->setTextBody($this->Text)
+					->send();
+			}
 			$trans->commit();
 		} catch (\Exception $e) {
 			$trans->rollback();

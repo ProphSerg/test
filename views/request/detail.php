@@ -6,7 +6,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 
-$this->title = 'Заявка №' . $model->Number;
+$this->title = 'Заявка № ' . $model->Number;
 
 $TextDetail = '';
 $i = 0;
@@ -20,7 +20,7 @@ echo DetailView::widget([
 	'hideIfEmpty' => true,
 	#'enableEditMode' => false,
 	'panel' => [
-		'heading' => 'Заявка №' . $model->Number,
+		'heading' => 'Заявка № ' . $model->Number,
 		'headingOptions' => [
 			'type' => DetailView::TYPE_PRIMARY,
 			'template' => '{title}',

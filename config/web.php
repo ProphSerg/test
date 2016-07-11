@@ -38,6 +38,9 @@ $config = [
 			// 'useFileTransport' to false and configure a transport
 			// for the mailer to send real emails.
 			'useFileTransport' => true,
+			'transport' => [
+				'host' => 'oms-ln01.fc.uralsibbank.ru'
+			],
 		],
 		'log' => [
 			'flushInterval' => 1,
@@ -110,7 +113,8 @@ $config = [
 					'controller' => 'api',
 					'only' => ['create'],
 				],
-				'request/detail/<id:\d+>' => 'request/detail'
+				'request/detail/<id:\d+>' => 'request/detail',
+				'request/add/<type:\d+>' => 'request/add',
 			],
 		],
 	],
