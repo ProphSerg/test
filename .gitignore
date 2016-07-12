@@ -28,6 +28,6 @@ phpunit.phar
 
 db/*.sqlite-journal
 db/atm.sqlite
-db/request.sqlite 
+db/request.sqlite
 
 /web/.htaccess
