@@ -27,4 +27,7 @@ phpunit.phar
 /phpunit.xml
 
 db/*.sqlite-journal
+db/atm.sqlite
+db/request.sqlite 
+
 /web/.htaccess

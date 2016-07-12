@@ -39,6 +39,7 @@ $config = [
 			// for the mailer to send real emails.
 			'useFileTransport' => true,
 			'transport' => [
+				'class' => 'Swift_SmtpTransport',
 				'host' => 'oms-ln01.fc.uralsibbank.ru'
 			],
 		],

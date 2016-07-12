@@ -32,6 +32,12 @@ class ApiController extends Controller {
 				'checkAccess' => [$this, 'checkAccess'],
 #				'scenario' => $this->createScenario,
 			],
+			'convert' => [
+				'class' => 'app\models\api\ConvertAction',
+#				'modelClass' => $this->modelClass,
+				'checkAccess' => [$this, 'checkAccess'],
+#				'scenario' => $this->createScenario,
+			],
 		];
 	}
 
