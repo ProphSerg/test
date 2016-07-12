@@ -60,7 +60,7 @@ class ConvertAction extends \yii\base\Action {
 						if (preg_match(self::CommentPatt, $desc) > 0) {
 							$rt->Text = substr($desc, 17);
 							$rt->Date = Convert::Date2SQLiteDate(substr($desc, 0, 16));
-							echo "\t{$desc} => {$rt->Date}\n";
+							#echo "\t{$desc} => {$rt->Date}\n";
 
 							$rt->link('request', $rq);
 						}
@@ -90,7 +90,7 @@ class ConvertAction extends \yii\base\Action {
 							if (preg_match(self::CommentPatt, $desc) > 0) {
 								$rt->Text = substr($desc, 17);
 								$rt->Date = Convert::Date2SQLiteDate(substr($desc, 0, 16));
-								echo "\t{$desc} => {$rt->Date}\n";
+								#echo "\t{$desc} => {$rt->Date}\n";
 							} else {
 								$rt->Text = $desc;
 								$rt->Date = $rq->Date;

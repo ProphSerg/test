@@ -91,7 +91,8 @@ class arReqText extends \yii\db\ActiveRecord {
 			if($req->Type == arRequest::REQUEST_SD){
 				$msg = Yii::$app->mailer->compose();
 				$msg->setFrom('tsp_it_omsk@oms.uralsib.ru')
-					->setTo('S.Rotar@oms.uralsib.ru')
+					->setCc('tsp_it_omsk@oms.uralsib.ru')
+					->setTo('sd@uralsib.ru')
 					->setSubject('Recall ' . $req->Number)
 					->setTextBody($this->Text)
 					->send();
