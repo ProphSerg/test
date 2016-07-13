@@ -62,7 +62,7 @@ class RequestController extends Controller {
 	public function actionAdd($type) {
 		$model = new RequestMan($type);
 		$post = Yii::$app->request->post();
-		var_dump($post);
+		#var_dump($post);
 		if($model->load($post)){
 			$model->addReq();
 			$this->redirect(['detail', 'id' => $model->ID]);
