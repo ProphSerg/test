@@ -47,6 +47,7 @@ class ApiController extends Controller {
 	protected function verbs() {
 		return [
 			'mail' => ['POST'],
+			'convert' => ['POST'],
 		];
 	}
 

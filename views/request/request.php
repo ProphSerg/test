@@ -70,12 +70,25 @@ echo GridView::widget([
 				'value' => function($data) {
 					$str = '';
 					$i = 0;
+					$tt = [];
 					foreach ($data['texts'] as $item) {
-						$str.='<p class="reqTableComent' . ($i++ % 2 == 0 ? 'Even' : 'Odd') . '">' . $item['FullDesc'];
+						$tt[$i++] = [
+							'class' => 'reqTableComent' . ($i % 2 == 1 ? 'Even' : 'Odd'),
+							'value' => $item['FullDesc'],
+						];
+						//$str.='<p class="reqTableComent' . ($i++ % 2 == 0 ? 'Even' : 'Odd') . '">' . $item['FullDesc'];
+					}
+					if (isset($data['DateClose']) && $data['DateClose'] !== null) {
+						$tt[$i - 1]['class'] = 'reqTableComentClose';
+						#var_dump($tt);
+						
+					}
+					foreach ($tt as $t) {
+						$str.='<p class="' . $t['class'] . '">' . $t['value'];
 					}
 					return $str;
 				}
+				],
 			],
-		],
-	]);
+		]);
 ?>

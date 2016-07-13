@@ -29,3 +29,11 @@ and open the template in the editor.
 	font-style: normal;
 	color: black;
 }
+
+.reqTableComentClose {
+	padding: 0;
+	margin: 0; 
+	font-style: normal;
+	font-weight: bold;
+	color: green;
+}

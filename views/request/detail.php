@@ -10,8 +10,19 @@ $this->title = 'Заявка № ' . $model->Number;
 
 $TextDetail = '';
 $i = 0;
+$tt = [];
 foreach ($model->texts as $text) {
-	$TextDetail.='<p class="reqTableComent' . ($i++ % 2 == 0 ? 'Even' : 'Odd') . '">' . $text->FullDesc;
+	$tt[$i++] = [
+		'class' => 'reqTableComent' . ($i % 2 == 1 ? 'Even' : 'Odd'),
+		'value' => $text->FullDesc,
+	];
+	//$TextDetail.='<p class="reqTableComent' . ($i++ % 2 == 0 ? 'Even' : 'Odd') . '">' . $text->FullDesc;
+}
+if (isset($model->DateClose) && $model->DateClose !== null) {
+	$tt[$i - 1]['class'] = 'reqTableComentClose';
+}
+foreach ($tt as $t) {
+	$TextDetail.='<p class="' . $t['class'] . '">' . $t['value'];
 }
 
 echo DetailView::widget([
@@ -140,3 +151,17 @@ if ($model->DateClose === null) {
 		],
 	]);
 }
+/*
+echo Html::a('Создать копия заявки', [
+	'/request/add/',
+	'type' => $model->Type,
+	], [
+	'class' => 'btn btn-primary',
+	'data-method' => 'post',
+	'model' => $model->attributes,
+	]
+);
+
+var_dump($model->attributes);
+ * 
+ */
