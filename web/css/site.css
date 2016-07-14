@@ -58,6 +58,7 @@ html,
 body {
     height: 100%;
 	padding-top: 35px;
+	/*background: #ccccff;*/
 }
 
 .wrap {

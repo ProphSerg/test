@@ -13,7 +13,7 @@ use Yii;
  * @property string $EnterBy
  * @property string $Serial
  *
- **/
+ * */
 class arATMOrder extends \yii\db\ActiveRecord {
 
 	/**
@@ -67,9 +67,19 @@ class arATMOrder extends \yii\db\ActiveRecord {
 		return $this->hasMany(arATMOrderStatus::className(), ['ATMOrder_ID' => 'ID']);
 	}
 
+	public function getStatusName() {
+		return $this->hasOne(arSprATMOrderStatus::className(), ['StatusID' => 'Status'])
+				->via('status');
+	}
+
 	public function getStatusLast() {
-		return $this->hasMany(arATMOrderStatus::className(), ['ATMOrder_ID' => 'ID'])
-				->orderBy(['Date' => SORT_DESC])->one();
+		return $this->hasOne(arATMOrderStatus::className(), ['ATMOrder_ID' => 'ID'])
+				->orderBy(['ATMOrderStatus.Date' => SORT_DESC]);
+	}
+
+	public function getStatusNameLast() {
+		return $this->hasOne(arSprATMOrderStatus::className(), ['StatusID' => 'Status'])
+				->via('statusLast');
 	}
 
 	public function getTech() {
@@ -77,8 +87,8 @@ class arATMOrder extends \yii\db\ActiveRecord {
 	}
 
 	public function getTechLast() {
-		return $this->hasMany(arATMOrderTech::className(), ['ATMOrder_ID' => 'ID'])
-				->orderBy(['Date' => SORT_DESC])->one();
+		return $this->hasOne(arATMOrderTech::className(), ['ATMOrder_ID' => 'ID'])
+				->orderBy(['Date' => SORT_DESC]);
 	}
 
 	public function getRemark() {

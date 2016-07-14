@@ -51,7 +51,21 @@ class MailAction extends \yii\base\Action {
 	}
 
 	private function parse(\SimpleXMLElement $item) {
-		return mb_convert_encoding(base64_decode(trim((string) $item)), 'UTF-8', 'UTF-16LE');
+		$i = mb_convert_encoding(base64_decode(trim((string) $item)), 'UTF-8', 'UTF-16LE');
+		$cs = (string) $item['charset'];
+		if (strtolower($cs) == 'unknown-8bit') {
+			$cs = 'Windows-1251';
+		}
+		switch (strtolower((string) $item['type'])) {
+			case 'base64':
+				$i = mb_convert_encoding(base64_decode(trim($i)), 'UTF-8', $cs);
+				break;
+			case 'quoted-printable':
+				$i = mb_convert_encoding(quoted_printable_decode(trim($i)), 'UTF-8', $cs);
+				break;
+		}
+
+		return $i;
 	}
 
 	public function run() {
@@ -132,17 +146,17 @@ class MailAction extends \yii\base\Action {
 			#Yii::trace('Шаблон (' . $bp->attributes . ')', self::LOG_CATEGORY);
 			#echo "Patt:\n" . trim(str_replace("\r", "", $bp->Pattern)) . "\n";
 			#echo "Body:\n" . trim(str_replace("\r", "", $mail->Body)) . "\n";
-			
+
 			if ($isFirst) {
 				foreach (arBodyPatt::find()->BPreplace($bp->Name) as $bpr) {
 					if (preg_match('/^(.+?)\|(.+)$/i', $bpr->Pattern, $rmach) > 0) {
-						$Body = str_replace((string)$rmach[1], (string)$rmach[2], $Body);
+						$Body = str_replace((string) $rmach[1], (string) $rmach[2], $Body);
 					}
 				}
 			}
 			$isFirst = false;
 			#Yii::trace('Body>>>>>' . $Body, self::LOG_CATEGORY);
-			
+
 			preg_match_all(trim(str_replace("\r", "", $bp->Pattern)), $Body, $bmatch, PREG_SET_ORDER);
 			$i = -1;
 			foreach ($bmatch as $val) {
