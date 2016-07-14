@@ -48,10 +48,10 @@ class arATMOrder extends \yii\db\ActiveRecord {
 	public function attributeLabels() {
 		return [
 			'ID' => 'ID',
-			'Number' => 'Number',
-			'EnterDate' => 'Enter Date',
+			'Number' => 'Номер заявки',
+			'EnterDate' => 'Дата заявки',
 			'EnterBy' => 'Enter By',
-			'Serial' => 'Serial',
+			'Serial' => 'Серийный №',
 		];
 	}
 

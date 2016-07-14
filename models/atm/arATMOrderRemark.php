@@ -50,9 +50,9 @@ class arATMOrderRemark extends \yii\db\ActiveRecord {
 		return [
 			'ID' => 'ID',
 			'ATMOrder_ID' => 'Atmorder  ID',
-			'Date' => 'Date',
-			'Creater' => 'Creater',
-			'Text' => 'Text',
+			'Date' => 'Дата',
+			'Creater' => 'Автор',
+			'Text' => 'Сообщение',
 		];
 	}
 

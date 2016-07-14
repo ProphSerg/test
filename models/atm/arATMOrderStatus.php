@@ -49,8 +49,8 @@ class arATMOrderStatus extends \yii\db\ActiveRecord {
 		return [
 			'ID' => 'ID',
 			'ATMOrder_ID' => 'Atmorder  ID',
-			'Date' => 'Date',
-			'Status' => 'Status',
+			'Date' => 'Дата',
+			'Status' => 'Статус',
 		];
 	}
 

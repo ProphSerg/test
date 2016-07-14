@@ -16,23 +16,17 @@ $this->title = 'Обслуживание банкоматов';
 echo GridView::widget([
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
+	#'filterRowOptions' => ['class' => 'atmTableFilter'],
 	'pjax' => true,
 	'hover' => true,
 	'condensed' => true,
 	'floatHeader' => true,
-	/*
-	  'tableOptions' => ['class' => 'reqTable'],
-	  'headerRowOptions' => ['class' => 'reqTable'],
-	  'rowOptions' => function ($model, $key, $index, $grid) {
-	  if ($model->Overdue === true) {
-	  #return ['style' => 'background-color:red'];
-	  return ['class' => 'reqTableRowOverdue'];
-	  } elseif ($index % 2 == 0) {
-	  #return ['style' => 'background-color:#CCCCCC'];
-	  }
-	  },
-	 * 
-	 */
+	'tableOptions' => ['class' => 'atmTable'],
+	'striped' => false,
+	'headerRowOptions' => ['class' => 'atmTable'],
+	'rowOptions' => function ($model, $key, $index, $grid) {
+	return ['class' => 'atmTableRowStatus' . $model->statusLast->Status];
+},
 	'columns' => [
 #['class' => 'yii\grid\SerialColumn'],
 		/*
@@ -50,6 +44,11 @@ echo GridView::widget([
 		 * 
 		 */
 		[
+			'class' => \kartik\grid\ActionColumn::className(),
+			'template' => '{view}',
+			'header' => '',
+		],
+		[
 			'attribute' => 'EnterDate',
 			'format' => ['date', 'php:d/m/Y H:i'],
 		],
@@ -59,6 +58,14 @@ echo GridView::widget([
 		],
 		[
 			'attribute' => 'statusNameLast.StatusName',
+			'format' => 'text',
+		],
+		[
+			'attribute' => 'serial.TerminalID',
+			'format' => 'text',
+		],
+		[
+			'attribute' => 'serial.Addres',
 			'format' => 'text',
 		],
 	],

@@ -45,7 +45,7 @@ class arSprATMOrderStatus extends \yii\db\ActiveRecord {
 		return [
 			'ID' => 'ID',
 			'StatusID' => 'Status ID',
-			'StatusName' => 'Status Name',
+			'StatusName' => 'Статус',
 		];
 	}
 

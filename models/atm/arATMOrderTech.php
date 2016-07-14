@@ -48,7 +48,7 @@ class arATMOrderTech extends \yii\db\ActiveRecord {
 		return [
 			'ID' => 'ID',
 			'ATMOrder_ID' => 'Atmorder  ID',
-			'Date' => 'Date',
+			'Date' => 'Дата',
 			'Code' => 'Code',
 		];
 	}

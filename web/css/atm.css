@@ -1,0 +1,69 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 06.07.2016, 16:19:00
+    Author     : proph
+*/
+
+.atmTable {
+	font-size:12px;
+	background: #e0fff9;
+}
+
+.atmTable .form-control {
+	font-size:10px;
+}
+
+.atmTableRowOverdue {
+	background-color:red;
+}
+
+.atmTableComentOdd {
+	padding: 0;
+	margin: 0;
+	font-style: italic;
+	color: Blue;
+}
+
+.atmTableComentEven {
+	padding: 0;
+	margin: 0; 
+	font-style: normal;
+	color: black;
+}
+
+.atmTableComentClose {
+	padding: 0;
+	margin: 0; 
+	font-style: normal;
+	font-weight: bold;
+	color: green;
+}
+
+.atmTableRowStatusOP {
+	background-color: #c0c0c0;
+}
+.atmTableRowStatusAS {
+	background-color: white;
+}
+.atmTableRowStatusCL {
+	background-color: #00ff00;
+}
+.atmTableRowStatusCM {
+	background-color: #008000;
+}
+.atmTableRowStatusBO {
+	background-color: white ;
+}
+.atmTableRowStatusSU {
+	background-color: #ffff00;
+}
+.atmTableRowStatusDS {
+	background-color: #ffff00;
+}
+.atmTableRowStatusCN {
+	background-color: #ff9999;
+}

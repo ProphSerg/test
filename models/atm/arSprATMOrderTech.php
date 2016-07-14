@@ -51,9 +51,9 @@ class arSprATMOrderTech extends \yii\db\ActiveRecord
         return [
             'ID' => 'ID',
             'Code' => 'Code',
-            'Name' => 'Name',
-            'NameRus' => 'Name Rus',
-            'Phone' => 'Phone',
+            'Name' => 'ФИО',
+            'NameRus' => 'ФИО (рус)',
+            'Phone' => 'Телефон',
         ];
     }
 
