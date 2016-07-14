@@ -26,8 +26,6 @@ phpunit.phar
 # local phpunit config
 /phpunit.xml
 
-db/*.sqlite-journal
-db/atm.sqlite
-db/request.sqlite
+/db
 
 /web/.htaccess
