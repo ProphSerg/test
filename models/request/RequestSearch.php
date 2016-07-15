@@ -42,7 +42,7 @@ class RequestSearch extends arRequest {
 			'query' => $query,
 			'sort' => [
 				'defaultOrder' => [
-					'Date' => SORT_DESC,
+					'Date' => SORT_ASC,
 				],
 			],
 		]);

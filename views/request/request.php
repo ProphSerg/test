@@ -12,8 +12,18 @@ $this->title = 'Заявки';
   ],
   ]);
  */
+$pbt = <<< HTML
+    <div class="pull-left">
+        <div class="btn-toolbar kv-grid-toolbar" role="toolbar">
+            {toolbar}
+        </div>
+    </div>
+    {before}
+    <div class="clearfix"></div>
+HTML;
 
 echo GridView::widget([
+	'id' => 'gvRequests',
 	'dataProvider' => $dataProvider,
 	'filterModel' => $searchModel,
 	'pjax' => true,
@@ -30,6 +40,51 @@ echo GridView::widget([
 		#return ['style' => 'background-color:#CCCCCC'];
 	}
 },
+	'toolbar' => [
+		[
+			'content' =>
+			Html::a(
+				'<i class="glyphicon glyphicon-refresh"></i>', [''], [
+				#'type' => 'button',
+				'class' => 'btn btn-default',
+				'id' => 'btnReqRefresh',
+				'title' => 'Обновить',
+			])
+			. '  ' .
+			Html::a(
+				'<i class="glyphicon glyphicon-print"></i>', ['/request/print', 'type' => Yii::$app->controller->action->id], [
+				'target' => '_blank',
+				'data-toggle' => 'tooltip',
+				'class' => 'btn btn-default',
+				#'id' => 'btnReqPrint',
+				'title' => 'Печать',
+			]),
+		],
+		'{export}',
+	#'{toggleData}',
+	],
+	'panel' => [
+		'type' => GridView::TYPE_PRIMARY,
+		'heading' => 'Заявки',
+	],
+	'panelBeforeTemplate' => $pbt,
+	'export' => [
+		'icon' => 'print',
+		'label' => 'Печать',
+		'showConfirmAlert' => false,
+		#'target' => GridView::TARGET_SELF,
+		'header' => (Yii::$app->controller->action->id == 'actived' ? 'Активные заявки' : 'Закрытые заявки'),
+		'exportConfig' => [
+			GridView::PDF => [
+				'config' => [
+					'methods' => [
+						'SetHeader' => (Yii::$app->controller->action->id == 'actived' ? 'Активные заявки' : 'Закрытые заявки') . '||' . date('r'),
+						'SetFooter' => '||стр. {PAGENO}',
+					],
+				],
+			],
+		],
+	],
 	'columns' => [
 #['class' => 'yii\grid\SerialColumn'],
 		[
@@ -81,7 +136,6 @@ echo GridView::widget([
 					if (isset($data['DateClose']) && $data['DateClose'] !== null) {
 						$tt[$i - 1]['class'] = 'reqTableComentClose';
 						#var_dump($tt);
-						
 					}
 					foreach ($tt as $t) {
 						$str.='<p class="' . $t['class'] . '">' . $t['value'];
