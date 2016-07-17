@@ -23,6 +23,7 @@ class AppAsset extends AssetBundle
 		'css/atm.css',
     ];
     public $js = [
+		'js/runTooltip.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

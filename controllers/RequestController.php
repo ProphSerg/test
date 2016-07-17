@@ -79,7 +79,7 @@ class RequestController extends Controller {
 	public function actionPrint($type) {
 		$query = arRequest::find();
 		call_user_func([$query, $type]);
-		$query->with('texts');
+		#$query->joinWith('texts');
 
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
@@ -91,17 +91,18 @@ class RequestController extends Controller {
 			'pagination' => false,
 		]);
 
-		
+		/*
 		return $this->renderPartial('print', [
 				'dataProvider' => $dataProvider,
 				'type' => $type]);
+		 * 
+		 */
 		
-		
-
 		$pdf = new Pdf([
 			'mode' => Pdf::MODE_UTF8,
 			'format' => Pdf::FORMAT_A4,
-			#'defaultFontSize' => 10,
+			#'orientation' => Pdf::ORIENT_LANDSCAPE,
+			'cssFile' => '@app/views/request/print.css',
 			'content' => $this->renderPartial('print', [
 				'dataProvider' => $dataProvider,
 				'type' => $type,

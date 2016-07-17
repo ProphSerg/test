@@ -5,8 +5,6 @@
 use yii\helpers\Html;
 use app\assets\AppAsset;
 
-include '_runTooltip.php';
-
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>

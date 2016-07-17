@@ -1,0 +1,14 @@
+.reqPrintTbl {
+	border-collapse: collapse;
+	border: 1px solid black;
+	font-size: 10px;
+	padding: 0;
+	margin: 0; 
+}
+.reqPrintRow {
+	border: 1px solid black;
+}
+
+tr.reqPrintRow td, tr.reqPrintRow th{
+	border: 1px solid black;
+}

@@ -4,14 +4,6 @@ use kartik\grid\GridView;
 use yii\helpers\Html;
 
 $this->title = 'Заявки';
-/*
-  $dataProvider = new ActiveDataProvider([
-  'query' => $model,
-  'pagination' => [
-  'pageSize' => 20,
-  ],
-  ]);
- */
 $pbt = <<< HTML
     <div class="pull-left">
         <div class="btn-toolbar kv-grid-toolbar" role="toolbar">
@@ -21,6 +13,13 @@ $pbt = <<< HTML
     {before}
     <div class="clearfix"></div>
 HTML;
+
+$script = <<< JS
+$(document).ready(function() {
+    setInterval(function(){ $("#btnReqRefresh").click(); }, 600000);
+});
+JS;
+$this->registerJs($script);
 
 echo GridView::widget([
 	'id' => 'gvRequests',
@@ -54,13 +53,14 @@ echo GridView::widget([
 			Html::a(
 				'<i class="glyphicon glyphicon-print"></i>', ['/request/print', 'type' => Yii::$app->controller->action->id], [
 				'target' => '_blank',
-				'data-toggle' => 'tooltip',
+				'data-pjax' => '0',
+				#'data-toggle' => 'tooltip',
 				'class' => 'btn btn-default',
 				#'id' => 'btnReqPrint',
 				'title' => 'Печать',
 			]),
 		],
-		'{export}',
+	#'{export}',
 	#'{toggleData}',
 	],
 	'panel' => [

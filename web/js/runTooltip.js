@@ -1,6 +1,3 @@
-<?php
-
-$js = <<< 'SCRIPT'
 /* To initialize BS3 tooltips set this below */
 $(function () { 
     $("[data-toggle='tooltip']").tooltip(); 
@@ -9,6 +6,3 @@ $(function () {
 $(function () { 
     $("[data-toggle='popover']").popover(); 
 });
-SCRIPT;
-// Register tooltip/popover initialization javascript
-$this->registerJs($js);

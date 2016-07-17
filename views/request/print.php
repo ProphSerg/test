@@ -1,43 +1,25 @@
 <?php
 
-use kartik\grid\GridView;
+use yii\grid\GridView;
+use yii\helpers\Html;
 ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
     <head>
         <meta charset="<?= Yii::$app->charset ?>">
-		<style>
-			table {
-				border-collapse: collapse;
-				border: 2px black;
-				font-size: 10px;
-				padding: 0;
-				margin: 0; 
-			}
-			td {
-				border: 2px black;
-			}
-		</style>
+		<?= Html::cssFile('@web/../views/request/print.css') ?>
     </head>
     <body>
 		<?php
 		echo GridView::widget([
 			'dataProvider' => $dataProvider,
-			'pjax' => false,
-			'hover' => false,
-			'condensed' => true,
-			'floatHeader' => true,
-			#'tableOptions' => ['class' => 'reqTable'],
-			#'headerRowOptions' => ['class' => 'reqTable'],
-			/*
-			'rowOptions' => function ($model, $key, $index, $grid) {
-			if ($model->Overdue === true) {
-				#return ['style' => 'background-color:red'];
-				return ['class' => 'reqTableRowOverdue'];
-			} elseif ($index % 2 == 0) {
-				#return ['style' => 'background-color:#CCCCCC'];
-			}
-		},*/
+			#'pjax' => false,
+			#'hover' => false,
+			#'condensed' => true,
+			#'floatHeader' => true,
+			'tableOptions' => ['class' => 'reqPrintTbl'],
+			'headerRowOptions' => ['class' => 'reqPrintRow'],
+			'rowOptions' => ['class' => 'reqPrintRow'],
 			'columns' => [
 				[
 					'attribute' => 'Number',
