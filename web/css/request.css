@@ -11,6 +11,7 @@ and open the template in the editor.
 .reqTable {
 	font-size:12px;
 	background: #e0fff9;
+	/*border: 1px solid;*/
 }
 
 .reqTableRowOverdue {

@@ -9,9 +9,10 @@ namespace app\models\atm;
  */
 class aqATMOrderRemark extends \yii\db\ActiveQuery
 {
-    /*public function active()
+	/*
+    public function order($id)
     {
-        return $this->andWhere('[[status]]=1');
+        return $this->andWhere([]);
     }*/
 
     /**

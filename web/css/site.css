@@ -1,5 +1,5 @@
 .navbar {
-	background-image: url(../images/nav-bg.png);
+	background-image: url(../images/nav-bg2.png);
 	/*border-color: #3a7dac;*/
 }
 
@@ -58,7 +58,8 @@ html,
 body {
     height: 100%;
 	padding-top: 35px;
-	/*background: #ccccff;*/
+	/*background: #cccccc;*/
+	background-color: #dddddd;
 }
 
 .wrap {
@@ -74,7 +75,8 @@ body {
 
 .footer {
     height: 60px;
-    background-color: #f5f5f5;
+    /*background-color: #f5f5f5;*/
+    /*background-color: #;*/
     border-top: 1px solid #ddd;
     padding-top: 20px;
 }

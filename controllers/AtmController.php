@@ -10,7 +10,7 @@ use app\models\atm\ATMOrderSearch;
 class AtmController extends Controller {
 
 	public $defaultAction = 'orders';
-	#public $ControllerMenu = 'atm';
+	public $ControllerMenu = 'atm';
 
 	public function actionOrders() {
 		$searchModel = new ATMOrderSearch();
@@ -27,6 +27,15 @@ class AtmController extends Controller {
 			return $model;
 		} else {
 			throw new NotFoundHttpException('The requested page does not exist.');
+		}
+	}
+
+	public function actionOrderRemarks() {
+		if (isset($_POST['expandRowKey'])) {
+			$model = \app\models\Book::findOne($_POST['expandRowKey']);
+			return $this->renderPartial('_book-details', ['model' => $model]);
+		} else {
+			return '<div class="alert alert-danger">No data found</div>';
 		}
 	}
 

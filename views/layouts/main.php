@@ -37,7 +37,7 @@ AppAsset::register($this);
 
         <footer class="footer">
             <div class="container-fluid">
-                <p class="pull-left">&copy; My Company <?= date('Y') ?> 
+                <p class="pull-left">&copy; ПАО УРАЛСИБ г.Омск <?= date('Y') ?> 
 					<?= (Yii::$app->user->isGuest ? 'Guest' : Yii::$app->user->identity->username) ?></p>
 
                 <p class="pull-right"><?= Yii::powered() ?></p>
