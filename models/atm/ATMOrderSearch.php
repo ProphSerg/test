@@ -50,17 +50,17 @@ class ATMOrderSearch extends arATMOrder {
 		if (!($this->load($param) && $this->validate())) {
 			return $dataProvider;
 		}
-		/*
+		
 		  $query->andFilterWhere([
 		  'and',
 		  ['like', 'Number', $this->Number],
-		  ['like', 'Desc', $this->Desc],
-		  ['like', 'Name', $this->Name],
-		  ['like', 'Addr', $this->Addr],
-		  ['strftime("%d/%m/%Y", Date, "localtime")' => $this->Date],
+		  #['like', 'Desc', $this->Desc],
+		  #['like', 'Name', $this->Name],
+		  #['like', 'Addr', $this->Addr],
+		  ['strftime("%d/%m/%Y", EnterDate, "localtime")' => $this->EnterDate],
 		  ]);
 		  #var_dump($query->where);
-		 */
+		
 		return $dataProvider;
 	}
 
