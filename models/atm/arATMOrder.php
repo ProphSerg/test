@@ -91,7 +91,7 @@ class arATMOrder extends \yii\db\ActiveRecord {
 				->orderBy(['Date' => SORT_DESC]);
 	}
 
-	public function getRemark() {
+	public function getRemarks() {
 		return $this->hasMany(arATMOrderRemark::className(), ['ATMOrder_ID' => 'ID'])
 				->orderBy('Date');
 	}
