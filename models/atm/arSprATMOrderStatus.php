@@ -3,6 +3,7 @@
 namespace app\models\atm;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "sprATMOrderStatus".
@@ -57,4 +58,12 @@ class arSprATMOrderStatus extends \yii\db\ActiveRecord {
 		return new aqSprATMOrderStatus(get_called_class());
 	}
 
+	public static function getStatusList() {
+		$stl = arSprATMOrderStatus::find()
+			->select(['StatusID', 'StatusName'])
+			->orderBy('StatusID')
+			->all();
+ 
+		return ArrayHelper::map($stl, 'StatusID', 'StatusName');
+	}
 }

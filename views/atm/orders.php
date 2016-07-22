@@ -2,16 +2,9 @@
 
 use kartik\grid\GridView;
 use yii\helpers\Html;
+use app\models\atm\arSprATMOrderStatus;
 
 $this->title = 'Обслуживание банкоматов';
-/*
-  $dataProvider = new ActiveDataProvider([
-  'query' => $model,
-  'pagination' => [
-  'pageSize' => 20,
-  ],
-  ]);
- */
 
 echo GridView::widget([
 	'dataProvider' => $dataProvider,
@@ -23,35 +16,12 @@ echo GridView::widget([
 	'floatHeader' => true,
 	'tableOptions' => ['class' => 'atmTable'],
 	'striped' => false,
-	'headerRowOptions' => ['class' => 'atmTable'],
+	'headerRowOptions' => ['class' => 'kartik-sheet-style atmTable'],
+	'filterRowOptions'=>['class'=>'kartik-sheet-style'],
 	'rowOptions' => function ($model, $key, $index, $grid) {
 	return ['class' => 'atmTableRowStatus' . $model->statusLast->Status];
 },
 	'columns' => [
-#['class' => 'yii\grid\SerialColumn'],
-		/*
-		  [
-		  'attribute' => 'Number',
-		  'format' => 'raw',
-		  'value' => function ($data) {
-		  return Html::a($data->Number, [
-		  'request/detail',
-		  'id' => $data->ID
-		  ]
-		  );
-		  }
-		  ],
-		 * 
-		 */
-		/*
-		  [
-		  'class' => \kartik\grid\ActionColumn::className(),
-		  'template' => '{view}',
-		  'header' => '',
-		  'contentOptions'=> ['class' => 'glyphicon-white'],
-		  ],
-		 * 
-		 */
 		[
 			'class' => \kartik\grid\ExpandRowColumn::className(),
 			'width' => '50px',
@@ -76,15 +46,17 @@ echo GridView::widget([
 			[
 				'attribute' => 'statusNameLast.StatusName',
 				'format' => 'text',
+				'filter' => arSprATMOrderStatus::getStatusList(),
 			],
 			[
-				'attribute' => 'serial.TerminalID',
+				'attribute' => 'sprATM.TerminalID',
 				'format' => 'text',
 			],
 			[
-				'attribute' => 'serial.Addres',
+				'attribute' => 'sprATM.Addres',
 				'format' => 'text',
 			],
 		],
 	]);
-?>
+
+#var_dump($dataProvider->query);
