@@ -49,7 +49,7 @@ class arSprATM extends \yii\db\ActiveRecord {
 			'ID' => 'ID',
 			'Model' => 'Модель',
 			'Serial' => 'Серийный №',
-			'TerminalID' => 'TerminalID',
+			'TerminalID' => 'Terminal ID',
 			'Addres' => 'Адрес ',
 			'Type' => 'Тип',
 			'InvNum' => 'Инв. №'

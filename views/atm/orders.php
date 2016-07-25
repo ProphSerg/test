@@ -17,7 +17,7 @@ echo GridView::widget([
 	'tableOptions' => ['class' => 'atmTable'],
 	'striped' => false,
 	'headerRowOptions' => ['class' => 'kartik-sheet-style atmTable'],
-	'filterRowOptions'=>['class'=>'kartik-sheet-style'],
+	'filterRowOptions' => ['class' => 'kartik-sheet-style'],
 	'rowOptions' => function ($model, $key, $index, $grid) {
 	return ['class' => 'atmTableRowStatus' . $model->statusLast->Status];
 },
@@ -37,11 +37,13 @@ echo GridView::widget([
 			],
 			[
 				'attribute' => 'EnterDate',
-				'format' => ['date', 'php:d/m/Y H:i'],
+				'format' => ['date', 'php:d/m/Y'],
+				'width' => '100px',
 			],
 			[
 				'attribute' => 'Number',
 				'format' => 'text',
+				'width' => '100px',
 			],
 			[
 				'attribute' => 'statusNameLast.StatusName',
@@ -51,6 +53,12 @@ echo GridView::widget([
 			[
 				'attribute' => 'sprATM.TerminalID',
 				'format' => 'text',
+				'width' => '80px',
+			],
+			[
+				'attribute' => 'techNameLast.Name',
+				'format' => 'text',
+				'label' => 'Инженер'
 			],
 			[
 				'attribute' => 'sprATM.Addres',

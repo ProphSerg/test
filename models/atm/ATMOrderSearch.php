@@ -22,7 +22,8 @@ class ATMOrderSearch extends arATMOrder {
 
 	public function rules() {
 		return[
-			[['Number', 'Serial', 'sprATM.TerminalID', 'statusNameLast.StatusName'], 'string'],
+			[['Number', 'Serial', 'sprATM.TerminalID'], 'string'],
+#			[['Number', 'Serial', 'sprATM.TerminalID', 'statusNameLast.StatusName'], 'string'],
 			[['EnterDate'], 'safe'],
 		];
 	}
@@ -30,7 +31,8 @@ class ATMOrderSearch extends arATMOrder {
 	public function attributes()
 	{
 		// делаем поле зависимости доступным для поиска
-		return array_merge(parent::attributes(), ['sprATM.TerminalID', 'statusNameLast.StatusName']);
+		return array_merge(parent::attributes(), ['sprATM.TerminalID']);
+#		return array_merge(parent::attributes(), ['sprATM.TerminalID', 'statusNameLast.StatusName']);
 	}
 
 	public function scenarios() {
