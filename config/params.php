@@ -3,7 +3,7 @@
 return [
 	'adminEmail' => 'admin@example.com',
 	'mdm.admin.configs' => [
-		'db' => 'dbSys',
+		#'db' => 'dbSys',
 		#'menuTable' => 'admin_menu',
 	],
 ];

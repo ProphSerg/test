@@ -94,7 +94,7 @@ $config = [
 		],
 		'authManager' => [
 			'class' => 'yii\rbac\DbManager',
-			'db' => 'dbSys',
+			#'db' => 'dbSys',
 		],
 		/*
 		  'as access' => [

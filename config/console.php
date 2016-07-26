@@ -10,6 +10,9 @@ $config = [
 	'basePath' => dirname(__DIR__),
 	'bootstrap' => ['log'],
 	'controllerNamespace' => 'app\commands',
+	'aliases' => [
+		'@dbs' => '@app/db',
+	],
 	'components' => [
 		'cache' => [
 			'class' => 'yii\caching\FileCache',
@@ -25,7 +28,7 @@ $config = [
 #        'db' => $db,
 		'authManager' => [
 			'class' => 'yii\rbac\DbManager',
-			'db' => 'dbSys'
+			#'db' => 'dbSys'
 		],
 	],
 	'params' => $params,
