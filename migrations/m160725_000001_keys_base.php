@@ -17,11 +17,12 @@ class m160725_000001_keys_base extends Migration {
 	 */
 	public function safeUp() {
 		$this->createTable('key', [
-			'ID' => $this->primaryKey(),
+			#'ID' => $this->primaryKey(),
 			'Number' => $this->text()->notNull(),
 			'Comp1' => $this->text()->notNull(),
 			'Comp2' => $this->text()->notNull(),
 			'Comp3' => $this->text()->notNull(),
+			'PRIMARY KEY (Number)'
 		]);
 		$this->createIndex('IDX_NUMBER', 'key', 'Number', true);
 	}

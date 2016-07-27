@@ -33,6 +33,7 @@ class m160725_000002_pos_base extends Migration {
 			'TAK_CHECK' => $this->text()->notNull(),
 			'TDK_KEY' => $this->text()->notNull(),
 			'TDK_CHECK' => $this->text()->notNull(),
+			'DateReg'=> $this->dateTime()
 		]);
 		$this->createIndex('IDX_REG_TERMINALID', 'RegPos', 'TerminalID', false);
 		$this->createIndex('IDX_REG_KEYNUM', 'RegPos', ['TerminalID', 'KeyNum'], true);
@@ -40,6 +41,8 @@ class m160725_000002_pos_base extends Migration {
 		$this->createIndex('IDX_REG_ADDRESS', 'RegPos', 'Address', false);
 		$this->createIndex('IDX_REG_NAME', 'RegPos', 'Name', false);
 		$this->createIndex('IDX_REG_MERCH', 'RegPos', 'MerchantID', false);
+		$this->createIndex('IDX_REG_DATEREG', 'RegPos', ['TerminalID', 'DateReg'], true);
+		
 	}
 
 	/**

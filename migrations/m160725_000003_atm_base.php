@@ -24,7 +24,7 @@ class m160725_000003_atm_base extends Migration {
 		 * 'EnterBy' TEXT NOT NULL, 
 		 * 'Serial' TEXT NOT NULL)		 
 		 */
-		
+
 		$this->createTable('ATMOrder', [
 			'ID' => $this->primaryKey(),
 			'Number' => $this->text()->notNull(),
@@ -145,9 +145,6 @@ class m160725_000003_atm_base extends Migration {
 			'Phone' => $this->text(),
 		]);
 		$this->createIndex('IDX_CODE_TECH', 'sprATMOrderTech', '[[Code]]', true);
-
-		#$this->addForeignKey('statusid_order_fk', '{{ATMOrderStatus}}', '[[ATMOrder_ID]]', '{{ATMOrder}}', '[[ID]]', 'CASCADE', 'CASCADE');
-		#$this->addForeignKey('techid_order_fk', '{{ATMOrderTech}}', '[[ATMOrder_ID]]', '{{ATMOrder}}', '[[ID]]', 'CASCADE', 'CASCADE');
 	}
 
 	/**
