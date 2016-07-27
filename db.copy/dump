@@ -1,0 +1,8 @@
+#!/bin/sh
+
+dd=`date "+%Y%m%d"`
+
+for i in `find . -name "*.sqlite"`
+do
+    echo "PRAGMA foreign_keys=ON;\n.dump" | sqlite3 $i > $i.$dd.dump
+done

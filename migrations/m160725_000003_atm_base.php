@@ -24,6 +24,7 @@ class m160725_000003_atm_base extends Migration {
 		 * 'EnterBy' TEXT NOT NULL, 
 		 * 'Serial' TEXT NOT NULL)		 
 		 */
+		
 		$this->createTable('ATMOrder', [
 			'ID' => $this->primaryKey(),
 			'Number' => $this->text()->notNull(),

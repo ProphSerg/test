@@ -15,7 +15,7 @@ class m160725_000002_pos_base extends Migration {
 	/**
 	 * @inheritdoc
 	 */
-	public function up() {
+	public function safeUp() {
 		$this->createTable('RegPos', [
 			'ID' => $this->primaryKey(),
 			'ClientN' => $this->text()->notNull(),
@@ -45,7 +45,7 @@ class m160725_000002_pos_base extends Migration {
 	/**
 	 * @inheritdoc
 	 */
-	public function down() {
+	public function safeDown() {
 		$this->dropTable('RegPos');
 		#return false;
 	}
