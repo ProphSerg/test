@@ -39,7 +39,7 @@ class ATMOrder extends Model {
 			$ast->Status = $fields['Status'];
 			$ast->Date = Convert::Date2SQLiteDate($mail->PostedDate);
 			#$ast->link('order', $atm);
-			$ast->ATMOrder_ID = $atm->ID;
+			$ast->ATMOrderID = $atm->ID;
 			$ast->save();
 
  			if (isset($fields['TNameCode']) && trim($fields['TNameCode']) !== '') {
@@ -50,7 +50,7 @@ class ATMOrder extends Model {
 				$atc->Code = strtolower($fields['TNameCode']);
 				$atc->Date = Convert::Date2SQLiteDate($mail->PostedDate);
 				#$atc->link('order', $atm);
-				$atc->ATMOrder_ID = $atm->ID;
+				$atc->ATMOrderID = $atm->ID;
 				$atc->save();
 			}
 
@@ -60,7 +60,7 @@ class ATMOrder extends Model {
 				$are->Text = trim(str_replace("\n", " ", $are->Text));
 				$are->Date = Convert::Date2SQLiteDate($are->Date);
 				#$are->link('order', $atm);
-				$are->ATMOrder_ID = $atm->ID;
+				$are->ATMOrderID = $atm->ID;
 				$are->save();
 			}
 			$trans->commit();

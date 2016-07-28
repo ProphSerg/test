@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "ATMOrderTech".
  *
  * @property integer $ID
- * @property integer $ATMOrder_ID
+ * @property integer $ATMOrderID
  * @property string $Date
  * @property string $Code
  */
@@ -33,11 +33,11 @@ class arATMOrderTech extends \yii\db\ActiveRecord {
 	 */
 	public function rules() {
 		return [
-			[['ATMOrder_ID', 'Date', 'Code'], 'required'],
-			[['ATMOrder_ID'], 'integer'],
+			[['ATMOrderID', 'Date', 'Code'], 'required'],
+			[['ATMOrderID'], 'integer'],
 			[['Date'], 'safe'],
 			[['Code'], 'string'],
-			[['ATMOrder_ID', 'Date'], 'unique', 'targetAttribute' => ['ATMOrder_ID', 'Date'], 'message' => 'The combination of Atmorder  ID and Date has already been taken.'],
+			[['ATMOrderID', 'Date'], 'unique', 'targetAttribute' => ['ATMOrderID', 'Date'], 'message' => 'The combination of Atmorder  ID and Date has already been taken.'],
 		];
 	}
 
@@ -47,7 +47,7 @@ class arATMOrderTech extends \yii\db\ActiveRecord {
 	public function attributeLabels() {
 		return [
 			'ID' => 'ID',
-			'ATMOrder_ID' => 'Atmorder  ID',
+			'ATMOrderID' => 'Atmorder  ID',
 			'Date' => 'Дата',
 			'Code' => 'Code',
 		];
@@ -62,7 +62,7 @@ class arATMOrderTech extends \yii\db\ActiveRecord {
 	}
 
 	public function getOrder() {
-		return $this->hasOne(arATMOrder::className(), ['ID' => 'ATMOrder_ID']);
+		return $this->hasOne(arATMOrder::className(), ['ID' => 'ATMOrderID']);
 	}
 
 	public function getTechName() {

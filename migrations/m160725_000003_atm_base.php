@@ -16,135 +16,254 @@ class m160725_000003_atm_base extends Migration {
 	 * @inheritdoc
 	 */
 	public function safeUp() {
-		/*
-		  CREATE TABLE 'ATMOrder'
-		 * ('ID' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-		 * 'Number' TEXT NOT NULL, 
-		 * 'EnterDate' DATETIME NOT NULL, 
-		 * 'EnterBy' TEXT NOT NULL, 
-		 * 'Serial' TEXT NOT NULL)		 
-		 */
+		$Tables = [
+			/* CREATE TABLE 'ATMOrder' (
+			 * 'ID' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+			 * 'Number' TEXT NOT NULL, 
+			 * 'EnterDate' DATETIME NOT NULL, 
+			 * 'EnterBy' TEXT NOT NULL, 
+			 * 'Serial' TEXT NOT NULL)		 
+			 */
+			'ATMOrder' => [
+				'migrate' => false,
+				'columns' => [
+					'ID' => $this->primaryKey(),
+					'Number' => $this->text()->notNull(),
+					'EnterDate' => $this->dateTime()->notNull(),
+					'EnterBy' => $this->text()->notNull(),
+					'Serial' => $this->text()->notNull(),
+				],
+				'indexs' => [
+					'IDX_NUMBER_ATMORDER' => [
+						'columns' => '[[Number]]',
+						'unique' => true
+					],
+				],
+			],
+			/* CREATE TABLE 'sprATMOrderStatus' (
+			 * 'ID' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+			 * 'StatusID' TEXT NOT NULL, 
+			 * 'StatusName' TEXT NOT NULL)
+			 */
+			'ATMOrderRemark' => [
+				'migrate' => false,
+				'columns' => [
+					'ID' => $this->primaryKey(),
+					'ATMOrderID' => $this->integer()->notNull(),
+					'Date' => $this->dateTime()->notNull(),
+					'Autor' => $this->text()->notNull(),
+					'Text' => $this->text()->notNull(),
+					'FOREIGN KEY(ATMOrderID) REFERENCES ATMOrder(ID) ON UPDATE CASCADE ON DELETE CASCADE',
+				],
+				'indexs' => [
+					'IDX_DATE_ATMREMARK' => [
+						'columns' => ['[[ATMOrderID]]', '[[Date]]'],
+						'unique' => true
+					],
+				],
+			],
+			/* CREATE TABLE 'sprATMOrderStatus' (
+			 * 'ID' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+			 * 'StatusID' TEXT NOT NULL, 
+			 * 'StatusName' TEXT NOT NULL)
+			 */
+			'ATMOrderStatus' => [
+				'migrate' => false,
+				'columns' => [
+					'ID' => $this->primaryKey(),
+					'ATMOrderID' => $this->integer()->notNull(),
+					'Date' => $this->dateTime()->notNull(),
+					'Status' => $this->text()->notNull(),
+					'FOREIGN KEY(ATMOrderID) REFERENCES ATMOrder(ID) ON UPDATE CASCADE ON DELETE CASCADE',
+				],
+				'indexs' => [
+					'IDX_DATE_ATMSTATUS' => [
+						'columns' => ['[[ATMOrderID]]', '[[Date]] DESC'],
+						'unique' => true
+					],
+				],
+			],
+			/* CREATE TABLE 'ATMOrderTech' (
+			 * 'ID' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+			 * 'ATMOrderID' INTEGER NOT NULL, 
+			 * 'Date' DATETIME NOT NULL, 
+			 * 'Code' TEXT NOT NULL)
+			 */
+			'ATMOrderTech' => [
+				'migrate' => false,
+				'columns' => [
+					'ID' => $this->primaryKey(),
+					'ATMOrderID' => $this->integer()->notNull(),
+					'Date' => $this->dateTime()->notNull(),
+					'Code' => $this->text()->notNull(),
+					'FOREIGN KEY(ATMOrderID) REFERENCES ATMOrder(ID) ON UPDATE CASCADE ON DELETE CASCADE',
+				],
+				'indexs' => [
+					'IDX_DATE_ATMTECH' => [
+						'columns' => ['[[ATMOrderID]]', '[[Date]] DESC'],
+						'unique' => true
+					],
+				],
+			],
+			/* Справочники */
+			/* CREATE TABLE 'sprATM' (
+			 * 'ID' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+			 * 'Model' TEXT NOT NULL, 
+			 * 'Serial' TEXT NOT NULL, 
+			 * 'TerminalID' TEXT, 
+			 * 'Addres' TEXT NOT NULL, 
+			 * 'Type' TEXT NOT NULL DEFAULT 'Банкомат', 
+			 * 'InvNum' TEXT)
+			 */
+			'sprATM' => [
+				'migrate' => false,
+				'columns' => [
+					'ID' => $this->primaryKey(),
+					'Model' => $this->text()->notNull(),
+					'Serial' => $this->text()->notNull(),
+					'TerminalID' => $this->text(),
+					'Addres' => $this->text()->notNull(),
+					'Type' => $this->text()->notNull()->defaultValue('Банкомат'),
+					'InvNum' => $this->text(),
+				],
+				'indexs' => [
+					'IDX_ATM_TERMINALID' => [
+						'columns' => '[[TerminalID]]',
+						'unique' => true
+					],
+					'IDX_SERIAL_ATM' => [
+						'columns' => '[[Serial]]',
+						'unique' => true
+					],
+				],
+			],
+			/* CREATE TABLE 'sprATMOrderStatus' (
+			 * 'ID' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+			 * 'StatusID' TEXT NOT NULL, 
+			 * 'StatusName' TEXT NOT NULL)
+			 */
+			'sprATMOrderStatus' => [
+				'migrate' => false,
+				'columns' => [
+					'ID' => $this->primaryKey(),
+					'StatusID' => $this->text()->notNull(),
+					'StatusName' => $this->text()->notNull(),
+				],
+				'indexs' => [
+					'IDX_STATUS_ORDERSTATUS' => [
+						'columns' => '[[StatusID]]',
+						'unique' => true
+					],
+				],
+			],
+			/* CREATE TABLE 'sprATMOrderTech' (
+			 * 'ID' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+			 * 'Code' TEXT NOT NULL, 
+			 * 'Name' TEXT NOT NULL, 
+			 * 'NameRus' TEXT, 
+			 * 'Phone' TEXT)
+			 */
+			'sprATMOrderTech' => [
+				'migrate' => false,
+				'columns' => [
+					'ID' => $this->primaryKey(),
+					'Code' => $this->text()->notNull(),
+					'Name' => $this->text()->notNull(),
+					'NameRus' => $this->text(),
+					'Phone' => $this->text(),
+				],
+				'indexs' => [
+					'IDX_CODE_TECH' => [
+						'columns' => '[[Code]]',
+						'unique' => true
+					],
+				],
+			],
+		];
 
-		$this->createTable('ATMOrder', [
-			'ID' => $this->primaryKey(),
-			'Number' => $this->text()->notNull(),
-			'EnterDate' => $this->dateTime()->notNull(),
-			'EnterBy' => $this->text()->notNull(),
-			'Serial' => $this->text()->notNull(),
-		]);
-		$this->createIndex('IDX_NUMBER_ATMORDER', 'ATMOrder', '[[Number]]', true);
+		$Views = [
+			'vATMOrderStatus' => "SELECT m.* FROM 'ATMOrderStatus' m INNER JOIN (SELECT ATMOrderID, max(Date) Date FROM 'ATMOrderStatus' GROUP BY ATMOrderID) s ON m.ATMOrderID = s.ATMOrderID AND m.Date = s.Date",
+			'vATMOrderTech' => "SELECT m.* FROM 'ATMOrderTech' m INNER JOIN (SELECT ATMOrderID, max(Date) Date FROM 'ATMOrderTech' GROUP BY ATMOrderID) s ON m.ATMOrderID = s.ATMOrderID AND m.Date = s.Date",
+		];
 
-		/*
-		  CREATE TABLE 'ATMOrderRemark' (
-		 * 'ID' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-		 * 'ATMOrder_ID' INTEGER NOT NULL, 
-		 * 'Date' DATETIME NOT NULL,
-		 * 'Autor' TEXT NOT NULL,
-		 * 'Text' TEXT NOT NULL)
-		 */
-		$this->createTable('ATMOrderRemark', [
-			'ID' => $this->primaryKey(),
-			'ATMOrder_ID' => $this->integer()->notNull(),
-			'Date' => $this->dateTime()->notNull(),
-			'Autor' => $this->text()->notNull(),
-			'Text' => $this->text()->notNull(),
-			'FOREIGN KEY(ATMOrder_ID) REFERENCES ATMOrder(ID) ON UPDATE CASCADE ON DELETE CASCADE',
-		]);
-		$this->createIndex('IDX_DATE_ATMREMARK', 'ATMOrderRemark', ['[[ATMOrder_ID]]', '[[Date]]'], true);
+		foreach ($this->db->schema->tableNames as $bTbl) {
+			foreach (array_keys($Tables) as $mTbl) {
+				if (strcasecmp($bTbl, $mTbl) == 0) {
+					$Tables[$mTbl]['migrate'] = true;
+				}
+			}
+		}
 
-		/*
-		  CREATE TABLE 'ATMOrderStatus' (
-		 * 'ID' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-		 * 'ATMOrder_ID' INTEGER NOT NULL, 
-		 * 'Date' DATETIME NOT NULL, 
-		 * 'Status' TEXT NOT NULL)
-		 */
-		$this->createTable('ATMOrderStatus', [
-			'ID' => $this->primaryKey(),
-			'ATMOrder_ID' => $this->integer()->notNull(),
-			'Date' => $this->dateTime()->notNull(),
-			'Status' => $this->text()->notNull(),
-			'FOREIGN KEY(ATMOrder_ID) REFERENCES ATMOrder(ID) ON UPDATE CASCADE ON DELETE CASCADE',
-		]);
-		$this->createIndex('IDX_DATE_ATMSTATUS', 'ATMOrderStatus', ['[[ATMOrder_ID]]', '[[Date]] DESC'], true);
+		foreach ($Tables as $mTbl => $mVal) {
+			if ($mVal['migrate'] == true) {
+				$this->renameTable($mTbl, $mTbl . '_old');
+			}
+			$this->createTable($mTbl, $mVal['columns']);
+		}
 
-		/*
-		  CREATE TABLE 'ATMOrderTech' (
-		 * 'ID' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-		 * 'ATMOrder_ID' INTEGER NOT NULL, 
-		 * 'Date' DATETIME NOT NULL, 
-		 * 'Code' TEXT NOT NULL)
-		 */
-		$this->createTable('ATMOrderTech', [
-			'ID' => $this->primaryKey(),
-			'ATMOrder_ID' => $this->integer()->notNull(),
-			'Date' => $this->dateTime()->notNull(),
-			'Code' => $this->text()->notNull(),
-			'FOREIGN KEY(ATMOrder_ID) REFERENCES ATMOrder(ID) ON UPDATE CASCADE ON DELETE CASCADE',
-		]);
-		$this->createIndex('IDX_DATE_ATMTECH', 'ATMOrderTech', ['[[ATMOrder_ID]]', '[[Date]] DESC'], true);
+		if ($Tables['ATMOrder']['migrate'] == true) {
+			echo "Migrate ATMOrder data .... ";
+			$col = [];
+			foreach ($this->db->createCommand('SELECT * FROM ATMOrder_old')->query() as $atmo) {
+				$atmoID = $atmo['ID'];
+				unset($atmo['ID']);
+				if (($Patmo = $this->db->schema->insert('ATMOrder', $atmo)) == false) {
+					return false;
+				}
+				foreach (['ATMOrderStatus', 'ATMOrderRemark', 'ATMOrderTech'] as $cTbl) {
+					if ($Tables[$cTbl]['migrate'] == true) {
+						$col = [];
+						foreach (array_keys($Tables[$cTbl]['columns']) as $c) {
+							if (!is_int($c) && strcasecmp($c, 'ID') != 0) {
+								$col[0][] = $c;
+								if (strcasecmp($c, 'ATMOrderID') == 0) {
+									$col[1][] = $Patmo['ID'] . ' as ' . $c;
+								} else {
+									$col[1][] = $c;
+								}
+							}
+						}
+						$this->db->createCommand()->batchInsert($cTbl, $col[0], $this->db->createCommand('SELECT ' . implode(', ', $col[1]) . ' FROM ' . $cTbl . '_old WHERE ATMOrder_ID = ' . $atmoID)
+								->queryAll())
+							->execute();
+					}
+				}
+			}
+			echo "done.\n";
+		}
+		foreach (['sprATM', 'sprATMOrderStatus', 'sprATMOrderTech'] as $cTbl) {
+			if ($Tables[$cTbl]['migrate'] == true) {
+				echo "Migrate {$cTbl} data .... ";
+				$col = [];
+				foreach (array_keys($Tables[$cTbl]['columns']) as $c) {
+					if (!is_int($c) && strcasecmp($c, 'ID') != 0) {
+						$col[] = $c;
+					}
+				}
+				$this->db->createCommand()->batchInsert($cTbl, $col, $this->db->createCommand('SELECT ' . implode(', ', $col) . ' FROM ' . $cTbl . '_old')
+						->queryAll())
+					->execute();
+				echo "done.\n";
+			}
+		}
 
-		$this->execute('DROP VIEW IF EXISTS vATMOrdeStatus;');
-		$this->execute("CREATE VIEW 'vATMOredStatus' AS SELECT m.* FROM 'ATMOrderStatus' m INNER JOIN (SELECT ATMOrder_ID, max(Date) Date FROM 'ATMOrderStatus' GROUP BY ATMOrder_ID) s ON m.ATMOrder_ID = s.ATMOrder_ID AND m.Date = s.Date");
-		$this->execute('DROP VIEW IF EXISTS vATMOrdeTech;');
-		$this->execute("CREATE VIEW 'vATMOredTech' AS SELECT m.* FROM 'ATMOrderTech' m INNER JOIN (SELECT ATMOrder_ID, max(Date) Date FROM 'ATMOrderTech' GROUP BY ATMOrder_ID) s ON m.ATMOrder_ID = s.ATMOrder_ID AND m.Date = s.Date");
 
+		foreach ($Tables as $mTbl => $mVal) {
+			if ($mVal['migrate'] == true) {
+				$this->dropTable($mTbl . '_old');
+			}
+			foreach ($mVal['indexs'] as $Idx => $idxVal) {
+				$this->createIndex($Idx, $mTbl, $idxVal['columns'], $idxVal['unique']);
+			}
+		}
 
-		/*
-		 * Справочники
-		 */
+		foreach ($Views as $name => $sel) {
+			$this->execute("DROP VIEW IF EXISTS {$name}");
+			$this->execute("CREATE VIEW {$name} AS {$sel}");
+		}
+		#$this->execute("VACUUM");
 
-		/*
-		  CREATE TABLE 'sprATM' (
-		 * 'ID' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-		 * 'Model' TEXT NOT NULL, 
-		 * 'Serial' TEXT NOT NULL, 
-		 * 'TerminalID' TEXT, 
-		 * 'Addres' TEXT NOT NULL, 
-		 * 'Type' TEXT NOT NULL DEFAULT 'Банкомат', 
-		 * 'InvNum' TEXT)
-		 */
-		$this->createTable('sprATM', [
-			'ID' => $this->primaryKey(),
-			'Model' => $this->text()->notNull(),
-			'Serial' => $this->text()->notNull(),
-			'TerminalID' => $this->text(),
-			'Addres' => $this->text()->notNull(),
-			'Type' => $this->text()->notNull()->defaultValue('Банкомат'),
-			'InvNum' => $this->text(),
-		]);
-		$this->createIndex('IDX_ATM_TERMINALID', 'sprATM', '[[TerminalID]]', true);
-		$this->createIndex('IDX_SERIAL_ATM', 'sprATM', '[[Serial]]', true);
-
-		/*
-		  CREATE TABLE 'sprATMOrderStatus' (
-		 * 'ID' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-		 * 'StatusID' TEXT NOT NULL, 
-		 * 'StatusName' TEXT NOT NULL)
-		 */
-		$this->createTable('sprATMOrderStatus', [
-			'ID' => $this->primaryKey(),
-			'StatusID' => $this->text()->notNull(),
-			'StatusName' => $this->text()->notNull(),
-		]);
-		$this->createIndex('IDX_STATUS_ORDERSTATUS', 'sprATMOrderStatus', '[[StatusID]]', true);
-
-		/*
-		  CREATE TABLE 'sprATMOrderTech' (
-		 * 'ID' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-		 * 'Code' TEXT NOT NULL, 
-		 * 'Name' TEXT NOT NULL, 
-		 * 'NameRus' TEXT, 
-		 * 'Phone' TEXT)
-		 */
-		$this->createTable('sprATMOrderTech', [
-			'ID' => $this->primaryKey(),
-			'Code' => $this->text()->notNull(),
-			'Name' => $this->text()->notNull(),
-			'NameRus' => $this->text(),
-			'Phone' => $this->text(),
-		]);
-		$this->createIndex('IDX_CODE_TECH', 'sprATMOrderTech', '[[Code]]', true);
+		#return false;
 	}
 
 	/**

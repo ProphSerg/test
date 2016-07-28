@@ -64,7 +64,7 @@ class arATMOrder extends \yii\db\ActiveRecord {
 	}
 
 	public function getStatus() {
-		return $this->hasMany(arATMOrderStatus::className(), ['ATMOrder_ID' => 'ID']);
+		return $this->hasMany(arATMOrderStatus::className(), ['ATMOrderID' => 'ID']);
 	}
 
 	public function getStatusName() {
@@ -73,8 +73,7 @@ class arATMOrder extends \yii\db\ActiveRecord {
 	}
 
 	public function getStatusLast() {
-		return $this->hasOne(arATMOrderStatus::className(), ['ATMOrder_ID' => 'ID'])
-				->orderBy(['ATMOrderStatus.Date' => SORT_DESC]);
+		return $this->hasOne(arvATMOrderStatus::className(), ['ATMOrderID' => 'ID']);
 	}
 
 	public function getStatusNameLast() {
@@ -83,11 +82,11 @@ class arATMOrder extends \yii\db\ActiveRecord {
 	}
 
 	public function getTech() {
-		return $this->hasMany(arATMOrderTech::className(), ['ATMOrder_ID' => 'ID']);
+		return $this->hasMany(arATMOrderTech::className(), ['ATMOrderID' => 'ID']);
 	}
 
 	public function getTechLast() {
-		return $this->hasOne(arATMOrderTech::className(), ['ATMOrder_ID' => 'ID'])
+		return $this->hasOne(arATMOrderTech::className(), ['ATMOrderID' => 'ID'])
 				->orderBy(['ATMOrderTech.Date' => SORT_DESC]);
 	}
 
@@ -97,7 +96,7 @@ class arATMOrder extends \yii\db\ActiveRecord {
 	}
 
 	public function getRemarks() {
-		return $this->hasMany(arATMOrderRemark::className(), ['ATMOrder_ID' => 'ID'])
+		return $this->hasMany(arATMOrderRemark::className(), ['ATMOrderID' => 'ID'])
 				->orderBy('Date');
 	}
 

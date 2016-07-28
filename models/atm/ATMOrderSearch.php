@@ -22,17 +22,16 @@ class ATMOrderSearch extends arATMOrder {
 
 	public function rules() {
 		return[
-			[['Number', 'Serial', 'sprATM.TerminalID'], 'string'],
-#			[['Number', 'Serial', 'sprATM.TerminalID', 'statusNameLast.StatusName'], 'string'],
+			#[['Number', 'Serial', 'sprATM.TerminalID'], 'string'],
+			[['Number', 'Serial', 'sprATM.TerminalID', 'statusNameLast.StatusName'], 'string'],
 			[['EnterDate'], 'safe'],
 		];
 	}
 
-	public function attributes()
-	{
+	public function attributes() {
 		// делаем поле зависимости доступным для поиска
-		return array_merge(parent::attributes(), ['sprATM.TerminalID']);
-#		return array_merge(parent::attributes(), ['sprATM.TerminalID', 'statusNameLast.StatusName']);
+		#return array_merge(parent::attributes(), ['sprATM.TerminalID']);
+		return array_merge(parent::attributes(), ['sprATM.TerminalID', 'statusNameLast.StatusName']);
 	}
 
 	public function scenarios() {
@@ -40,9 +39,8 @@ class ATMOrderSearch extends arATMOrder {
 	}
 
 	public function search($param) {
-
 		$query = arATMOrder::find();
-		$query->with('statusLast')
+		$query->joinWith('statusLast')
 			->with('techLast')
 			->joinWith('sprATM');
 
@@ -54,32 +52,32 @@ class ATMOrderSearch extends arATMOrder {
 				],
 			],
 		]);
-		
+
 		$dataProvider->sort->attributes['sprATM.TerminalID'] = [
 			'asc' => ['sprATM.TerminalID' => SORT_ASC],
 			'desc' => ['sprATM.TerminalID' => SORT_DESC]
-			];
+		];
 
-/*
 		$dataProvider->sort->attributes['statusNameLast.StatusName'] = [
-			'asc' => ['ATMOrderStatus.Status' => SORT_ASC],
-			'desc' => ['ATMOrderStatus.Status' => SORT_DESC]
-			];
-*/
+			'asc' => ['vATMOrderStatus.Status' => SORT_ASC],
+			'desc' => ['vATMOrderStatus.Status' => SORT_DESC]
+		];
+
 		if (!($this->load($param) && $this->validate())) {
 			return $dataProvider;
 		}
-		
-		  $query->andFilterWhere([
-		  'and',
-		  ['like', 'Number', $this->Number],
-		  #['like', 'Desc', $this->Desc],
-		  #['like', 'Name', $this->Name],
-		  ['like', 'sprATM.TerminalID', $this->getAttribute('sprATM.TerminalID')],
-		  ['strftime("%d/%m/%Y", EnterDate, "localtime")' => $this->EnterDate],
-		  ]);
-		  #var_dump($query->where);
-		
+
+		$query->andFilterWhere([
+			'and',
+			['like', 'Number', $this->Number],
+			#['like', 'Desc', $this->Desc],
+			#['like', 'Name', $this->Name],
+			['like', 'sprATM.TerminalID', $this->getAttribute('sprATM.TerminalID')],
+			['strftime("%d/%m/%Y", EnterDate, "localtime")' => $this->EnterDate],
+			['vATMOrderStatus.Status' => $this->getAttribute('statusNameLast.StatusName')],
+		]);
+		#var_dump($query->where);
+
 		return $dataProvider;
 	}
 

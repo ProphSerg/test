@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "ATMOrderStatus".
  *
  * @property integer $ID
- * @property integer $ATMOrder_ID
+ * @property integer $ATMOrderID
  * @property string $Date
  * @property string $Status
  */
@@ -33,12 +33,12 @@ class arATMOrderStatus extends \yii\db\ActiveRecord {
 	 */
 	public function rules() {
 		return [
-			[['ATMOrder_ID', 'Date', 'Status'], 'required'],
-			[['ATMOrder_ID'], 'integer'],
+			[['ATMOrderID', 'Date', 'Status'], 'required'],
+			[['ATMOrderID'], 'integer'],
 			[['Date'], 'safe'],
 			[['Status'], 'string'],
-			#[['ATMOrder_ID', 'Date'], 'unique'],
-			[['ATMOrder_ID', 'Date'], 'unique', 'targetAttribute' => ['ATMOrder_ID', 'Date'], 'message' => 'The combination of Atmorder  ID and Date has already been taken.'],
+			#[['ATMOrderID', 'Date'], 'unique'],
+			[['ATMOrderID', 'Date'], 'unique', 'targetAttribute' => ['ATMOrderID', 'Date'], 'message' => 'The combination of Atmorder  ID and Date has already been taken.'],
 		];
 	}
 
@@ -48,7 +48,7 @@ class arATMOrderStatus extends \yii\db\ActiveRecord {
 	public function attributeLabels() {
 		return [
 			'ID' => 'ID',
-			'ATMOrder_ID' => 'Atmorder  ID',
+			'ATMOrderID' => 'Atmorder  ID',
 			'Date' => 'Дата',
 			'Status' => 'Статус',
 		];
@@ -63,7 +63,7 @@ class arATMOrderStatus extends \yii\db\ActiveRecord {
 	}
 
 	public function getOrder() {
-		return $this->hasOne(arATMOrder::className(), ['ID' => 'ATMOrder_ID']);
+		return $this->hasOne(arATMOrder::className(), ['ID' => 'ATMOrderID']);
 	}
 
 	public function getStatusName() {
