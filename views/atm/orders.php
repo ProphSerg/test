@@ -3,6 +3,7 @@
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use app\models\atm\arSprATMOrderStatus;
+use \app\models\atm\arSprATMOrderTech;
 
 $this->title = 'Обслуживание банкоматов';
 
@@ -58,7 +59,8 @@ echo GridView::widget([
 			[
 				'attribute' => 'techNameLast.Name',
 				'format' => 'text',
-				'label' => 'Инженер'
+				'label' => 'Инженер',
+				'filter' => arSprATMOrderTech::getTechList(),
 			],
 			[
 				'attribute' => 'sprATM.Addres',

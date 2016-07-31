@@ -38,12 +38,15 @@ class RequestSearch extends arRequest {
 		call_user_func([$query, Yii::$app->controller->action->id]);
 		$query->with('texts');
 
+		$defOrder = ['Date' => SORT_ASC];
+		if (Yii::$app->controller->action->id === 'closed') {
+			$defOrder = ['DateClose' => SORT_DESC];
+		}
+		
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
 			'sort' => [
-				'defaultOrder' => [
-					'Date' => SORT_ASC,
-				],
+				'defaultOrder' => $defOrder,
 			],
 		]);
 

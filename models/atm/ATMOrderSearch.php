@@ -23,7 +23,7 @@ class ATMOrderSearch extends arATMOrder {
 	public function rules() {
 		return[
 			#[['Number', 'Serial', 'sprATM.TerminalID'], 'string'],
-			[['Number', 'Serial', 'sprATM.TerminalID', 'statusNameLast.StatusName'], 'string'],
+			[['Number', 'Serial', 'sprATM.TerminalID', 'statusNameLast.StatusName', 'techNameLast.Name'], 'string'],
 			[['EnterDate'], 'safe'],
 		];
 	}
@@ -31,7 +31,7 @@ class ATMOrderSearch extends arATMOrder {
 	public function attributes() {
 		// делаем поле зависимости доступным для поиска
 		#return array_merge(parent::attributes(), ['sprATM.TerminalID']);
-		return array_merge(parent::attributes(), ['sprATM.TerminalID', 'statusNameLast.StatusName']);
+		return array_merge(parent::attributes(), ['sprATM.TerminalID', 'statusNameLast.StatusName', 'techNameLast.Name']);
 	}
 
 	public function scenarios() {
@@ -40,8 +40,8 @@ class ATMOrderSearch extends arATMOrder {
 
 	public function search($param) {
 		$query = arATMOrder::find();
-		$query->joinWith('statusLast')
-			->with('techLast')
+		$query->joinWith('statusNameLast')
+			->joinWith('techNameLast')
 			->joinWith('sprATM');
 
 		$dataProvider = new ActiveDataProvider([
@@ -63,6 +63,11 @@ class ATMOrderSearch extends arATMOrder {
 			'desc' => ['vATMOrderStatus.Status' => SORT_DESC]
 		];
 
+		$dataProvider->sort->attributes['techNameLast.Name'] = [
+			'asc' => ['sprATMOrderTech.Name' => SORT_ASC],
+			'desc' => ['sprATMOrderTech.Name' => SORT_DESC]
+		];
+
 		if (!($this->load($param) && $this->validate())) {
 			return $dataProvider;
 		}
@@ -75,6 +80,7 @@ class ATMOrderSearch extends arATMOrder {
 			['like', 'sprATM.TerminalID', $this->getAttribute('sprATM.TerminalID')],
 			['strftime("%d/%m/%Y", EnterDate, "localtime")' => $this->EnterDate],
 			['vATMOrderStatus.Status' => $this->getAttribute('statusNameLast.StatusName')],
+			['vATMOrderTech.Code' => $this->getAttribute('techNameLast.Name')],
 		]);
 		#var_dump($query->where);
 

@@ -86,8 +86,7 @@ class arATMOrder extends \yii\db\ActiveRecord {
 	}
 
 	public function getTechLast() {
-		return $this->hasOne(arATMOrderTech::className(), ['ATMOrderID' => 'ID'])
-				->orderBy(['ATMOrderTech.Date' => SORT_DESC]);
+		return $this->hasOne(arvATMOrderTech::className(), ['ATMOrderID' => 'ID']);
 	}
 
 	public function getTechNameLast() {
