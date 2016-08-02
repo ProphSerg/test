@@ -19,6 +19,7 @@ and open the template in the editor.
 
 .atmTableRowOverdue {
 	background-color:red;
+	color: s
 }
 
 .atmTableComentOdd {
@@ -53,7 +54,7 @@ and open the template in the editor.
 	background-color: #00ff00;
 }
 .atmTableRowStatusCM {
-	background-color: #008000;
+	background-color: #7ade23;
 }
 .atmTableRowStatusBO {
 	background-color: white ;

@@ -2,10 +2,12 @@
 
 use kartik\grid\GridView;
 use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Modal;
 use app\models\atm\arSprATMOrderStatus;
-use \app\models\atm\arSprATMOrderTech;
+use app\models\atm\arSprATMOrderTech;
 
-$this->title = 'Обслуживание банкоматов';
+$this->title = 'Справочник инженеров';
 
 echo GridView::widget([
 	'dataProvider' => $dataProvider,
@@ -58,15 +60,45 @@ echo GridView::widget([
 			],
 			[
 				'attribute' => 'techNameLast.Name',
-				'format' => 'text',
-				'label' => 'Инженер',
+				#'format' => 'text',
 				'filter' => arSprATMOrderTech::getTechList(),
+				'label' => 'Инженер',
+				'format' => 'raw',
+				'value' => function ($model) {
+					return Html::a($model->techNameLast['Name'], '#', [
+							#'class' => 'btn',
+							'data' => [
+								'pjax' => '0',
+								'toggle' => 'modal',
+								'target' => '#detail-' . $model->techNameLast['Code'],
+							],
+							#'title' => 'Добавить комментарий',
+					]);
+				},
+				],
+				[
+					'attribute' => 'sprATM.Addres',
+					'format' => 'text',
+				],
 			],
-			[
-				'attribute' => 'sprATM.Addres',
-				'format' => 'text',
-			],
-		],
-	]);
+		]);
 
+		foreach ($techList as $tech) {
+			Modal::begin([
+				'header' => 'Подробности',
+				#'toggleButton' => ['label' => 'Modal click'],
+				'id' => 'detail-' . $tech['Code'],
+			]);
+
+#		$aForm = ActiveForm::begin([]);
+#		echo $aForm->activeLabel($tech, ($tech['NameRus'] === null ? 'Name' : 'NameRus'));
+			echo Html::label($tech['NameRus'] === null ? $tech['Name'] : $tech['NameRus']);
+			if ($tech['Phone'] !== null) {
+				echo '<br>' . Html::label($tech['Phone']);
+			}
+
+#echo 'Hello MODAL!!';
+#		ActiveForm::end();
+			Modal::end();
+		}
 #var_dump($dataProvider->query);
