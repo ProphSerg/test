@@ -57,16 +57,16 @@ class m160725_000004_api_base extends Migration {
 		]);
 		$this->createIndex('IDX_BODY_NAME', 'BodyPatt', ['Name', 'Priority'], false);
 		$patt = <<< EPAT
-/.*?их вопрос[:\s]+
+/.*?их вопрос[:\\s]+
 
-\s*(?'Text'.+?)
+\\s*(?'Text'.+?)
 
 .*?Вопрос относится к вашей заявке.*?
-Номер заявки[:\s]+(?'Number'\d+).*?созданной[:\s]+(?'Date'[\d\/]+ [\d\:]+)
-Описание[:\s]+(?'Desc'[^\n]*)
-Доп.*?инф.*?[:\s]+(?'Append'[^\n]*)
-Конт.*?тел.*?[:\s]+(?'Contact'[^\n]*)
-Название ТСП[:\s]+(?'Name'[^\n]*)/uis'
+Номер заявки[:\\s]+(?'Number'\\d+).*?созданной[:\\s]+(?'Date'[\\d\\/]+ [\\d\\:]+)
+Описание[:\\s]+(?'Desc'[^\\n]*)
+Доп.*?инф.*?[:\\s]+(?'Append'[^\\n]*)
+Конт.*?тел.*?[:\\s]+(?'Contact'[^\\n]*)
+Название ТСП[:\\s]+(?'Name'[^\\n]*)/uis
 EPAT;
 		$this->batchInsert('BodyPatt', ['Name', 'Priority', 'Pattern'], [
 			['Request', 1, $patt],

@@ -9,13 +9,12 @@ use app\assets\AppAsset;
 use app\common\myMenuHelper;
 
 if (isset(Yii::$app->controller->ControllerMenu)) {
-	echo Nav::widget([
-		'options' => ['class' => 'nav nav-pills nav-stacked'],
-		'items' => myMenuHelper::getAssignedMenuByName(Yii::$app->user->id, Yii::$app->controller->ControllerMenu),
-	]);
+	$items = myMenuHelper::getAssignedMenuByName(Yii::$app->user->id, Yii::$app->controller->ControllerMenu);
 } elseif (isset($this->params['LeftMenuItemsURL'])) {
-	echo Nav::widget([
-		'options' => ['class' => 'nav nav-pills nav-stacked'],
-		'items' => $this->params['LeftMenuItemsURL'],
-	]);
+	$items = $this->params['LeftMenuItemsURL'];
 }
+
+echo Nav::widget([
+	'options' => ['class' => 'nav nav-pills nav-stacked'],
+	'items' => $items,
+]);

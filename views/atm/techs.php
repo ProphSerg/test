@@ -28,10 +28,20 @@ echo GridView::widget([
 		[
 			'class' => 'kartik\grid\EditableColumn',
 			'attribute' => 'NameRus',
+			'editableOptions' => [
+				#'header' => 'Name',
+				#'size' => 'md',
+				'formOptions' => ['action' => ['/atm/edittech']]
+			],
 		],
 		[
 			'class' => 'kartik\grid\EditableColumn',
 			'attribute' => 'Phone',
+			'editableOptions' => [
+				#'header' => 'Name',
+				#'size' => 'md',
+				'formOptions' => ['action' => ['/atm/edittech']]
+			],
 		],
 	],
 ]);
