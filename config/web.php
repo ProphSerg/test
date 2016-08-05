@@ -10,9 +10,7 @@ $config = [
 	'timeZone' => 'Asia/Omsk',
 	'basePath' => dirname(__DIR__),
 	'bootstrap' => ['log', 'admin'],
-	'aliases' => [
-        '@dbs' => '@app/db',
-    ],
+	'aliases' => require(__DIR__ . '/aliases.php'),
 	'defaultRoute' => 'request',
 	'components' => [
 		'request' => [

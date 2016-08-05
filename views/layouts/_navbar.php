@@ -19,6 +19,8 @@ $items = myMenuHelper::getAssignedMenuByName(Yii::$app->user->id, 'TopMenu');
 if (Yii::$app->user->isGuest) {
 	$items[] = ['label' => 'Login', 'url' => ['admin/user/login']];
 }
+#var_dump($items);
+
 echo Nav::widget([
 	'options' => ['class' => 'navbar-nav navbar-right'],
 	'items' => $items

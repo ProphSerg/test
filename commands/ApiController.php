@@ -17,10 +17,10 @@ use yii\console\Controller;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class HelloController extends Controller
+class ApiController extends Controller
 {
     /**
-     * This command echoes what you have entered as the message.
+     * This !!!command echoes what you have entered as the message.
      * @param string $message the message to be echoed.
      */
     public function actionIndex($message = 'hello world')

@@ -6,13 +6,15 @@ $params = require(__DIR__ . '/params.php');
 $db = require(__DIR__ . '/db.php');
 
 $config = [
-	'id' => 'basic-console',
+	'id' => 'UralsibPS',
+	'name' => 'Сервисы Платежных систем',
+	'language' => 'ru_RU',
+	'sourceLanguage' => 'ru_RU',
+	'timeZone' => 'Asia/Omsk',
 	'basePath' => dirname(__DIR__),
 	'bootstrap' => ['log'],
 	'controllerNamespace' => 'app\commands',
-	'aliases' => [
-		'@dbs' => '@app/db',
-	],
+	'aliases' => require(__DIR__ . '/aliases.php'),
 	'components' => [
 		'cache' => [
 			'class' => 'yii\caching\FileCache',
