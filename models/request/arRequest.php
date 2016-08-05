@@ -25,6 +25,8 @@ class arRequest extends \yii\db\ActiveRecord {
 	const REQUEST_TS = 1;
 	const REQUEST_ATM = 2;
 	
+	public $countType;
+	
 	public function __construct($_Type = self::REQUEST_SD) {
 		$this->Type = $_Type;
 		parent::__construct();

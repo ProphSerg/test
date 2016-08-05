@@ -10,6 +10,9 @@ return [
 	'db' => [
 		'class' => 'yii\db\Connection',
 		'dsn' => 'sqlite:@dbs/system.sqlite',
+		'on afterOpen' => function ($event) {
+			$event->sender->createCommand('PRAGMA foreign_keys = ON;');
+		},
 	],
 	'dbApi' => [
 		'class' => 'yii\db\Connection',
@@ -35,6 +38,9 @@ return [
 	'dbKey' => [
 		'class' => 'yii\db\Connection',
 		'dsn' => 'sqlite:@dbs/key.sqlite',
+		'on afterOpen' => function ($event) {
+			$event->sender->createCommand('PRAGMA foreign_keys = ON;');
+		},
 	],
 	'dbPos' => [
 		'class' => 'yii\db\Connection',

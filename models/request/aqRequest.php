@@ -2,6 +2,8 @@
 
 namespace app\models\request;
 
+use app\common\Convert;
+
 /**
  * This is the ActiveQuery class for [[arRequest]].
  *
@@ -23,6 +25,19 @@ class aqRequest extends \yii\db\ActiveQuery {
 
 	public function closed() {
 		return $this->andWhere(['not', ['DateClose' => null]]);
+	}
+
+	public function ReportClose($range) {
+		return $this
+				->select(['type', 'count(*) as countType'])
+				->andWhere([
+					'between',
+					'DateClose',
+					Convert::Date2SQLiteDate($range['start']),
+					'DateClose', Convert::Date2SQLiteDate($range['end'])
+				])
+				->groupBy('type')
+		;
 	}
 
 	/**
