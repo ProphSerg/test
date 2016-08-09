@@ -92,7 +92,7 @@ $config = [
 		],
 		'authManager' => [
 			'class' => 'yii\rbac\DbManager',
-			#'db' => 'dbSys',
+		#'db' => 'dbSys',
 		],
 		/*
 		  'as access' => [
@@ -115,7 +115,7 @@ $config = [
 				'request/detail/<id:\d+>' => 'request/detail',
 				'request/add/<type:\d+>' => 'request/add',
 				'request/print/<type:\w+>' => 'request/print',
-				
+				'report/<type:(range|one)>/<name>' => 'report/report',
 			],
 		],
 	],

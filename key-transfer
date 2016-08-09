@@ -1,0 +1,9 @@
+#!/bin/sh -x
+
+run=php
+if [ -x /Applications/MAMP/bin/php/php5.6.10/bin/php ]; then
+    run=/Applications/MAMP/bin/php/php5.6.10/bin/php
+fi
+$run ./yii transfer/keys-delete
+$run ./yii transfer/keys-add db/POS\ терминал\ архивный.xls Лист2 N=Number,P=Comp1,Q=Comp2,R=Comp3,K=Check
+$run ./yii transfer/keys-add db/POS\ terminal.xls POS N=Number,P=Comp1,Q=Comp2,R=Comp3,K=Check

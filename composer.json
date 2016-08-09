@@ -1,7 +1,7 @@
 {
-    "name": "yiisoft/yii2-app-basic",
-    "description": "Yii 2 Basic Project Template",
-    "keywords": ["yii2", "framework", "basic", "project template"],
+    "name": "UralsibPS",
+    "description": "Сервисы Платежных систем",
+    "keywords": ["yii2", "framework"],
     "homepage": "http://www.yiiframework.com/",
     "type": "project",
     "license": "BSD-3-Clause",
@@ -25,7 +25,8 @@
         "kartik-v/yii2-widgets": "*",
         "kartik-v/yii2-editable": "*",
         "bower-asset/clipboard": "^1.5",
-        "kartik-v/yii2-date-range": "*"
+        "kartik-v/yii2-date-range": "*",
+        "PHPOffice/PHPExcel": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

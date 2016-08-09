@@ -29,12 +29,13 @@ class aqRequest extends \yii\db\ActiveQuery {
 
 	public function ReportClose($range) {
 		return $this
-				->select(['type', 'count(*) as countType'])
+				->select(['sprType.Name as typeName', 'count(*) as countType'])
+				->joinWith('typeName')
 				->andWhere([
 					'between',
 					'DateClose',
 					Convert::Date2SQLiteDate($range['start']),
-					'DateClose', Convert::Date2SQLiteDate($range['end'])
+					Convert::Date2SQLiteDate($range['end'])
 				])
 				->groupBy('type')
 		;

@@ -17,33 +17,6 @@ and open the template in the editor.
 	font-size:10px;
 }
 
-.atmTableRowOverdue {
-	background-color:red;
-	color: s
-}
-
-.atmTableComentOdd {
-	padding: 0;
-	margin: 0;
-	font-style: italic;
-	color: Blue;
-}
-
-.atmTableComentEven {
-	padding: 0;
-	margin: 0; 
-	font-style: normal;
-	color: black;
-}
-
-.atmTableComentClose {
-	padding: 0;
-	margin: 0; 
-	font-style: normal;
-	font-weight: bold;
-	color: green;
-}
-
 .atmTableRowStatusOP {
 	background-color: #c0c0c0;
 }

@@ -24,7 +24,7 @@ class m160725_000001_keys_base extends Migration {
 			'Comp3' => $this->text()->notNull(),
 			'PRIMARY KEY (Number)'
 		]);
-		$this->createIndex('IDX_NUMBER', 'key', 'Number', true);
+		#$this->createIndex('IDX_NUMBER', 'key', 'Number', true);
 	}
 
 	/**

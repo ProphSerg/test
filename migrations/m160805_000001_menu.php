@@ -28,6 +28,7 @@ class m160805_000001_menu extends Migration {
 			['Report', '/report'],
 			['Report', '/report/request-close'],
 			['РольОтчеты', 'Report'],
+			['РольAdmin', 'РольОтчеты'],
 		]);
 
 		$this->batchInsert('auth_assignment', ['item_name', 'user_id', 'created_at'], [

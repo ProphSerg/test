@@ -18,7 +18,7 @@ use yii\data\ActiveDataProvider;
 			'convertFormat' => true,
 			'useWithAddon' => false,
 			'hideInput' => true,
-			'value' => $report_range,
+			'value' => $range['value'],
 			'pluginOptions' => [
 				'ranges' => [
 					'Прошедшая неделя' => ["moment().startOf('week').subtract(1,'week')", "moment().endOf('week').subtract(1,'week')"],
@@ -33,17 +33,8 @@ use yii\data\ActiveDataProvider;
 		<?= Html::endForm(); ?>
 	</div>
 </div>
-<?php
-if ($model !== null) {
-	$dataProvider = new ActiveDataProvider([
-		'query' => $model,
-	]);
+<div class="row">
+	<?= $this->render($report, ['range' => $range]) ?>
+</div>
 
-	echo GridView::widget([
-		'dataProvider' => $dataProvider,
-		'columns' => [
-			'typeName',
-			'countType',
-		],
-	]);
-}
+	

@@ -7,26 +7,29 @@ use app\models\request\arRequest;
 
 class ReportController extends \yii\web\Controller {
 
-	public $defaultAction = 'request-close';
+	#public $defaultAction = 'request-close';
 	public $ControllerMenu = 'reports';
 
-	public function actionRequestClose() {
+	public function actionIndex() {
+		return $this->render('index');
+	}
+	public function actionReport($type, $name) {
 		$post = Yii::$app->request->post();
-		var_dump($post);
+		#var_dump($post);
 
-		$report_range = '';
-		$model = null;
-		if (isset($post['report_range'])) {
-			$report_range = $post['report_range'];
-			$range['start'] = substr($report_range, 0, 10);
-			$range['end'] = substr($report_range, 13, 10);
-			
-			$model = arRequest::find()->ReportClose($range);
+		$range = ['value' => null];
+		if (isset($post['report_range']) && $post['report_range'] !== '') {
+			$range['value'] = $post['report_range'];
+			$range['start'] = substr($range['value'], 0, 10);
+			$range['end'] = substr($range['value'], 13, 10);
+		} elseif (isset($post['report_date']) && $post['report_date'] !== '') {
+			$range['value'] = $post['report_date'];
+			$range['date'] = substr($range['value'], 0, 10);
 		}
-		
-		return $this->render('requestClose', [
-				'model' => $model,
-				'report_range' => $report_range,
+
+		return $this->render('report-' . $type, [
+				'report' => $name,
+				'range' => $range,
 		]);
 	}
 

@@ -21,6 +21,7 @@ class AppAsset extends AssetBundle
         'css/site.css',
 		'css/request.css',
 		'css/atm.css',
+		'css/report.css',
     ];
     public $js = [
 		'js/runTooltip.js'

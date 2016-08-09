@@ -24,9 +24,10 @@ class arRequest extends \yii\db\ActiveRecord {
 	const REQUEST_SD = 0;
 	const REQUEST_TS = 1;
 	const REQUEST_ATM = 2;
-	
+
 	public $countType;
-	
+	public $typeName;
+
 	public function __construct($_Type = self::REQUEST_SD) {
 		$this->Type = $_Type;
 		parent::__construct();
@@ -57,6 +58,8 @@ class arRequest extends \yii\db\ActiveRecord {
 			[['Desc', 'Append', 'Contact', 'Name', 'Addr'], 'string'],
 			[['Overdue'], 'boolean'],
 			[['Type', 'Number'], 'unique', 'targetAttribute' => ['Type', 'Number'], 'message' => 'The combination of Type and Number has already been taken.'],
+			[['countType'], 'integer'],
+			[['typeName'], 'string'],
 		];
 	}
 
@@ -76,6 +79,8 @@ class arRequest extends \yii\db\ActiveRecord {
 			'Name' => 'Название',
 			'Addr' => 'Адрес',
 			'Overdue' => 'Просрочена?',
+			'countType' => 'Количество заявок',
+			'typeName' => 'Тип заявки',
 		];
 	}
 
@@ -91,6 +96,10 @@ class arRequest extends \yii\db\ActiveRecord {
 		return $this->hasMany(arReqText::className(), ['RequestID' => 'ID'])->inverseOf('request')
 				->orderBy('Date');
 		;
+	}
+
+	public function getTypeName() {
+		return $this->hasOne(arSprType::className(), ['ID' => 'Type']);
 	}
 
 	public static function getNextNumber($Type) {
