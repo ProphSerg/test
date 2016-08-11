@@ -7,7 +7,7 @@ namespace app\models\pos;
  *
  * @see KeyReserve
  */
-class aqKeyReserveQuery extends \yii\db\ActiveQuery
+class aqKeyReserve extends \yii\db\ActiveQuery
 {
     /*public function active()
     {

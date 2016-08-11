@@ -44,7 +44,7 @@ class RequestMan extends arRequest {
 		if ($this->Type == arRequest::REQUEST_ATM) {
 			$atm = arSprATM::find()->byID($this->ATMID);
 			if ($atm === null) {
-				throw new Exception('Request: Ошибка выбора банкомата.');
+				throw new \Exception('Request: Ошибка выбора банкомата.');
 			}
 			#var_dump($atm);
 			$this->Name = $atm->Type;
@@ -58,7 +58,7 @@ class RequestMan extends arRequest {
 		$trans = self::getDb()->beginTransaction();
 		try {
 			if ($this->save() === false) {
-				throw new Exception('Request: Ошибка записи новой заявки.');
+				throw new \Exception('Request: Ошибка записи новой заявки.');
 			}
 			#Yii::info($rq->attributes, 'parse');
 

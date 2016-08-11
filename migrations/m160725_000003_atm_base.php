@@ -129,11 +129,11 @@ class m160725_000003_atm_base extends Migration {
 				'indexs' => [
 					'IDX_ATM_TERMINALID' => [
 						'columns' => '[[TerminalID]]',
-						'unique' => true
+						'unique' => false,
 					],
 					'IDX_SERIAL_ATM' => [
 						'columns' => '[[Serial]]',
-						'unique' => true
+						'unique' => true,
 					],
 				],
 			],

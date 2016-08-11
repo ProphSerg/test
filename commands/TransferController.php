@@ -62,6 +62,7 @@ class TransferController extends Controller {
 		 * 
 		 */
 		$xls_sheet = $xls->getActiveSheet();
+		$kn=0;
 		for ($i = 1; $i <= $xls_sheet->getHighestRow(); $i++) {
 			echo "Row: {$i} ... ";
 
@@ -74,11 +75,11 @@ class TransferController extends Controller {
 				self::printValidaterError($k);
 			}
 
-			$k->save();
+			$k->save() && $kn++;
 
 			echo "\r";
 		}
-		echo "\nDone.\n";
+		echo "\nDone.\nAdded {$kn} keys\n";
 		return 0;
 	}
 

@@ -25,7 +25,7 @@ class Request extends Model {
 			$rq->Date = Convert::Date2SQLiteDate($rq->Date);
 			if($rq->save() === false){
 				if(($rq = arRequest::find()->getRequest($fields['Number'])) === null){
-					throw new Exception('Request: Ошибка записи и поиска имеющейся записи.');
+					throw new \Exception('Request: Ошибка записи и поиска имеющейся записи.');
 				}
 			}
 			#Yii::info($rq->attributes, 'parse');

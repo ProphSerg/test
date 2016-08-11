@@ -83,12 +83,12 @@ class arReqText extends \yii\db\ActiveRecord {
 
 			if ($req->save() === false) {
 				if (($rq = arRequest::find()->getRequest($fields['Number'])) === null) {
-					throw new Exception('Request: Ошибка записи и поиска имеющейся записи.');
+					throw new \Exception('Request: Ошибка записи и поиска имеющейся записи.');
 				}
 			}
 
 			$this->save();
-			if($req->Type == arRequest::REQUEST_SD){
+			if ($req->Type == arRequest::REQUEST_SD) {
 				$msg = Yii::$app->mailer->compose();
 				$msg->setFrom('tsp_it_omsk@oms.uralsib.ru')
 					->setCc('tsp_it_omsk@oms.uralsib.ru')
@@ -110,10 +110,10 @@ class arReqText extends \yii\db\ActiveRecord {
 	public function addComment() {
 		if ($this->Date === null) {
 			$this->Date = Convert::SQLiteDateNow();
-		}else {
+		} else {
 			$this->Date = Convert::Date2SQLiteDate($this->Date);
 		}
-		
+
 		#var_dump($this);
 		$trans = arReqText::getDb()->beginTransaction();
 		try {

@@ -7,7 +7,7 @@ namespace app\models\pos;
  *
  * @see RegPos
  */
-class aqRegPosQuery extends \yii\db\ActiveQuery
+class aqRegPos extends \yii\db\ActiveQuery
 {
     /*public function active()
     {

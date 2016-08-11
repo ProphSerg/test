@@ -22,12 +22,15 @@ class AppAsset extends AssetBundle
 		'css/request.css',
 		'css/atm.css',
 		'css/report.css',
+		'css/pos.css',
     ];
     public $js = [
-		'js/runTooltip.js'
+		'js/runTooltip.js',
+        'js/clipboard.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+		'app\assets\ClipboardAsset',
     ];
 }

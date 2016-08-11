@@ -1,0 +1,22 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 06.07.2016, 16:19:00
+    Author     : proph
+*/
+
+.keyTable {
+	background: #e0fff9;
+}
+
+.posTable {
+	font-size:12px;
+	background: #e0fff9;
+}
+
+.posTable .form-control {
+	font-size:10px;
+}

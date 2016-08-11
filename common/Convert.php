@@ -16,6 +16,17 @@ class Convert {
 			str_replace(Yii::getAlias('@app') . '/', '', $e->getFile()) . ':' . $e->getLine() . ']';
 	}
 
+	static public function ValidaterError2Str($model, $only = null, $exclude = null) {
+		$str = '';
+		foreach ($model->getErrors() as $a => $es) {
+			if (($only === null || $a == $only) && ($exclude === null || $a != $exclude)) {
+				$str .= "{$a}[{$model->$a}]: " . implode('. ', $es) . ".\n";
+			}
+		}
+
+		return $str;
+	}
+
 	#dd/MM/YY(YY)( hh:mm:(ss))
 
 	const AllFormat = ['!d#m#y H#i#s', '!d#m#Y H#i#s', '!d#m#y H#i', '!d#m#Y H#i', '!d#m#y', '!d#m#Y'];

@@ -18,7 +18,7 @@ class m160803_000001_pos_add_keyreserve extends Migration {
 	public function safeUp() {
 		$this->createTable('KeyReserve', [
 			'Number' => $this->text()->notNull(),
-			'Comment' => $this->text()->notNull(),
+			'Comment' => $this->text(),
 			'PRIMARY KEY (Number)'
 		]);
 		#$this->createIndex('IDX_KR_NUMBER', 'KeyReserve', 'Number', true);

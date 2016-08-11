@@ -5,7 +5,7 @@ use app\models\request\arRequest;
 /**
  * Handles the creation for table `key_table`.
  */
-class m160808_000001_request_sprtype extends Migration {
+class m160726_000001_request_sprtype extends Migration {
 
 	public function init() {
 		$this->db = 'dbRequest';

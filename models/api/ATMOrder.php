@@ -18,6 +18,7 @@ class ATMOrder extends Model {
 	public function save($fields, Mail $mail) {
 
 		#Yii::info(['ATMOrder Save!', 'mail', $mail, 'fields', $fields], 'parse');
+		#Yii::info(['ATMOrder Save!', 'fields', $fields], 'parse');
 		$trans = arATMOrder::getDb()->beginTransaction();
 		try {
 			#Yii::info(['Save!', 'mail', $mail], 'parse');
@@ -31,7 +32,7 @@ class ATMOrder extends Model {
 			$atm->EnterDate = Convert::Date2SQLiteDate($atm->EnterDate);
 			if ($atm->save() === false) {
 				if (($atm = arATMOrder::find()->Where(['Number' => $fields['Number']])->one()) === null) {
-					throw new Exception('ATMOrder: Ошибка записи и поиска имеющейся записи.');
+					throw new \Exception('ATMOrder: Ошибка записи и поиска имеющейся записи.');
 				}
 			}
 			#Yii::info($rq->attributes, 'parse');

@@ -93,7 +93,7 @@ class MailAction extends \yii\base\Action {
 
 		foreach (arMailPatt::find()->orderBy('Priority')->all() as $mp) {
 			#echo 'Pattern: ' . $mp->Pattern . "\n";
-			if (preg_match_all("/(\w+)\|(.+)\|/", $mp->Pattern, $matches, PREG_SET_ORDER) > 0) {
+			if (preg_match_all("/(\w+)\|(.+?)\|/", $mp->Pattern, $matches, PREG_SET_ORDER) > 0) {
 				foreach ($matches as $out) {
 					if (!isset($mail->{$out[1]})) {
 						Yii::error('Ошибка применения шаблона (ID:' . $mp->ID . ')! Поле ' . $out[1] . ' не найдено!', self::LOG_CATEGORY);
@@ -165,9 +165,11 @@ class MailAction extends \yii\base\Action {
 				foreach ($val as $bk => $bv) {
 					if (preg_match('/^\d+$/', $bk) == 0) {
 						if (preg_match('/^repit(.+)$/i', $bk, $rmach) > 0) {
-							#echo 'REPIT: <' . $rmach[1] . '>';
+							#echo 'REPIT: <' . $rmach[1] . '> [' . $bv . ']';
 							#Yii::trace('REPIT: <' . $rmach[1] . '>', self::LOG_CATEGORY);
 							$result[$rmach[1]] = $this->BodyParse(arBodyPatt::find()->BP($rmach[1]), $bv, true);
+						} elseif (preg_match('/^block(.+)$/i', $bk, $rmach) > 0) {
+							$result[] = $this->BodyParse(arBodyPatt::find()->BP($rmach[1]), $bv);
 						} else {
 							if ($repit) {
 								$result[$i][$bk] = $bv;

@@ -15,6 +15,9 @@ use app\common\KeyCheck;
  */
 class arKey extends \yii\db\ActiveRecord {
 
+	const NUMBER_PREFIX = 'O03S2';
+	const NUMBER_PATTERN = '/^' . self::NUMBER_PREFIX . '_\d{6}_\d{4}$/';
+
 	public $Check;
 
 	/**
@@ -41,8 +44,8 @@ class arKey extends \yii\db\ActiveRecord {
 			[['Number'], 'unique'],
 			[['Number', 'Comp1', 'Comp2', 'Comp3', 'Check'], 'trim'],
 			[['Number', 'Comp1', 'Comp2', 'Comp3', 'Check'], 'filter', 'filter' => 'strtoupper', 'skipOnArray' => true],
-			[['Number'], 'match', 'pattern' => '/^O\d{2}S2_\d{6}_\d{4}$/s'],
-			[['Comp1', 'Comp2', 'Comp3'], 'match', 'pattern' => '/^[0-9A-F]{32}$/s'],
+			[['Number'], 'match', 'pattern' => self::NUMBER_PATTERN],
+			[['Comp1', 'Comp2', 'Comp3'], 'match', 'pattern' => '/^[0-9A-F]{32}$/'],
 			[['Check'], 'validateCheckKCV'],
 		];
 	}
@@ -52,6 +55,23 @@ class arKey extends \yii\db\ActiveRecord {
 			($this->$attribute != KeyCheck::FullKeyKCV($this->Comp1, $this->Comp2, $this->Comp3))) {
 			$this->addError($attribute, 'Контрольная сумма не совподает с введенными ключами');
 		}
+	}
+
+	public function afterFind() {
+		parent::afterFind();
+		$this->Check = KeyCheck::FullKeyKCV($this->Comp1, $this->Comp2, $this->Comp3);
+	}
+
+	public function getComp1Check() {
+		return KeyCheck::KCV($this->Comp1);
+	}
+
+	public function getComp2Check() {
+		return KeyCheck::KCV($this->Comp2);
+	}
+
+	public function getComp3Check() {
+		return KeyCheck::KCV($this->Comp3);
 	}
 
 	/**

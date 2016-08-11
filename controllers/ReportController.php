@@ -13,6 +13,7 @@ class ReportController extends \yii\web\Controller {
 	public function actionIndex() {
 		return $this->render('index');
 	}
+
 	public function actionReport($type, $name) {
 		$post = Yii::$app->request->post();
 		#var_dump($post);

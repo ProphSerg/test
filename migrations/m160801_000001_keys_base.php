@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation for table `key_table`.
  */
-class m160725_000001_keys_base extends Migration {
+class m160801_000001_keys_base extends Migration {
 
 	public function init() {
 		$this->db = 'dbKey';
