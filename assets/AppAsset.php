@@ -26,7 +26,6 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
 		'js/runTooltip.js',
-        'js/clipboard.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

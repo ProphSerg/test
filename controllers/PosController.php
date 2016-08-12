@@ -69,6 +69,8 @@ class PosController extends Controller {
 		]);
 	}
 	public function actionRegister() {
+	$post = \Yii::$app->request->post();
+	var_dump($post);
 		$searchModel = new RegPosSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->get());
 		return $this->render('register', [
@@ -78,6 +80,7 @@ class PosController extends Controller {
 	}
 public function actionRegisterDetail() {
 	$post = \Yii::$app->request->post();
+	var_dump($post);
     if (isset($post['expandRowKey'])) {
         $model = arRegPos::findOne($post['expandRowKey']);
         return $this->renderPartial('_register-detail', ['model'=>$model]);

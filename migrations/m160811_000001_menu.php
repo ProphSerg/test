@@ -23,20 +23,20 @@ class m160811_000001_menu extends Migration {
 			['/pos/enter-key-reserve', 2, $timestamp, $timestamp],
 			['/pos/register', 2, $timestamp, $timestamp],
 			['Pos', 2, $timestamp, $timestamp],
-			['PosAdmin', 2, $timestamp, $timestamp],
+			['Keys', 2, $timestamp, $timestamp],
 			['РольPos', 1, $timestamp, $timestamp],
-			['РольPosAdmin', 1, $timestamp, $timestamp],
+			['РольKeys', 1, $timestamp, $timestamp],
 		]);
 
 		$this->batchInsert('auth_item_child', ['parent', 'child'], [
 			['Pos', '/pos'],
 			['Pos', '/pos/key-reserve'],
 			['Pos', '/pos/register'],
-			['PosAdmin', '/pos/enter-key-reserve'],
+			['Keys', '/pos/enter-key-reserve'],
 			['РольPos', 'Pos'],
-			['РольPosAdmin', 'PosAdmin'],
+			['РольKeys', 'Keys'],
 			['РольAdmin', 'РольPos'],
-			['РольAdmin', 'РольPosAdmin'],
+			['РольAdmin', 'РольKeys'],
 		]);
 
 		/*
@@ -67,13 +67,19 @@ class m160811_000001_menu extends Migration {
 			$this->delete('menu', ['id' => $reports['id']]);
 		}
 		$this->delete('auth_assignment', ['item_name' => 'РольPos']);
+		$this->delete('auth_assignment', ['item_name' => 'РольKeys']);
 
 		$this->delete('auth_item_child', ['like', 'child', 'РольPos']);
 		$this->delete('auth_item_child', ['like', 'parent', 'РольPos']);
 		$this->delete('auth_item_child', ['like', 'parent', 'Pos']);
+		$this->delete('auth_item_child', ['like', 'child', 'РольKeys']);
+		$this->delete('auth_item_child', ['like', 'parent', 'РольKeys']);
+		$this->delete('auth_item_child', ['like', 'parent', 'Keys']);
 
 		$this->delete('auth_item', ['like', 'name', 'РольPos']);
 		$this->delete('auth_item', ['like', 'name', 'Pos']);
+		$this->delete('auth_item', ['like', 'name', 'РольKeys']);
+		$this->delete('auth_item', ['like', 'name', 'Keys']);
 		$this->delete('auth_item', ['like', 'name', '/pos']);
 
 		#return false;

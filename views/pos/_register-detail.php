@@ -1,17 +1,67 @@
 <?php
 
 use kartik\detail\DetailView;
+use yii\helpers\Html;
+use yii\bootstrap\Collapse;
+use app\models\pos\arKey;
+
+#var_dump($model->keys);
+
+$keymode = DetailView::MODE_VIEW;
+$key = $model->keys;
+if ($key == null) {
+	$key = new arKey();
+	$key->Number = $model->KeyNum;
+	$key->Check = $model->TMK_CHECK;
+	$keymode = DetailView::MODE_EDIT;
+}
+
+$keyView = DetailView::widget([
+		'model' => $key,
+		'mode' => $keymode,
+		'hideIfEmpty' => false,
+		#'enableEditMode' => false,
+		'panel' => [
+			'heading' => 'Компоненты ключа111: ' . $key->Number
+			. ($key->Check != '' ? ', контрольная сумма: ' . $key->Check : ''),
+			'type' => DetailView::TYPE_INFO,
+			'headingOptions' => [
+			#'type' => DetailView::TYPE_INFO,
+			#'template' => '{title}',
+			],
+			#'footer' => '1234321',
+			'footerOptions' => [
+			#'template' => '{title}',
+			],
+		],
+		'buttons1' => '{update}',
+		'options' => [
+			'id' => implode('-', ['dvKey', $model->KeyNum]),
+		],
+		'attributes' => [
+			[
+				'attribute' => 'Comp1',
+			],
+			[
+				'attribute' => 'Comp2',
+			],
+			[
+				'attribute' => 'Comp3',
+			],
+		],
+	]);
+
 
 echo DetailView::widget([
 	'model' => $model,
 	'mode' => DetailView::MODE_VIEW,
 	'hideIfEmpty' => true,
-	#'enableEditMode' => false,
+	'enableEditMode' => false,
 	'panel' => [
 		'heading' => 'Terminal ID ' . $model->TerminalID,
 		'type' => DetailView::TYPE_INFO,
 		'headingOptions' => [
-			#'type' => DetailView::TYPE_INFO,
+#'type' => DetailView::TYPE_INFO,
 			'template' => '{title}',
 		],
 		#'footer' => '1234321',
@@ -19,6 +69,15 @@ echo DetailView::widget([
 			'template' => '{title}',
 		],
 	],
+	'options' => [
+		'id' => implode('-', [$model->TerminalID, $model->KeyNum]),
+	],
+	/*
+	'formOptions' => [
+		'action' => ['register'],
+	],
+	 * 
+	 */
 	'attributes' => [
 		/*
 		  'ClientN' => 'Client #',
@@ -60,6 +119,21 @@ echo DetailView::widget([
 		],
 		[
 			'attribute' => 'KeyNum',
+			'format' => 'raw',
+			'value' => (arKey::CanAccess() ?
+				Collapse::widget([
+					'id' => implode('-', [$model->TerminalID, $model->KeyNum, 'keys']),
+					'items' => [
+						[
+							'encode' => false,
+							'label' => $model->KeyNum,
+							#	'content' => $keyView,
+							'content' => $this->render('_key-detail', [
+								'model' => $model,
+							]),
+						]
+					],
+				]) : $model->KeyNum),
 		],
 	/*
 	  [

@@ -2,8 +2,8 @@
 
 use kartik\grid\GridView;
 use yii\helpers\Html;
-#use app\assets\ClipboardAsset;
 
+#use app\assets\ClipboardAsset;
 #ClipboardAsset::register($this);
 
 $this->title = 'Зарегистрированные терминалы';
@@ -27,27 +27,24 @@ echo GridView::widget([
 			'value' => function ($model, $key, $index, $column) {
 				return GridView::ROW_COLLAPSED;
 			},
-			'detailUrl' => 'register-detail',
-			/*
-			  'detail' => function ($model, $key, $index, $column) {
-			  return Yii::$app->controller->renderPartial('_expand-order-details', ['model' => $model->remarks]);
-			  },
-			 * 
-			 */
-			'headerOptions' => ['class' => 'kartik-sheet-style'],
-			'expandOneOnly' => true,
+			#'detailUrl' => 'register-detail',
+			'detail' => function ($model, $key, $index, $column) {
+				return Yii::$app->controller->renderPartial('_register-detail', ['model' => $model]);
+			},
+				'headerOptions' => ['class' => 'kartik-sheet-style'],
+				'expandOneOnly' => true,
+			],
+			[
+				'attribute' => 'TerminalID',
+				'width' => '70px',
+			],
+			[
+				'attribute' => 'Name',
+			],
+			[
+				'attribute' => 'Address',
+			],
 		],
-		[
-			'attribute' => 'TerminalID',
-			'width' => '70px',
-		],
-		[
-			'attribute' => 'Name',
-		],
-		[
-			'attribute' => 'Address',
-		],
-	],
-]);
+	]);
 
 #var_dump($dataProvider->query);

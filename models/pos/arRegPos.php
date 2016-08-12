@@ -92,4 +92,13 @@ class arRegPos extends \yii\db\ActiveRecord {
 		return new aqRegPos(get_called_class());
 	}
 
+	public function getKeys() {
+		if (arKey::CanAccess()) {
+			return $this->hasOne(arKey::className(), ['Number' => 'KeyNum']);
+		}
+
+			#return $this->hasOne(arKey::className(), ['Number' => 'KeyNum']);
+		return null;
+	}
+
 }
