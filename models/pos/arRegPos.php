@@ -101,4 +101,18 @@ class arRegPos extends \yii\db\ActiveRecord {
 		return null;
 	}
 
+	public function save($runValidation = true, $attributeNames = null) {
+		$ret = parent::save($runValidation, $attributeNames);
+		if($ret){
+			$k = arKeyReserve::findReserve($this->KeyNum);
+			if($k == null){
+				$k = new arKeyReserve();
+			}
+			$k->Number = $this->KeyNum;
+			$k->Comment = $this->Name;
+			$k->validate() && $k->save();
+		}
+		
+		return $ret;
+	}
 }
