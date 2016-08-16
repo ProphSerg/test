@@ -3,8 +3,8 @@
 use kartik\grid\GridView;
 use yii\helpers\Html;
 
-#use app\assets\ClipboardAsset;
-#ClipboardAsset::register($this);
+use app\assets\ClipboardAsset;
+ClipboardAsset::Instantiate($this, '.btnClip');
 
 $this->title = 'Зарегистрированные терминалы';
 
@@ -27,10 +27,14 @@ echo GridView::widget([
 			'value' => function ($model, $key, $index, $column) {
 				return GridView::ROW_COLLAPSED;
 			},
-			#'detailUrl' => 'register-detail',
-			'detail' => function ($model, $key, $index, $column) {
+			'detailUrl' => 'register-detail',
+			/*
+			 'detail' => function ($model, $key, $index, $column) {
+			 
 				return Yii::$app->controller->renderPartial('_register-detail', ['model' => $model]);
 			},
+			 * 
+			 */
 				'headerOptions' => ['class' => 'kartik-sheet-style'],
 				'expandOneOnly' => true,
 			],

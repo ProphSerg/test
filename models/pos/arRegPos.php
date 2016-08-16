@@ -46,7 +46,7 @@ class arRegPos extends \yii\db\ActiveRecord {
 	 */
 	public function rules() {
 		return [
-			[['ClientN', 'Name', 'ContractN', 'TerminalID', 'City', 'Address', 'MerchantID', 'KeyNum', 'TMK_CHECK', 'TPK_KEY', 'TAK_KEY', 'TDK_KEY'], 'required'],
+			[['ClientN', 'Name', 'ContractN', 'TerminalID', 'Address', 'MerchantID', 'KeyNum', 'TMK_CHECK', 'TPK_KEY', 'TAK_KEY', 'TDK_KEY'], 'required'],
 			[['ClientN', 'Name', 'ContractN', 'TerminalID', 'City', 'Address', 'MerchantID', 'KeyNum', 'TMK_CHECK', 'TPK_KEY', 'TPK_CHECK', 'TAK_KEY', 'TAK_CHECK', 'TDK_KEY', 'TDK_CHECK'], 'string'],
 			[['DateReg'], 'safe'],
 			#[['TerminalID', 'DateReg'], 'unique', 'targetAttribute' => ['TerminalID', 'DateReg'], 'message' => 'The combination of Terminal ID and Date Reg has already been taken.'],

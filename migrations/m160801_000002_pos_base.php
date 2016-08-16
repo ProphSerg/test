@@ -22,7 +22,7 @@ class m160801_000002_pos_base extends Migration {
 			'Name' => $this->text()->notNull(),
 			'ContractN' => $this->text()->notNull(),
 			'TerminalID' => $this->text()->notNull(),
-			'City' => $this->text()->notNull(),
+			'City' => $this->text(),
 			'Address' => $this->text()->notNull(),
 			'MerchantID' => $this->text()->notNull(),
 			'KeyNum' => $this->text()->notNull(),

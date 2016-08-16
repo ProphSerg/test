@@ -7,28 +7,29 @@ namespace app\models\pos;
  *
  * @see RegPos
  */
-class aqRegPos extends \yii\db\ActiveQuery
-{
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
+class aqRegPos extends \yii\db\ActiveQuery {
 
-    /**
-     * @inheritdoc
-     * @return RegPos[]|array
-     */
-    public function all($db = null)
-    {
-        return parent::all($db);
-    }
+	public function findReg($termID, $keyNum) {
+		return $this->andWhere([
+				'TerminalID' => $termID,
+				'KeyNum' => strtoupper($keyNum),
+		])->one();
+	}
 
-    /**
-     * @inheritdoc
-     * @return RegPos|array|null
-     */
-    public function one($db = null)
-    {
-        return parent::one($db);
-    }
+	/**
+	 * @inheritdoc
+	 * @return RegPos[]|array
+	 */
+	public function all($db = null) {
+		return parent::all($db);
+	}
+
+	/**
+	 * @inheritdoc
+	 * @return RegPos|array|null
+	 */
+	public function one($db = null) {
+		return parent::one($db);
+	}
+
 }

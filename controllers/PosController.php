@@ -24,7 +24,7 @@ class PosController extends Controller {
 
 	public function actions() {
 		return ArrayHelper::merge(parent::actions(), [
-				'key-reserve-edit' => [			// identifier for your editable column action
+				'key-reserve-edit' => [   // identifier for your editable column action
 					'class' => EditableColumnAction::className(), // action class name
 					'modelClass' => arKeyReserve::className(), // the model for the record being edited
 					/*
@@ -38,7 +38,7 @@ class PosController extends Controller {
 					  },
 					 */
 					'showModelErrors' => true, // show model validation errors after save
-					'errorOptions' => ['header' => '']	// error summary HTML options
+					'errorOptions' => ['header' => ''] // error summary HTML options
 				// 'postOnly' => true,
 				// 'ajaxOnly' => true,
 				// 'findModel' => function($id, $action) {},
@@ -68,9 +68,22 @@ class PosController extends Controller {
 				'dataProvider' => $dataProvider,
 		]);
 	}
+
 	public function actionRegister() {
-	$post = \Yii::$app->request->post();
-	var_dump($post);
+		/*
+		$post = \Yii::$app->request->post();
+		#var_dump($post);
+		$key = new arKey();
+		if ($key->load($post)) {
+			$key->validate() && $key->save();
+			$this->renderAjax('_key-detail', [
+				'model' => [
+					'key' => $key,
+				]
+			]);
+		}
+		 * 
+		 */
 		$searchModel = new RegPosSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->get());
 		return $this->render('register', [
@@ -78,14 +91,16 @@ class PosController extends Controller {
 				'searchModel' => $searchModel
 		]);
 	}
-public function actionRegisterDetail() {
-	$post = \Yii::$app->request->post();
-	var_dump($post);
-    if (isset($post['expandRowKey'])) {
-        $model = arRegPos::findOne($post['expandRowKey']);
-        return $this->renderPartial('_register-detail', ['model'=>$model]);
-    } else {
-        return '<div class="alert alert-danger">No data found</div>';
-    }
-}
+
+	public function actionRegisterDetail() {
+		$post = \Yii::$app->request->post();
+		#var_dump($post);
+		if (isset($post['expandRowKey'])) {
+			$model = arRegPos::findOne($post['expandRowKey']);
+			return $this->renderPartial('_register-detail', ['model' => $model]);
+		} else {
+			return '<div class="alert alert-danger">No data found</div>';
+		}
+	}
+
 }

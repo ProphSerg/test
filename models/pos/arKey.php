@@ -46,14 +46,30 @@ class arKey extends \yii\db\ActiveRecord {
 			[['Number', 'Comp1', 'Comp2', 'Comp3', 'Check'], 'filter', 'filter' => 'strtoupper', 'skipOnArray' => true],
 			[['Number'], 'match', 'pattern' => self::NUMBER_PATTERN],
 			[['Comp1', 'Comp2', 'Comp3'], 'match', 'pattern' => '/^[0-9A-F]{32}$/'],
-			[['Check', 'Comp1', 'Comp2', 'Comp3'], 'validateCheckKCV'],
+			[['Check'], 'validateCheckKCV'],
+#			[['Check', 'Comp1', 'Comp2', 'Comp3'], 'validateCheckKCV'],
 		];
 	}
 
-	public function validateCheckKCV($attribute, $params) {
+	public function validateCheckKCV($attribute) {
+		/*
+		Yii::info(['validateCheckKCV('.$attribute.')!',
+			'hasErrors()',
+			$this->hasErrors(),
+			'Check',
+			$this->Check,
+			'Comp1',
+			$this->Comp1,
+			'Comp2',
+			$this->Comp2,
+			'Comp3',
+			$this->Comp3,
+			], 'parse');
+		 * 
+		 */
 		if (!$this->hasErrors() && !empty($this->Check) &&
 			!empty($this->Comp1) && !empty($this->Comp2) && !empty($this->Comp3) &&
-			($this->$attribute != KeyCheck::FullKeyKCV($this->Comp1, $this->Comp2, $this->Comp3))) {
+			($this->Check != KeyCheck::FullKeyKCV($this->Comp1, $this->Comp2, $this->Comp3))) {
 			$this->addError($attribute, 'Контрольная сумма не совподает с введенными ключами');
 		}
 	}

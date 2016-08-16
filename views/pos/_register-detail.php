@@ -4,54 +4,10 @@ use kartik\detail\DetailView;
 use yii\helpers\Html;
 use yii\bootstrap\Collapse;
 use app\models\pos\arKey;
+use app\assets\ClipboardAsset;
 
 #var_dump($model->keys);
-
-$keymode = DetailView::MODE_VIEW;
-$key = $model->keys;
-if ($key == null) {
-	$key = new arKey();
-	$key->Number = $model->KeyNum;
-	$key->Check = $model->TMK_CHECK;
-	$keymode = DetailView::MODE_EDIT;
-}
-
-$keyView = DetailView::widget([
-		'model' => $key,
-		'mode' => $keymode,
-		'hideIfEmpty' => false,
-		#'enableEditMode' => false,
-		'panel' => [
-			'heading' => 'Компоненты ключа111: ' . $key->Number
-			. ($key->Check != '' ? ', контрольная сумма: ' . $key->Check : ''),
-			'type' => DetailView::TYPE_INFO,
-			'headingOptions' => [
-			#'type' => DetailView::TYPE_INFO,
-			#'template' => '{title}',
-			],
-			#'footer' => '1234321',
-			'footerOptions' => [
-			#'template' => '{title}',
-			],
-		],
-		'buttons1' => '{update}',
-		'options' => [
-			'id' => implode('-', ['dvKey', $model->KeyNum]),
-		],
-		'attributes' => [
-			[
-				'attribute' => 'Comp1',
-			],
-			[
-				'attribute' => 'Comp2',
-			],
-			[
-				'attribute' => 'Comp3',
-			],
-		],
-	]);
-
-
+#echo 'register-detail';
 echo DetailView::widget([
 	'model' => $model,
 	'mode' => DetailView::MODE_VIEW,
@@ -69,15 +25,17 @@ echo DetailView::widget([
 			'template' => '{title}',
 		],
 	],
-	'options' => [
-		'id' => implode('-', [$model->TerminalID, $model->KeyNum]),
-	],
 	/*
-	'formOptions' => [
-		'action' => ['register'],
-	],
+	  'options' => [
+	  'id' => implode('-', [$model->TerminalID, $model->KeyNum]),
+	  ],
+	  /*
+	  'formOptions' => [
+	  'action' => ['register'],
+	  ],
 	 * 
 	 */
+	'rowOptions' => ['style' => 'font-size: 12px'],
 	'attributes' => [
 		/*
 		  'ClientN' => 'Client #',
@@ -98,58 +56,70 @@ echo DetailView::widget([
 		 */
 		[
 			'attribute' => 'Name',
+			'format' => 'raw',
+			'value' => ClipboardAsset::buttonCopyText($model->Name, $model->TerminalID . $model->KeyNum . 'Name'),
 		],
 		[
 			'attribute' => 'Address',
+			'format' => 'raw',
+			'value' => ClipboardAsset::buttonCopyText($model->Address, $model->TerminalID . $model->KeyNum . 'Address'),
 		],
 		[
 			'attribute' => 'MerchantID',
+			'format' => 'raw',
+			'value' => ClipboardAsset::buttonCopyText($model->MerchantID, $model->TerminalID . $model->KeyNum . 'MerchantID'),
 		],
 		[
 			'attribute' => 'TPK_KEY',
+			'valueColOptions' => ['style' => 'font-family: monospace; font-size: 14px;'],
+			'format' => 'raw',
+			'value' => ClipboardAsset::buttonCopyText($model->TPK_KEY, $model->TerminalID . $model->KeyNum . 'TPK_KEY') .
+			'<p>' . ClipboardAsset::buttonCopyText(substr($model->TPK_KEY, 0, 16), $model->TerminalID . $model->KeyNum . 'TPK_KEY1') .
+			ClipboardAsset::buttonCopyText(substr($model->TPK_KEY, 16, 16), $model->TerminalID . $model->KeyNum . 'TPK_KEY2'),
 		],
 		[
 			'attribute' => 'TAK_KEY',
+			'valueColOptions' => ['style' => 'font-family: monospace; font-size: 14px;'],
+			'format' => 'raw',
+			'value' => ClipboardAsset::buttonCopyText($model->TAK_KEY, $model->TerminalID . $model->KeyNum . 'TAK_KEY') .
+			'<p>' . ClipboardAsset::buttonCopyText(substr($model->TAK_KEY, 0, 16), $model->TerminalID . $model->KeyNum . 'TAK_KEY1') .
+			ClipboardAsset::buttonCopyText(substr($model->TAK_KEY, 16, 16), $model->TerminalID . $model->KeyNum . 'TAK_KEY2'),
 		],
 		[
 			'attribute' => 'TDK_KEY',
+			'valueColOptions' => ['style' => 'font-family: monospace; font-size: 14px;'],
+			'format' => 'raw',
+			'value' => ClipboardAsset::buttonCopyText($model->TDK_KEY, $model->TerminalID . $model->KeyNum . 'TDK_KEY') .
+			'<p>' . ClipboardAsset::buttonCopyText(substr($model->TDK_KEY, 0, 16), $model->TerminalID . $model->KeyNum . 'TDK_KEY1') .
+			ClipboardAsset::buttonCopyText(substr($model->TDK_KEY, 16, 16), $model->TerminalID . $model->KeyNum . 'TDK_KEY2'),
 		],
 		[
 			'attribute' => 'TMK_CHECK',
+			'valueColOptions' => ['style' => 'font-family: monospace; font-size: 14px;'],
 		],
 		[
 			'attribute' => 'KeyNum',
 			'format' => 'raw',
-			'value' => (arKey::CanAccess() ?
+			'value' => (arKey::CanAccess() && $model->keys != null ?
 				Collapse::widget([
-					'id' => implode('-', [$model->TerminalID, $model->KeyNum, 'keys']),
 					'items' => [
 						[
 							'encode' => false,
 							'label' => $model->KeyNum,
 							#	'content' => $keyView,
 							'content' => $this->render('_key-detail', [
-								'model' => $model,
+								'key' => $model->keys,
 							]),
 						]
 					],
-				]) : $model->KeyNum),
+				]) : $model->KeyNum . (!arKey::CanAccess() ? '' :
+					Html::a('', '', [
+						'class' => 'btn glyphicon glyphicon-plus',
+						'data-toggle' => 'modal',
+						'data-target' => '#addKeys',
+						'title' => 'Ввести ключ',
+					]))
+			),
 		],
-	/*
-	  [
-	  'label' => 'Вопрос/Проблема' .
-	  ($model->DateClose === null ? ' ' .
-	  Html::a('', '', [
-	  'class' => 'btn glyphicon glyphicon-pencil',
-	  'data-toggle' => 'modal',
-	  'data-target' => '#addComment',
-	  'title' => 'Добавить комментарий',
-	  ]) : ''),
-	  'format' => 'html',
-	  'value' => $TextDetail,
-	  #'value' => implode('<p>', ArrayHelper::map($model->texts, 'ID', 'FullDesc')),
-	  ]
-	 * 
-	 */
 	],
 ]);

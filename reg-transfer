@@ -1,0 +1,9 @@
+#!/bin/sh -x
+
+run=php
+if [ -x /Applications/MAMP/bin/php/php5.6.10/bin/php ]; then
+    run=/Applications/MAMP/bin/php/php5.6.10/bin/php
+fi
+$run ./yii transfer/reg-delete
+$run ./yii transfer/reg-add db/POS\ терминал\ архивный.xls Лист2 E=ClientN,C=Name,F=ContractN,B=TerminalID,D=Address,G=MerchantID,N=KeyNum,K=TMK_CHECK,H=TPK_KEY,I=TAK_KEY,J=TDK_KEY
+$run ./yii transfer/reg-add db/POS\ terminal.xls POS E=ClientN,C=Name,F=ContractN,B=TerminalID,D=Address,G=MerchantID,N=KeyNum,K=TMK_CHECK,H=TPK_KEY,I=TAK_KEY,J=TDK_KEY

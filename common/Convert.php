@@ -16,10 +16,10 @@ class Convert {
 			str_replace(Yii::getAlias('@app') . '/', '', $e->getFile()) . ':' . $e->getLine() . ']';
 	}
 
-	static public function ValidaterError2Str($model, $only = null, $exclude = null) {
+	static public function ValidaterError2Str($model, $only = '', $exclude = '') {
 		$str = '';
 		foreach ($model->getErrors() as $a => $es) {
-			if (($only === null || $a == $only) && ($exclude === null || $a != $exclude)) {
+			if (($only == '' || $a == $only) && ($exclude == '' || $a != $exclude)) {
 				$str .= "{$a}[{$model->$a}]: " . implode('. ', $es) . ".\n";
 			}
 		}
@@ -55,11 +55,23 @@ class Convert {
 		#return $date->getTimestamp();
 	}
 
-	static public
-		function SQLiteDateNow() {
+	static public function SQLiteDateNow() {
 		#$date = new \DateTime();
 		#var_dump($date->getTimezone()->getName());
 		return self::DateTime2UTC(new \DateTime());
+	}
+
+	static public function KeyByGroup($key) {
+		return implode(' ', [
+			substr($key, 0, 4),
+			substr($key, 4, 4),
+			substr($key, 8, 4),
+			substr($key, 12, 4),
+			substr($key, 16, 4),
+			substr($key, 20, 4),
+			substr($key, 24, 4),
+			substr($key, 28, 4)
+		]);
 	}
 
 }

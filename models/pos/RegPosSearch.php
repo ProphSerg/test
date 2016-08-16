@@ -35,6 +35,12 @@ class RegPosSearch extends arRegPos {
 			'sort' => [
 				'defaultOrder' => ['TerminalID' => SORT_ASC],
 			],
+			/*
+			'pagination' => [
+				'pageSize' => 2,
+			],
+			 * 
+			 */
 		]);
 
 		if (!($this->load($param) && $this->validate())) {
