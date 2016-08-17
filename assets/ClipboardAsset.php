@@ -36,8 +36,9 @@ class ClipboardAsset extends AssetBundle {
 	}
 
 	static public function buttonCopyText($value, $id, $btnSize = 13) {
-		return self::buttonCopy($id, $btnSize) .
-			Html::tag('span', $value, ['id' => 'clip_' . $id]);
+
+		return (($value === null) || ($value == '') ? null : self::buttonCopy($id, $btnSize) .
+				Html::tag('span', $value, ['id' => 'clip_' . $id]));
 	}
 
 }

@@ -60,6 +60,11 @@ echo DetailView::widget([
 			'value' => ClipboardAsset::buttonCopyText($model->Name, $model->TerminalID . $model->KeyNum . 'Name'),
 		],
 		[
+			'attribute' => 'City',
+			'format' => 'raw',
+			'value' => ClipboardAsset::buttonCopyText($model->City, $model->TerminalID . $model->KeyNum . 'City'),
+		],
+		[
 			'attribute' => 'Address',
 			'format' => 'raw',
 			'value' => ClipboardAsset::buttonCopyText($model->Address, $model->TerminalID . $model->KeyNum . 'Address'),
