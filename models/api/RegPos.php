@@ -19,7 +19,10 @@ class RegPos extends Model {
 			$trans = arRegPos::getDb()->beginTransaction();
 			try {
 				#Yii::info(['Save!', 'mail', $mail], 'parse');
-				$rp = new arRegPos();
+				$rp = arRegPos::find()->findReg($frp['TerminalID'], $frp['KeyNum']);
+				if ($rp == null) {
+					$rp = new arRegPos();
+				}
 				$rp->attributes = $frp;
 				$rp->DateReg = Convert::Date2SQLiteDate($mail->PostedDate);
 				if ($rp->save() === false) {

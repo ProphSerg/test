@@ -80,7 +80,7 @@ class arRegPos extends \yii\db\ActiveRecord {
 			'TAK_CHECK' => 'TAK_CHECK',
 			'TDK_KEY' => 'TDK_KEY',
 			'TDK_CHECK' => 'TDK_CHECK',
-			'DateReg' => 'Date Reg',
+			'DateReg' => 'Дата регистрации',
 		];
 	}
 

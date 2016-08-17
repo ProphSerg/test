@@ -39,6 +39,10 @@ echo GridView::widget([
 				'expandOneOnly' => true,
 			],
 			[
+				'attribute' => 'DateReg',
+				'width' => '70px',
+			],
+			[
 				'attribute' => 'TerminalID',
 				'width' => '70px',
 			],

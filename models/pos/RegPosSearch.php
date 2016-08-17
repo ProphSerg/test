@@ -33,12 +33,15 @@ class RegPosSearch extends arRegPos {
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
 			'sort' => [
-				'defaultOrder' => ['TerminalID' => SORT_ASC],
+				'defaultOrder' => [
+					'DateReg' => SORT_DESC,
+					'TerminalID' => SORT_ASC
+				],
 			],
 			/*
-			'pagination' => [
-				'pageSize' => 2,
-			],
+			  'pagination' => [
+			  'pageSize' => 2,
+			  ],
 			 * 
 			 */
 		]);
