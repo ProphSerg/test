@@ -10,7 +10,7 @@ $this->title = 'Список банкоматов';
 echo GridView::widget([
 	'dataProvider' => $dataProvider,
 	#'filterRowOptions' => ['class' => 'atmTableFilter'],
-	#'pjax' => true,
+#'pjax' => true,
 	'hover' => true,
 	'condensed' => true,
 	'floatHeader' => true,
@@ -20,11 +20,14 @@ echo GridView::widget([
 #'filterRowOptions' => ['class' => 'kartik-sheet-style'],
 	'columns' => [
 		[
+			'class' => kartik\grid\SerialColumn::className(),
+		],
+		[
 			'attribute' => 'Model',
 			'class' => 'kartik\grid\EditableColumn',
 			'editableOptions' => [
-				#'header' => 'Name',
-				#'size' => 'md',
+#'header' => 'Name',
+#'size' => 'md',
 				'formOptions' => ['action' => ['/atm/editatm']]
 			],
 		],
@@ -32,8 +35,8 @@ echo GridView::widget([
 			'attribute' => 'Serial',
 			'class' => 'kartik\grid\EditableColumn',
 			'editableOptions' => [
-				#'header' => 'Name',
-				#'size' => 'md',
+#'header' => 'Name',
+#'size' => 'md',
 				'formOptions' => ['action' => ['/atm/editatm']]
 			],
 		],
@@ -41,8 +44,8 @@ echo GridView::widget([
 			'attribute' => 'TerminalID',
 			'class' => 'kartik\grid\EditableColumn',
 			'editableOptions' => [
-				#'header' => 'Name',
-				#'size' => 'md',
+#'header' => 'Name',
+#'size' => 'md',
 				'formOptions' => ['action' => ['/atm/editatm']]
 			],
 		],
@@ -50,8 +53,8 @@ echo GridView::widget([
 			'attribute' => 'Addres',
 			'class' => 'kartik\grid\EditableColumn',
 			'editableOptions' => [
-				#'header' => 'Name',
-				#'size' => 'md',
+#'header' => 'Name',
+#'size' => 'md',
 				'formOptions' => ['action' => ['/atm/editatm']]
 			],
 		],
@@ -59,8 +62,8 @@ echo GridView::widget([
 			'attribute' => 'Type',
 			'class' => 'kartik\grid\EditableColumn',
 			'editableOptions' => [
-				#'header' => 'Name',
-				#'size' => 'md',
+#'header' => 'Name',
+#'size' => 'md',
 				'formOptions' => ['action' => ['/atm/editatm']]
 			],
 		],
@@ -68,8 +71,8 @@ echo GridView::widget([
 			'attribute' => 'InvNum',
 			'class' => 'kartik\grid\EditableColumn',
 			'editableOptions' => [
-				#'header' => 'Name',
-				#'size' => 'md',
+#'header' => 'Name',
+#'size' => 'md',
 				'formOptions' => ['action' => ['/atm/editatm']]
 			],
 		],
