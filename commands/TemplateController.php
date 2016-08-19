@@ -22,10 +22,11 @@ class TemplateController extends Controller {
 	 * @param string $file Файл шаблона
 	 */
 	public function actionInfo($file) {
-		$tp = IOFactory::load($file, 'MsDoc');
+		$tp = IOFactory::load($file);
 		#var_dump($tp);
 		echo "Show Sections:\n";
 		$i = 0;
+		/*
 		foreach ($tp->getSections() as $sN => $s) {
 			echo "Section: " . $i++ . "({$sN})\n";
 			echo "\tSectionId: {$s->getSectionId()}\n";
@@ -36,9 +37,11 @@ class TemplateController extends Controller {
 			foreach ($s->getElements() as $eN => $e) {
 				echo "\tElement: " . $j++ . "({$eN})\n";
 				echo "\t\tClass: " . get_class($e) . "\n";
-				echo "\t\tText: {$e->getText()}\n";
+				#echo "\t\tText: {$e->getText()}\n";
 			}
 		}
+		 *
+		 */
 		#echo "Show Sections:\n\t" . implode("\n\t", $tp->getSections());
 		#echo "\n";
 		return 0;
