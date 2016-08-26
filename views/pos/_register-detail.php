@@ -107,6 +107,7 @@ echo DetailView::widget([
 			'format' => 'raw',
 			'value' => (arKey::CanAccess() && $model->keys != null ?
 				Collapse::widget([
+					'id' => $model->TerminalID . $model->KeyNum,
 					'items' => [
 						[
 							'encode' => false,
@@ -119,12 +120,37 @@ echo DetailView::widget([
 					],
 				]) : $model->KeyNum . (!arKey::CanAccess() ? '' :
 					Html::a('', '', [
+						'id' => 'modal-btn-add-key',
 						'class' => 'btn glyphicon glyphicon-plus',
-						'data-toggle' => 'modal',
-						'data-target' => '#addKeys',
+						#'data-toggle' => 'modal',
+						'data' => [
+							'target' => '#addKeys',
+							'keynum' => $model->KeyNum,
+							'keycheck' => $model->TMK_CHECK,
+						],
 						'title' => 'Ввести ключ',
 					]))
 			),
 		],
 	],
 ]);
+
+echo "END";
+if (arKey::CanAccess()) {
+	yii\bootstrap\Modal::begin([
+		'header' => 'Введите компоненты ключа',
+		'id' => 'modal-form-add-key',
+		'size' => 'modal-md',
+	]);
+	?>
+	<div id='modal-content'>Загрузка</div>
+	<?php yii\bootstrap\Modal::end(); ?>
+	<script>
+		$('#modal-btn-add-key').on('click', function () {
+			$('#modal-form-add-key').modal('show')
+					.find('#modal-content')
+					.load($(this).attr('data-target'))
+		});
+	</script>
+	<?php
+}
