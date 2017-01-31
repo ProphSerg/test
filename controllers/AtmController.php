@@ -95,6 +95,7 @@ class AtmController extends Controller {
 		$atm = arSprATM::find()->indexBy('ID');
 		$dataProvider = new ActiveDataProvider([
 			'query' => $atm,
+			'pagination' => false,
 		]);
 		return $this->render('atmlist', [
 				'dataProvider' => $dataProvider,

@@ -79,12 +79,17 @@ class TransferController extends Controller {
 				$k->$f = $xls_sheet->getCell($c . $i)->getValue();
 				#echo $cell->getColumn() . '(' . $cell->getValue() . ') ';
 			}
-			if ($k->validate() == false) {
-				echo Convert::ValidaterError2Str($k, 'Check');
+
+			if( !($k->Comp1 === null || $k->Comp1 == '' ||
+			    $k->Comp2 === null || $k->Comp2 == '' ||
+			    $k->Comp3 === null || $k->Comp3 == '')) {
+
+			    if ($k->validate() == false) {
+					echo Convert::ValidaterError2Str($k);
+				}
+
+				$k->save() && $kn++;
 			}
-
-			$k->save() && $kn++;
-
 			echo "\r";
 		}
 		echo "\nDone.\nAdded {$kn} keys\n";
@@ -143,6 +148,9 @@ class TransferController extends Controller {
 			foreach ($fld as $f => $c) {
 				$k->$f = $xls_sheet->getCell($c . $i)->getValue();
 				#echo "Cell({$c}{$i}): " . $xls_sheet->getCell($c . $i)->getValue();
+			}
+			if ($k->TMK_CHECK === null || $k->TMK_CHECK == '') {
+				$k->TMK_CHECK = '000000';
 			}
 			if ($k->validate() == false) {
 				#echo Convert::ValidaterError2Str($k);
