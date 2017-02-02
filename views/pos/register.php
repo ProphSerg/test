@@ -3,6 +3,7 @@
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use app\assets\ClipboardAsset;
+use yii\helpers\Url;
 
 ClipboardAsset::Instantiate($this, '.btnClip');
 
@@ -27,7 +28,7 @@ echo GridView::widget([
 			'value' => function ($model, $key, $index, $column) {
 				return GridView::ROW_COLLAPSED;
 			},
-			'detailUrl' => 'register-detail',
+			'detailUrl' => Url::to(['register-detail']),
 			/*
 			  'detail' => function ($model, $key, $index, $column) {
 
