@@ -7,7 +7,7 @@ use yii\bootstrap\Modal;
 use app\models\atm\arSprATMOrderStatus;
 use app\models\atm\arSprATMOrderTech;
 
-$this->title = 'Справочник инженеров';
+$this->title = 'Заявки на ремонт банкоматов';
 
 echo GridView::widget([
 	'dataProvider' => $dataProvider,
