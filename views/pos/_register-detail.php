@@ -121,7 +121,7 @@ echo DetailView::widget([
                         ],
                     ]) : $model->KeyNum . (!arKey::CanAccess() ? '' :
                             Html::a('', '#', [
-                                'id' => 'modal-btn-add-key',
+                                'id' => $model->TerminalID . $model->KeyNum . '-mbak',
                                 'class' => 'btn glyphicon glyphicon-plus',
                                 #'data-toggle' => 'modal',
                                 'data' => [
@@ -140,15 +140,15 @@ echo DetailView::widget([
 if (($model->keys == null) && arKey::CanAccess()) {
     yii\bootstrap\Modal::begin([
         'header' => 'Введите компоненты ключа',
-        'id' => 'modal-form-add-key',
+        'id' => $model->TerminalID . $model->KeyNum . '-mfak',
         'size' => 'modal-md',
     ]);
     ?>
     <div id='modal-content'>Загрузка</div>
     <?php yii\bootstrap\Modal::end(); ?>
     <script type="text/javascript">
-        $('#modal-btn-add-key').on('click', function () {
-            $('#modal-form-add-key').modal('show')
+        $('#<?= $model->TerminalID . $model->KeyNum ?>-mbak').on('click', function () {
+            $('#<?= $model->TerminalID . $model->KeyNum ?>-mfak').modal('show')
                     .find('#modal-content')
                     .load($(this).attr('data-target')
                             , {

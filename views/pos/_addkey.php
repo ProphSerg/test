@@ -4,7 +4,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
 $form = ActiveForm::begin([
-            'id' => 'order-form',
+            'id' => $model->Check . $model->Number . '-of',
             'enableAjaxValidation' => true,
         ]);
 ?>
