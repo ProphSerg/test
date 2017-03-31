@@ -92,10 +92,16 @@ class AtmController extends Controller {
 		]);
 	}
 	public function actionAtmlist() {
-		$atm = arSprATM::find()->indexBy('ID');
+//		$atm = arSprATM::find()->indexBy('ID');
+		$atm = arSprATM::find();
 		$dataProvider = new ActiveDataProvider([
 			'query' => $atm,
 			'pagination' => false,
+			'sort' => [
+				'defaultOrder' => [
+					'TerminalID' => SORT_ASC,
+				],
+			],
 		]);
 		return $this->render('atmlist', [
 				'dataProvider' => $dataProvider,
