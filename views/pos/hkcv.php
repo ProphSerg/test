@@ -20,6 +20,10 @@ echo GridView::widget([
 #'filterRowOptions' => ['class' => 'kartik-sheet-style'],
     'columns' => [
         [
+            'attribute' => 'KCV',
+            'width' => '50px',
+        ],
+        [
             'attribute' => 'Serial',
             'width' => '70px',
         ],

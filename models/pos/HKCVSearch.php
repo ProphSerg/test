@@ -21,7 +21,7 @@ class HKCVSearch extends arHKCV {
 
 	public function rules() {
 		return[
-			[['Serial'], 'string'],
+			[['KCV', 'Serial'], 'string'],
 		];
 	}
 
@@ -53,6 +53,7 @@ class HKCVSearch extends arHKCV {
 		$query->andFilterWhere([
 			'and',
 			['like', 'Serial', $this->Serial],
+			['like', 'KCV', $this->KCV],
 		]);
 		#var_dump($query->where);
 		return $dataProvider;
