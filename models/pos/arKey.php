@@ -107,7 +107,7 @@ class arKey extends \yii\db\ActiveRecord {
             'Comp2' => 'Компонента 2',
             'Comp3' => 'Компонента 3',
             'Check' => 'Контрольная сумма (KCV)',
-            'FullKey'=>'Итоговый ключ'
+            'FullKey' => 'Итоговый ключ'
         ];
     }
 

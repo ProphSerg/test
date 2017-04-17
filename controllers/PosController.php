@@ -13,6 +13,8 @@ use app\models\pos\arKeyReserve;
 use app\models\pos\arRegPos;
 use app\models\pos\KeyReserveModel;
 use app\models\pos\RegPosSearch;
+use app\models\pos\HKCVSearch;
+use app\models\pos\arHKCV;
 use yii\widgets\ActiveForm;
 
 class PosController extends Controller {
@@ -130,4 +132,12 @@ class PosController extends Controller {
         return $this->renderAjax(Url::to('_addkey'), ['model' => $model]);
     }
 
+    public function actionHkcv() {
+        $searchModel = new HKCVSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->get());
+        return $this->render('hkcv', [
+                    'dataProvider' => $dataProvider,
+                    'searchModel' => $searchModel
+        ]);
+    }
 }
