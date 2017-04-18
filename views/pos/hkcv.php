@@ -12,7 +12,7 @@ echo GridView::widget([
     #'filterRowOptions' => ['class' => 'atmTableFilter'],
     #'pjax' => true,
     'hover' => true,
-    'condensed' => true,
+    #'condensed' => true,
     'floatHeader' => true,
     'tableOptions' => ['class' => 'posTable'],
 #'striped' => false,
@@ -29,19 +29,24 @@ echo GridView::widget([
         ],
         [
             'attribute' => 'DateEnter',
-            'format' => ['date', 'php:d/m/Y h:i:s'],
+            'format' => ['date', 'php:d/m/Y H:i:s'],
             'width' => '150px',
         ],
         [
             'attribute' => 'reg.FullDesc',
-            'label' => 'ТСП',
+            'label' => 'ТСП (Дата регистрации, Номер терминала, Название, Адрес)',
             'format' => 'raw',
             'value' => function($data) {
                 $str = '';
                 $i = 0;
                 $tt = [];
                 foreach ($data['reg'] as $item) {
-                    $str .= '<p>' . $item['FullDesc'];
+                    $str .= '<p>' . implode('. ', [
+                                Yii::$app->formatter->asDatetime($item['DateReg'], 'php:d/m/Y H:i'),
+                                '<b>' . $item['TerminalID'] . "</b>",
+                                $item['Name'],
+                                $item['Address'],
+                    ]);
                 }
                 return $str;
             }

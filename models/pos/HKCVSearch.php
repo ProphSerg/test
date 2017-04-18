@@ -34,8 +34,8 @@ class HKCVSearch extends arHKCV {
 			'query' => $query,
 			'sort' => [
 				'defaultOrder' => [
-					'Serial' => SORT_ASC,
 					'DateEnter' => SORT_DESC,
+					'Serial' => SORT_ASC,
 				],
 			],
 			/*
