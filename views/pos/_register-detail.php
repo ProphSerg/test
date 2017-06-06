@@ -102,6 +102,8 @@ echo DetailView::widget([
         [
             'attribute' => 'TMK_CHECK',
             'valueColOptions' => ['style' => 'font-family: monospace; font-size: 14px;'],
+            'format' => 'raw',
+            'value' => $model->TMK_CHECK . ' ' . Html::a('Hypercom', Url::to(['pos/hkcv', 'HKCVSearch[KCV]' => $model->TMK_CHECK]), [])
         ],
         [
             'attribute' => 'KeyNum',
