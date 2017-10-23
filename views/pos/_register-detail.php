@@ -79,25 +79,31 @@ echo DetailView::widget([
             'attribute' => 'TPK_KEY',
             'valueColOptions' => ['style' => 'font-family: monospace; font-size: 14px;'],
             'format' => 'raw',
-            'value' => ClipboardAsset::buttonCopyText($model->TPK_KEY, $model->TerminalID . $model->KeyNum . 'TPK_KEY') .
-            '<p>' . ClipboardAsset::buttonCopyText(substr($model->TPK_KEY, 0, 16), $model->TerminalID . $model->KeyNum . 'TPK_KEY1') .
-            ClipboardAsset::buttonCopyText(substr($model->TPK_KEY, 16, 16), $model->TerminalID . $model->KeyNum . 'TPK_KEY2'),
+            'value' => ClipboardAsset::buttonCopyText($model->TPK_KEY, $model->TerminalID . $model->KeyNum . 'TPK_KEY')
+        /*
+          . '<p>' . ClipboardAsset::buttonCopyText(substr($model->TPK_KEY, 0, 16), $model->TerminalID . $model->KeyNum . 'TPK_KEY1') .
+          ClipboardAsset::buttonCopyText(substr($model->TPK_KEY, 16, 16), $model->TerminalID . $model->KeyNum . 'TPK_KEY2'),
+         */
         ],
         [
             'attribute' => 'TAK_KEY',
             'valueColOptions' => ['style' => 'font-family: monospace; font-size: 14px;'],
             'format' => 'raw',
-            'value' => ClipboardAsset::buttonCopyText($model->TAK_KEY, $model->TerminalID . $model->KeyNum . 'TAK_KEY') .
-            '<p>' . ClipboardAsset::buttonCopyText(substr($model->TAK_KEY, 0, 16), $model->TerminalID . $model->KeyNum . 'TAK_KEY1') .
-            ClipboardAsset::buttonCopyText(substr($model->TAK_KEY, 16, 16), $model->TerminalID . $model->KeyNum . 'TAK_KEY2'),
+            'value' => ClipboardAsset::buttonCopyText($model->TAK_KEY, $model->TerminalID . $model->KeyNum . 'TAK_KEY')
+        /*
+          . '<p>' . ClipboardAsset::buttonCopyText(substr($model->TAK_KEY, 0, 16), $model->TerminalID . $model->KeyNum . 'TAK_KEY1') .
+          ClipboardAsset::buttonCopyText(substr($model->TAK_KEY, 16, 16), $model->TerminalID . $model->KeyNum . 'TAK_KEY2')
+         */
         ],
         [
             'attribute' => 'TDK_KEY',
             'valueColOptions' => ['style' => 'font-family: monospace; font-size: 14px;'],
             'format' => 'raw',
-            'value' => ClipboardAsset::buttonCopyText($model->TDK_KEY, $model->TerminalID . $model->KeyNum . 'TDK_KEY') .
-            '<p>' . ClipboardAsset::buttonCopyText(substr($model->TDK_KEY, 0, 16), $model->TerminalID . $model->KeyNum . 'TDK_KEY1') .
-            ClipboardAsset::buttonCopyText(substr($model->TDK_KEY, 16, 16), $model->TerminalID . $model->KeyNum . 'TDK_KEY2'),
+            'value' => ClipboardAsset::buttonCopyText($model->TDK_KEY, $model->TerminalID . $model->KeyNum . 'TDK_KEY')
+        /*
+          . '<p>' . ClipboardAsset::buttonCopyText(substr($model->TDK_KEY, 0, 16), $model->TerminalID . $model->KeyNum . 'TDK_KEY1') .
+          ClipboardAsset::buttonCopyText(substr($model->TDK_KEY, 16, 16), $model->TerminalID . $model->KeyNum . 'TDK_KEY2')
+         */
         ],
         [
             'attribute' => 'TMK_CHECK',
