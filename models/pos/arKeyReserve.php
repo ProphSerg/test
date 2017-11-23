@@ -12,83 +12,103 @@ use Yii;
  */
 class arKeyReserve extends \yii\db\ActiveRecord {
 
-	/**
-	 * @inheritdoc
-	 */
-	public static function tableName() {
-		return 'KeyReserve';
-	}
+    /**
+     * @inheritdoc
+     */
+    public $blockKey;
 
-	/**
-	 * @return \yii\db\Connection the database connection used by this AR class.
-	 */
-	public static function getDb() {
-		return Yii::$app->get('dbPos');
-	}
+    public static function tableName() {
+        return 'KeyReserve';
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function rules() {
-		return [
-			[['Number'], 'required'],
-			[['Number', 'Comment'], 'string'],
-			[['Number'], 'unique'],
-			[['Number'], 'trim'],
-			[['Number'], 'filter', 'filter' => 'strtoupper', 'skipOnArray' => true],
-			[['Number'], 'match', 'pattern' => arKey::NUMBER_PATTERN],
-		];
-	}
+    /**
+     * @return \yii\db\Connection the database connection used by this AR class.
+     */
+    public static function getDb() {
+        return Yii::$app->get('dbPos');
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function attributeLabels() {
-		return [
-			'Number' => 'Номер ключа',
-			'Comment' => 'Комментарий',
-		];
-	}
+    /**
+     * @inheritdoc
+     */
+    public function rules() {
+        return [
+            [['Number'], 'required'],
+            [['Number', 'Comment'], 'string'],
+            [['Number'], 'unique'],
+            [['Number'], 'trim'],
+            [['Number'], 'filter', 'filter' => 'strtoupper', 'skipOnArray' => true],
+            [['Number'], 'match', 'pattern' => arKey::NUMBER_PATTERN],
+        ];
+    }
 
-	/**
-	 * @inheritdoc
-	 * @return KeyReserveQuery the active query used by this AR class.
-	 */
-	public static function find() {
-		return new aqKeyReserve(get_called_class());
-	}
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels() {
+        return [
+            'Number' => 'Номер ключа',
+            'Comment' => 'Комментарий',
+            'blockKey' => 'BlockKey1',
+        ];
+    }
 
-	public static function findReserve($keynum) {
-		return self::find()->where(['Number' => $keynum])->one();
-	}
+    /**
+     * @inheritdoc
+     * @return KeyReserveQuery the active query used by this AR class.
+     */
+    public static function find() {
+        return new aqKeyReserve(get_called_class());
+    }
 
-	public static function EnterRange($keydate, $start, $end) {
-		$trans = self::getDb()->beginTransaction();
-		try {
+    public static function findReserve($keynum) {
+        return self::find()->where(['Number' => $keynum])->one();
+    }
 
-			for ($i = $start; $i <= $end; $i++) {
-				$kr = new arKeyReserve();
-				$kr->Number = sprintf("%s_%s_%04d", arKey::NUMBER_PREFIX, $keydate, $i);
-				$kr->validate() && $kr->save();
-			}
-			$trans->commit();
+    public static function findBlockKeys() {
+        return self::find()->select(['blockKey' => 'SubStr(Number,1,12)'])->distinct()->orderby('blockKey')->all();
+#        return self::find()->select(['blockKey' => 'Number'])->distinct()->all();
+    }
 
-			return true;
-		} catch (\Exception $e) {
-			$trans->rollback();
+    public static function findByBlock($block) {
+        return self::find()->
+                        where(['like', 'Number', $block])->
+                        orderby('Number')->
+                        all();
+    }
 
-			return false;
-		}
-	}
+    public function getPos() {
+        return $this->hasOne(arRegPos::className(), ['KeyNum' => 'Number']);
+    }
 
-	public static function UpdateComment($keynum, $comment) {
-		if (($kr = self::findReserve($keynum)) == null) {
-			$kr = new arKeyReserve();
-			$kr->Number = $keynum;
-		}
-		$kr->Comment = $comment;
+    public static function EnterRange($keydate, $start, $end) {
+        $trans = self::getDb()->beginTransaction();
+        try {
 
-		$kr->validate() && $kr->save();
-	}
+            for ($i = $start; $i <= $end; $i++) {
+                $kr = new arKeyReserve();
+                $kr->Number = sprintf("%s_%s_%04d", arKey::NUMBER_PREFIX, $keydate, $i);
+                #var_dump($kr);
+                $kr->validate() && $kr->save();
+            }
+            $trans->commit();
+
+            return true;
+        } catch (\Exception $e) {
+            $trans->rollback();
+
+            return false;
+        }
+    }
+
+    public static function UpdateComment($keynum, $comment) {
+        if (($kr = self::findReserve($keynum)) == null) {
+            $kr = new arKeyReserve();
+            $kr->Number = $keynum;
+        }
+        $kr->Comment = $comment;
+
+        $kr->validate() && $kr->save();
+    }
 
 }

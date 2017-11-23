@@ -16,6 +16,7 @@ use app\models\pos\RegPosSearch;
 use app\models\pos\HKCVSearch;
 use app\models\pos\arHKCV;
 use yii\widgets\ActiveForm;
+use kartik\mpdf\Pdf;
 
 class PosController extends Controller {
 
@@ -140,4 +141,54 @@ class PosController extends Controller {
                     'searchModel' => $searchModel
         ]);
     }
+
+    public function actionKeys() {
+        $post = \Yii::$app->request->post();
+        #var_dump($post);
+        $KeyReserveModel = new KeyReserveModel();
+        $BlockKeyModel = arKeyReserve::findBlockKeys();
+
+        if (isset($post['btn-key-reserve'])) {
+            if ($KeyReserveModel->load($post)) {
+                #var_dump($KeyReserveModel);
+                $KeyReserveModel->save();
+                #return $this->redirect(['/pos']);
+            }
+        } elseif (isset($post['btn-rpt-block-key'])) {
+            $BlockKey = $post['ddl-blockKey'];
+            $content = $this->renderPartial('key-use-report', [
+                'model' => arKeyReserve::findByBlock($BlockKey),
+            ]);
+            #var_dump($content);
+            
+            $pdf = new Pdf([
+                'mode' => Pdf::MODE_UTF8,
+                'format' => Pdf::FORMAT_A4,
+                #'orientation' => Pdf::ORIENT_LANDSCAPE,
+                'orientation' => 'P',
+                'destination' => Pdf::DEST_BROWSER,
+                #'cssFile' => '@app/views/pos/key-use-report.css',
+                #'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/bootstrap.min.css',
+                'content' => $content,
+                'methods' => [
+                    'SetHeader' => '||' . date('r'),
+                    'SetFooter' => '||стр. {PAGENO}',
+                ]
+            ]);
+            return $pdf->render();
+            return $content;
+        }
+
+        return $this->render('keys', [
+                    'KeyReserveModel' => $KeyReserveModel,
+                    'BlockKeyModel' => $BlockKeyModel,
+        ]);
+    }
+
+    public function actionPrintUseKeys($param) {
+        var_dump($param);
+        $post = \Yii::$app->request->post();
+        var_dump($post);
+    }
+
 }
