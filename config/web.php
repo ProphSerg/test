@@ -116,6 +116,7 @@ $config = [
 				'request/add/<type:\d+>' => 'request/add',
 				'request/print/<type:\w+>' => 'request/print',
 				'report/<type:(range|one)>/<name>' => 'report/report',
+                                'pos/key-reserve/<type:\w+>' => 'pos/key-reserve',
 			],
 		],
 	],

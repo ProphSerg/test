@@ -81,13 +81,13 @@ class arKeyReserve extends \yii\db\ActiveRecord {
         return $this->hasOne(arRegPos::className(), ['KeyNum' => 'Number']);
     }
 
-    public static function EnterRange($keydate, $start, $end) {
+    public static function EnterRange($keytype, $keydate, $start, $end) {
         $trans = self::getDb()->beginTransaction();
         try {
 
             for ($i = $start; $i <= $end; $i++) {
                 $kr = new arKeyReserve();
-                $kr->Number = sprintf("%s_%s_%04d", arKey::NUMBER_PREFIX, $keydate, $i);
+                $kr->Number = sprintf("%s_%s_%04d", $keytype, $keydate, $i);
                 #var_dump($kr);
                 $kr->validate() && $kr->save();
             }

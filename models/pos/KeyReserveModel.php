@@ -17,14 +17,15 @@ use yii\base\Model;
  */
 class KeyReserveModel extends Model {
 
+    public $KeyType;
     public $KeyDate;
     public $KeyStart;
     public $KeyEnd;
 
     public function rules() {
         return [
-            [['KeyDate', 'KeyStart', 'KeyEnd'], 'required'],
-            [['KeyDate'], 'string'],
+            [['KeyType', 'KeyDate', 'KeyStart', 'KeyEnd'], 'required'],
+            [['KeyType', 'KeyDate'], 'string'],
             [['KeyStart', 'KeyEnd'], 'integer', 'min' => 1, 'max' => 9999],
             [['KeyEnd'], 'compare', 'compareAttribute' => 'KeyStart', 'operator' => '>='],
             [['KeyDate'], 'match', 'pattern' => '/^\d{6}$/'],
@@ -33,15 +34,16 @@ class KeyReserveModel extends Model {
 
     public function attributeLabels() {
         return [
-            'KeyDate' => arKey::NUMBER_PREFIX . '_',
-            'KeyStart' => 'С',
-            'KeyEnd' => 'ПО',
+            'KeyType' => 'Тип ключа', 
+            'KeyDate' => 'Номер ключа',
+            'KeyStart' => 'Начало диапазона',
+            'KeyEnd' => 'Конец диапазона',
         ];
     }
 
     public function save() {
-        var_dump($this);
-        return arKeyReserve::EnterRange($this->KeyDate, $this->KeyStart, $this->KeyEnd);
+        #var_dump($this);
+        return arKeyReserve::EnterRange($this->KeyType, $this->KeyDate, $this->KeyStart, $this->KeyEnd);
     }
 
 }

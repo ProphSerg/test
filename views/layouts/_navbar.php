@@ -15,6 +15,7 @@ NavBar::begin([
 	'innerContainerOptions' => ['class' => 'container-fluid'],
 	#'ContainerEnds' => '<div class="b-yellow-strip"></div><div class="b-green-strip"></div>',
 ]);
+
 $items = myMenuHelper::getAssignedMenuByName(Yii::$app->user->id, 'TopMenu');
 if (Yii::$app->user->isGuest) {
 	$items[] = ['label' => 'Login', 'url' => ['admin/user/login']];

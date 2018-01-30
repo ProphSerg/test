@@ -36,116 +36,6 @@ function printCheck($k, $p) {
             foreach ($model as $key) {
                 ?>
                 <div align=center>
-                    <table border=1 cellspacing=0 cellpadding=0 style="padding:0cm 5.4pt 0cm 5.4pt">
-                        <tr>
-                            <td colspan="5" rowspan="2">
-                                <b>
-                                    <span>Серийный номер: <u><?= $key->Number ?></u>
-                                    </span>
-                                </b>
-                            </td>
-                            <td rowspan="2">                                    
-                                <b>
-                                    <span>Terminal_Id: <u><?= (($key->pos === null) ? "" : $key->pos->TerminalID) ?></u>
-                                    </span>
-                                </b>
-                            </td>
-                            <td rowspan="2">
-                                <span style='text-transform:uppercase'>Компрометация:</span>
-                            </td>
-                            <td colspan="2" rowspan="2">
-                                <b>
-                                    <span>POS</span>
-                                </b>
-                            </td>
-                            <td>
-                                <b>
-                                    <s>
-                                        <span>DES</span>
-                                    </s>
-                                </b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>              
-                                <b>
-                                    <span>TDES</span>
-                                </b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>&nbsp;</td>
-                            <td colspan="2">ответственный за настройку</td>
-                            <td>&nbsp;</td>
-                            <td colspan="3">ответственные за получение и загрузку октмк</td>
-                            <td>&nbsp;</td>
-                            <td colspan="2">ответственный наблюдатель</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="2">ф.и.о.</td>
-                            <td colspan="2"></td>
-                            <td rowspan="2">ф.и.о.</td>
-                            <td>1-ая</td>
-                            <td>2-ая</td>
-                            <td>3-я</td>
-                            <td rowspan="2">ф.и.о.</td>
-                            <td colspan="2">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">курочкин</td>
-                            <td>ротарь</td>
-                            <td>курочкин</td>
-                            <td>зуев</td>
-                            <td colspan="2">бурлак</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="2">вскрытие мск</td>
-                            <td colspan="2"></td>
-                            <td rowspan="2">вскрытие мск</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td>&nbsp;</td>
-                            <td rowspan="2">коментарий</td>
-                            <td colspan="2">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2"><?= printDate($key) ?></td>
-                            <td><?= printDate($key) ?></td>
-                            <td><?= printDate($key) ?></td>
-                            <td><?= printDate($key) ?></td>
-                            <td colspan="2">&nbsp;</td>
-                        </tr>
-                        <tr>
-                            <td rowspan="4">check value</td>
-                            <td>tmk</td>
-                            <td>tpk</td>
-                            <td rowspan="4">уничтожение</td>
-                            <td rowspan="3">&nbsp;</td>
-                            <td rowspan="3">&nbsp;</td>
-                            <td rowspan="3">&nbsp;</td>
-                            <td rowspan="4">уничтожение</td>
-                            <td colspan="2" rowspan="3"></td>
-                        </tr>
-                        <tr>
-                            <td><?= printCheck($key, 'TMK') ?></td>
-                            <td><?= printCheck($key, 'TPK') ?></td>
-                        </tr>
-                        <tr>
-                            <td>tdk</td>
-                            <td>tak</td>
-                        </tr>
-                        <tr>
-                            <td><?= printCheck($key, 'TDK') ?></td>
-                            <td><?= printCheck($key, 'TAK') ?></td>
-                            <td><?= printDateDel($key) ?></td>
-                            <td><?= printDateDel($key) ?></td>
-                            <td><?= printDateDel($key) ?></td>
-                            <td colspan="2"><?= printDateDel($key) ?></td>
-                        </tr>
-                    </table>
-                    <p></p>
-
-
                     <table class=MsoNormalTable border=1 cellspacing=0 cellpadding=0 width=939
                            style='width:704.35pt;border-collapse:collapse;border:none'>
                         <tr style='height:12.75pt'>
@@ -439,7 +329,7 @@ function printCheck($k, $p) {
                                     </b>
                                 </p>
                                 <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;text-align:center;line-height:normal'>
-                                    <span lang=EN-US style='font-size:8.0pt;'><?= printCheck($key, 'TMK') ?></span>
+                                    <span lang=EN-US style='font-size:8.0pt;'><?= printCheck($key,'TMK') ?></span>
                                 </p>
                             </td>
                             <td width=84 nowrap valign=top style='width:63.2pt;border-top:none;
@@ -451,7 +341,7 @@ function printCheck($k, $p) {
                                     </b>
                                 </p>
                                 <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;text-align:center;line-height:normal'>
-                                    <span lang=EN-US style='font-size:8.0pt;'><?= printCheck($key, 'TPK') ?></span>
+                                    <span lang=EN-US style='font-size:8.0pt;'><?= printCheck($key,'TPK') ?></span>
                                 </p>
                             </td>
                             <td width=40 nowrap rowspan=2 style='width:29.75pt;border-top:none;
@@ -515,7 +405,7 @@ function printCheck($k, $p) {
                                     </b>
                                 </p>
                                 <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;text-align:center;line-height:normal'>
-                                    <span lang=EN-US style='font-size:8.0pt;'><?= printCheck($key, 'TDK') ?></span>
+                                    <span lang=EN-US style='font-size:8.0pt;'><?= printCheck($key,'TDK') ?></span>
                                 </p>
                             </td>
                             <td width=84 nowrap valign=top style='width:63.2pt;border-top:none;
@@ -527,7 +417,7 @@ function printCheck($k, $p) {
                                     </b>
                                 </p>
                                 <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;text-align:center;line-height:normal'>
-                                    <span lang=EN-US style='font-size:8.0pt;'><?= printCheck($key, 'TAK') ?></span>
+                                    <span lang=EN-US style='font-size:8.0pt;'><?= printCheck($key,'TAK') ?></span>
                                 </p>
                             </td>
                         </tr>

@@ -62,9 +62,13 @@ class PosController extends Controller {
         ]);
     }
 
-    public function actionKeyReserve() {
+    public function actionKeyReserve($type) {
         $query = arKeyReserve::find()
-                ->where(['Comment' => null])
+                ->where([
+                    'and',
+                    ['Comment' => null],
+                    ['like', 'Number', $type]
+                ])
                 ->orderBy('Number');
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -160,22 +164,24 @@ class PosController extends Controller {
                 'model' => arKeyReserve::findByBlock($BlockKey),
             ]);
             #var_dump($content);
-            
-            $pdf = new Pdf([
-                'mode' => Pdf::MODE_UTF8,
-                'format' => Pdf::FORMAT_A4,
-                #'orientation' => Pdf::ORIENT_LANDSCAPE,
-                'orientation' => 'P',
-                'destination' => Pdf::DEST_BROWSER,
-                #'cssFile' => '@app/views/pos/key-use-report.css',
-                #'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/bootstrap.min.css',
-                'content' => $content,
-                'methods' => [
-                    'SetHeader' => '||' . date('r'),
-                    'SetFooter' => '||стр. {PAGENO}',
-                ]
-            ]);
-            return $pdf->render();
+            /*
+              $pdf = new Pdf([
+              'mode' => Pdf::MODE_UTF8,
+              'format' => Pdf::FORMAT_A4,
+              #'orientation' => Pdf::ORIENT_LANDSCAPE,
+              'orientation' => 'P',
+              'destination' => Pdf::DEST_BROWSER,
+              #'cssFile' => '@app/views/pos/key-use-report.css',
+              #'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/bootstrap.min.css',
+              'content' => $content,
+              'methods' => [
+              'SetHeader' => '||' . date('r'),
+              'SetFooter' => '||стр. {PAGENO}',
+              ]
+              ]);
+              return $pdf->render();
+             * 
+             */
             return $content;
         }
 

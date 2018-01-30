@@ -15,8 +15,11 @@ use app\common\KeyCheck;
  */
 class arKey extends \yii\db\ActiveRecord {
 
-    const NUMBER_PREFIX = 'O03S2';
-    const NUMBER_PATTERN = '/^' . self::NUMBER_PREFIX . '_\d{6}_\d{4}$/';
+    const NUMBER_PREFIX = [
+        'O03D2' => 'Транспортные ключи KLK (O03D2)', 
+        'O03S2' => 'Рабочие ключи (O03S2)'
+        ];
+    const NUMBER_PATTERN = '/^O03[DS]2_\d{6}_\d{4}$/';
 
     public $Check;
 
