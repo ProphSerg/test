@@ -29,8 +29,19 @@ $params = [
 #        Html::a('Сформировать журнал', [''], [
             'class' => 'btn btn-primary',
             'name' => 'btn-rpt-block-key',
- #           'target' => '_blank',
- #           'data-pjax' => '0',
+                #           'target' => '_blank',
+                #           'data-pjax' => '0',
+        ])
+        ?>
+    </div>
+    <div class="col-xs-3">
+        <?=
+        Html::submitButton('Сформировать титул', [
+#        Html::a('Сформировать журнал', [''], [
+            'class' => 'btn btn-primary',
+            'name' => 'btn-rpt-block-key-titul',
+                #           'target' => '_blank',
+                #           'data-pjax' => '0',
         ])
         ?>
     </div>

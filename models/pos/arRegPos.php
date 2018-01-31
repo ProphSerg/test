@@ -27,6 +27,7 @@ use Yii;
  */
 class arRegPos extends \yii\db\ActiveRecord {
 
+    public $MinDate, $MaxDate;
     /**
      * @inheritdoc
      */
@@ -90,6 +91,15 @@ class arRegPos extends \yii\db\ActiveRecord {
      */
     public static function find() {
         return new aqRegPos(get_called_class());
+    }
+
+    public static function findDateByBlock($block) {
+        return self::find()->select([
+                            'MinDate' => 'min(DateReg)',
+                            'MaxDate' => 'max(DateReg)',
+                        ])->
+                        where(['like', 'KeyNum', $block])->
+                        one();
     }
 
     public function getKeys() {

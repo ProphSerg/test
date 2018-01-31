@@ -16,6 +16,24 @@
     border: 1px solid black; /* Граница вокруг ячеек */
 }
 
+.key-title { 
+    width: 100%; /* Ширина таблицы */
+    border: 0; /* Рамка вокруг таблицы */
+    border-collapse: collapse; /* Отображать только одинарные линии */
+    align: center;
+    padding:0 5.4pt 0 0;
+    font-size:10pt;
+    /*font-family:"Calibri","sans-serif"; */
+    font-family:"Arial","sans-serif";
+    /*font-family:"Times New Roman","serif";*/
+    text-align:center;
+}
+
+.key-title td { 
+    padding: 2px; /* Поля вокруг содержимого ячеек */
+    border: 0; /* Граница вокруг ячеек */
+}
+
 .rotated-text {
     display: inline-block;
     white-space: nowrap;
@@ -27,148 +45,4 @@
     /*width: 25px;*/
     transform: translate(0,100%) rotate(-90deg);
     transform-origin: 0 0;
-}
-/* Font Definitions */
-
-.KUR
-{
-    margin-top:0;
-    margin-right:0;
-    margin-bottom:0;
-    margin-left:0;
-    font-size:8pt;
-    /* font-family:"Calibri","sans-serif"; */
-    font-family:"Times New Roman","serif";
-    /* font-family:"Times New Roman";      */
-    /*font-family:"Arial","sans-serif";*/
-    padding:0cm 5.4pt 0cm 5.4pt;
-}
-
-@font-face
-{
-    font-family:Calibri;
-    panose-1:2 15 5 2 2 2 4 3 2 4;
-}
-@font-face
-{
-    font-family:Tahoma;
-    panose-1:2 11 6 4 3 5 4 4 2 4;
-}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-{
-    margin-top:0cm;
-    margin-right:0cm;
-    margin-bottom:10.0pt;
-    margin-left:0cm;
-    line-height:115%;
-    font-size:11.0pt;
-    /* font-family:"Calibri","sans-serif"; */
-    font-family:"Times New Roman","serif";
-    /* font-family:"Times New Roman";      */
-    /*font-family:"Arial","sans-serif";*/
-}
-p.MsoHeader, li.MsoHeader, div.MsoHeader
-{
-    mso-style-link:"Верхний колонтитул Знак";
-    margin-top:0cm;
-    margin-right:0cm;
-    margin-bottom:10.0pt;
-    margin-left:0cm;
-    line-height:115%;
-    font-size:11.0pt;
-    font-family:"Calibri","sans-serif";
-}
-p.MsoFooter, li.MsoFooter, div.MsoFooter
-{
-    mso-style-link:"Нижний колонтитул Знак";
-    margin-top:0cm;
-    margin-right:0cm;
-    margin-bottom:10.0pt;
-    margin-left:0cm;
-    line-height:115%;
-    font-size:11.0pt;
-    font-family:"Calibri","sans-serif";
-}
-p.MsoTitle, li.MsoTitle, div.MsoTitle
-{
-    mso-style-link:"Название Знак";
-    margin:0cm;
-    margin-bottom:.0001pt;
-    text-align:center;
-    font-size:10.0pt;
-    font-family:"Times New Roman","serif";
-    font-weight:bold;
-}
-p.MsoAcetate, li.MsoAcetate, div.MsoAcetate
-{
-    mso-style-link:"Текст выноски Знак";
-    margin:0cm;
-    margin-bottom:.0001pt;
-    font-size:8.0pt;
-    font-family:"Tahoma","sans-serif";
-}
-span.a
-{
-    mso-style-name:"Название Знак";
-    mso-style-link:Название;
-    font-family:"Times New Roman","serif";
-    font-weight:bold;
-}
-p.a0, li.a0, div.a0
-{
-    mso-style-name:"текст в таблице";
-    mso-style-link:"текст в таблице Знак";
-    margin:0cm;
-    margin-bottom:.0001pt;
-    font-size:6.0pt;
-    font-family:"Arial","sans-serif";
-    text-transform:uppercase;
-}
-p.a1, li.a1, div.a1
-{
-    mso-style-name:"Без стиля";
-    margin:0cm;
-    margin-bottom:.0001pt;
-    text-align:justify;
-    font-size:10.0pt;
-    font-family:"Arial","sans-serif";
-}
-span.a2
-{
-    mso-style-name:"текст в таблице Знак";
-    mso-style-link:"текст в таблице";
-    font-family:"Arial","sans-serif";
-    text-transform:uppercase;
-}
-span.a3
-{
-    mso-style-name:"Верхний колонтитул Знак";
-    mso-style-link:"Верхний колонтитул";
-}
-span.a4
-{
-    mso-style-name:"Нижний колонтитул Знак";
-    mso-style-link:"Нижний колонтитул";
-}
-span.a5
-{
-    mso-style-name:"Текст выноски Знак";
-    mso-style-link:"Текст выноски";
-    font-family:"Tahoma","sans-serif";
-}
-.MsoChpDefault
-{
-    font-size:10.0pt;
-    font-family:"Calibri","sans-serif";
-}
-/* Page Definitions */
-@page WordSection1
-{
-    size:841.9pt 595.3pt;
-    margin:2.0cm 1.0cm 1.0cm 1.0cm;
-}
-div.WordSection1
-{
-    page:WordSection1;
 }

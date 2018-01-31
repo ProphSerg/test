@@ -195,7 +195,28 @@ class PosController extends Controller {
                 ini_set('pcre.backtrack_limit', $OldSetVal['pcre.backtrack_limit']);
                 ini_set('max_execution_time', $OldSetVal['max_execution_time']);
             }
-            return $content;
+            #return $content;
+        } elseif (isset($post['btn-rpt-block-key-titul'])) {
+            $BlockKey = $post['ddl-blockKey'];
+
+            $content = $this->renderPartial('key-title-report', [
+                'model' => arRegPos::findDateByBlock($BlockKey),
+            ]);
+            #var_dump($content);
+            $pdf = new Pdf([
+                'mode' => Pdf::MODE_UTF8,
+                'format' => Pdf::FORMAT_A4,
+                #'orientation' => Pdf::ORIENT_LANDSCAPE,
+                'orientation' => 'P',
+                'destination' => Pdf::DEST_BROWSER,
+                'cssFile' => '@app/views/pos/key-use-report.css',
+                #'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/bootstrap.min.css',
+                'content' => $content,
+            ]);
+
+
+            return $pdf->render();
+            #return $content;
         }
 
         return $this->render('keys', [
