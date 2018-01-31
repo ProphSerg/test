@@ -1,3 +1,33 @@
+.key-list { 
+    width: 100%; /* Ширина таблицы */
+    border: 0; /* Рамка вокруг таблицы */
+    border-collapse: collapse; /* Отображать только одинарные линии */
+    align: center;
+    padding:0 5.4pt 0 0;
+    font-size:8pt;
+    /*font-family:"Calibri","sans-serif"; */
+    font-family:"Arial","sans-serif";
+    /*font-family:"Times New Roman","serif";*/
+    text-align:center;
+}
+
+.key-list td { 
+    padding: 2px; /* Поля вокруг содержимого ячеек */
+    border: 1px solid black; /* Граница вокруг ячеек */
+}
+
+.rotated-text {
+    display: inline-block;
+    white-space: nowrap;
+    
+    -moz-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    writing-mode: tb-rl;
+    /*width: 25px;*/
+    transform: translate(0,100%) rotate(-90deg);
+    transform-origin: 0 0;
+}
 /* Font Definitions */
 
 .KUR

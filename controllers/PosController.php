@@ -160,28 +160,41 @@ class PosController extends Controller {
             }
         } elseif (isset($post['btn-rpt-block-key'])) {
             $BlockKey = $post['ddl-blockKey'];
-            $content = $this->renderPartial('key-use-report', [
-                'model' => arKeyReserve::findByBlock($BlockKey),
-            ]);
-            #var_dump($content);
-            /*
-              $pdf = new Pdf([
-              'mode' => Pdf::MODE_UTF8,
-              'format' => Pdf::FORMAT_A4,
-              #'orientation' => Pdf::ORIENT_LANDSCAPE,
-              'orientation' => 'P',
-              'destination' => Pdf::DEST_BROWSER,
-              #'cssFile' => '@app/views/pos/key-use-report.css',
-              #'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/bootstrap.min.css',
-              'content' => $content,
-              'methods' => [
-              'SetHeader' => '||' . date('r'),
-              'SetFooter' => '||стр. {PAGENO}',
-              ]
-              ]);
-              return $pdf->render();
-             * 
-             */
+
+            $OldSetVal = [
+                'pcre.backtrack_limit' => ini_get('pcre.backtrack_limit'),
+                'max_execution_time' => ini_get('max_execution_time')
+            ];
+
+            try {
+                ini_set('pcre.backtrack_limit', 10000000);
+                ini_set('max_execution_time', 900);
+
+                $content = $this->renderPartial('key-use-report', [
+                    'model' => arKeyReserve::findByBlock($BlockKey),
+                ]);
+                #var_dump($content);
+                $pdf = new Pdf([
+                    'mode' => Pdf::MODE_UTF8,
+                    'format' => Pdf::FORMAT_A4,
+                    #'orientation' => Pdf::ORIENT_LANDSCAPE,
+                    'orientation' => 'P',
+                    'destination' => Pdf::DEST_BROWSER,
+                    'cssFile' => '@app/views/pos/key-use-report.css',
+                    #'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/bootstrap.min.css',
+                    'content' => $content,
+                    'methods' => [
+                        'SetHeader' => '|Журнал регистрации ключей|',
+                        'SetFooter' => '||стр. {PAGENO}',
+                    ]
+                ]);
+
+
+                return $pdf->render();
+            } finally {
+                ini_set('pcre.backtrack_limit', $OldSetVal['pcre.backtrack_limit']);
+                ini_set('max_execution_time', $OldSetVal['max_execution_time']);
+            }
             return $content;
         }
 
