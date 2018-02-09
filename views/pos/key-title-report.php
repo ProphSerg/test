@@ -6,8 +6,8 @@ function printDate($k) {
     return (($k === null) ? "«____» __________ 20___ г." : Yii::$app->formatter->asDate($k, 'php:d/m/Y'));
 }
 
-function printDateDel($k, $add = 1) {
-    if ($k === null) {
+function printDateDel($k, $ped, $add = 1) {
+    if ($ped == false || $k === null) {
         return "«____» __________ 20___ г.";
     }
     $dt = new DateTime($k);
@@ -75,7 +75,7 @@ function printCheck($k, $p) {
                 </td>
                 <td></td>
                 <td align="right" >
-                    <span><?= printDateDel($model->MaxDate) ?></span>
+                    <span><?= printDateDel($model->MaxDate, $printEndDate) ?></span>
                 </td>
             </tr>
         </table>

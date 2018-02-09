@@ -201,6 +201,7 @@ class PosController extends Controller {
 
             $content = $this->renderPartial('key-title-report', [
                 'model' => arRegPos::findDateByBlock($BlockKey),
+                'printEndDate' => !(isset($post['chk-no-end-date']) && ($post['chk-no-end-date'] == "1")),
             ]);
             #var_dump($content);
             $pdf = new Pdf([

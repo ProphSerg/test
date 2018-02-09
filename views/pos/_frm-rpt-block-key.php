@@ -36,6 +36,12 @@ $params = [
     </div>
     <div class="col-xs-3">
         <?=
+        Html::checkbox('chk-no-end-date', false, [
+            #'class' => 'btn btn-primary',
+            'label' => 'без даты окончания',
+        ])
+        ?><p>
+        <?=
         Html::submitButton('Сформировать титул', [
 #        Html::a('Сформировать журнал', [''], [
             'class' => 'btn btn-primary',
