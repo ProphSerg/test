@@ -38,11 +38,10 @@ class m180209_000001_regpos_base extends Migration {
             'TDK_CHECK' => $this->text(),
             'DateReg' => $this->dateTime()
         ]);
-        $this->batchInsert('RegPos', 
-                ['ClientN', 'Name', 'ContractN', 'TerminalID', 'City', 'Address', 'MerchantID', 'KeyNum', 'KEY_CHECK', 'TPK_KEY', 'TPK_CHECK', 'TAK_KEY', 'TAK_CHECK', 'TDK_KEY', 'TDK_CHECK', 'DateReg'], 
-                $this->db->createCommand(
-                        'SELECT ClientN, Name, ContractN, TerminalID, City, Address, MerchantID, KeyNum, TMK_CHECK as KEY_CHECK, TPK_KEY, TPK_CHECK, TAK_KEY, TAK_CHECK, TDK_KEY, TDK_CHECK, DateReg FROM RegPos_old'
-                )->queryAll());
+        $this->db->createCommand(
+                'INSERT INTO RegPos (ClientN, Name, ContractN, TerminalID, City, Address, MerchantID, KeyNum, KEY_CHECK, TPK_KEY, TPK_CHECK, TAK_KEY, TAK_CHECK, TDK_KEY, TDK_CHECK, DateReg) ' .
+                'SELECT ClientN, Name, ContractN, TerminalID, City, Address, MerchantID, KeyNum, TMK_CHECK, TPK_KEY, TPK_CHECK, TAK_KEY, TAK_CHECK, TDK_KEY, TDK_CHECK, DateReg FROM RegPos_old'
+        )->execute();
 
         $this->dropTable('RegPos_old');
 
