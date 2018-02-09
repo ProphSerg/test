@@ -141,7 +141,7 @@ function printCheck($k, $p) {
                     </td>
                     <td>
                         <b>
-                            <span style="text-transform:uppercase">tmk</span>
+                            <span style="text-transform:uppercase"><?= (($key->pos === null) ? "tmk" : $key->pos->KeyType) ?></span>
                         </b>
                     </td>
                     <td>
@@ -161,7 +161,7 @@ function printCheck($k, $p) {
                     <td rowspan="4" style="vertical-align:bottom;"><?= printDateDel($key) ?></td>
                 </tr>
                 <tr>
-                    <td><?= printCheck($key, 'TMK') ?></td>
+                    <td><?= printCheck($key, 'KEY') ?></td>
                     <td><?= printCheck($key, 'TPK') ?></td>
                 </tr>
                 <tr>
