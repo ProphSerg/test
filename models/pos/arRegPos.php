@@ -16,7 +16,7 @@ use Yii;
  * @property string $Address
  * @property string $MerchantID
  * @property string $KeyNum
- * @property string $TMK_CHECK
+ * @property string $KEY_CHECK
  * @property string $TPK_KEY
  * @property string $TPK_CHECK
  * @property string $TAK_KEY
@@ -27,7 +27,8 @@ use Yii;
  */
 class arRegPos extends \yii\db\ActiveRecord {
 
-    public $MinDate, $MaxDate;
+    public $MinDate, $MaxDate, $KeyType;
+
     /**
      * @inheritdoc
      */
@@ -47,15 +48,18 @@ class arRegPos extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['ClientN', 'Name', 'ContractN', 'TerminalID', 'Address', 'MerchantID', 'KeyNum', 'TMK_CHECK', 'TPK_KEY', 'TAK_KEY', 'TDK_KEY'], 'required'],
-            [['ClientN', 'Name', 'ContractN', 'TerminalID', 'City', 'Address', 'MerchantID', 'KeyNum', 'TMK_CHECK', 'TPK_KEY', 'TPK_CHECK', 'TAK_KEY', 'TAK_CHECK', 'TDK_KEY', 'TDK_CHECK'], 'string'],
+            [['ClientN', 'Name', 'ContractN', 'TerminalID', 'Address', 'MerchantID', 'KeyNum', 'KEY_CHECK'], 'required'],
+            [['TPK_KEY', 'TAK_KEY', 'TDK_KEY'], 'required', 'when' => function($model) {
+                    return substr($model->KeyNum, 0, 5) == 'O03S2';
+                }],
+            [['ClientN', 'Name', 'ContractN', 'TerminalID', 'City', 'Address', 'MerchantID', 'KeyNum', 'KEY_CHECK', 'TPK_KEY', 'TPK_CHECK', 'TAK_KEY', 'TAK_CHECK', 'TDK_KEY', 'TDK_CHECK'], 'string'],
             [['DateReg'], 'safe'],
             #[['TerminalID', 'DateReg'], 'unique', 'targetAttribute' => ['TerminalID', 'DateReg'], 'message' => 'The combination of Terminal ID and Date Reg has already been taken.'],
-            [['ClientN', 'Name', 'ContractN', 'TerminalID', 'City', 'Address', 'MerchantID', 'KeyNum', 'TMK_CHECK', 'TPK_KEY', 'TPK_CHECK', 'TAK_KEY', 'TAK_CHECK', 'TDK_KEY', 'TDK_CHECK'], 'trim'],
-            [['KeyNum', 'TMK_CHECK', 'TPK_KEY', 'TPK_CHECK', 'TAK_KEY', 'TAK_CHECK', 'TDK_KEY', 'TDK_CHECK'], 'filter', 'filter' => 'strtoupper', 'skipOnArray' => true],
+            [['ClientN', 'Name', 'ContractN', 'TerminalID', 'City', 'Address', 'MerchantID', 'KeyNum', 'KEY_CHECK', 'TPK_KEY', 'TPK_CHECK', 'TAK_KEY', 'TAK_CHECK', 'TDK_KEY', 'TDK_CHECK'], 'trim'],
+            [['KeyNum', 'KEY_CHECK', 'TPK_KEY', 'TPK_CHECK', 'TAK_KEY', 'TAK_CHECK', 'TDK_KEY', 'TDK_CHECK'], 'filter', 'filter' => 'strtoupper', 'skipOnArray' => true],
             [['KeyNum'], 'match', 'pattern' => arKey::NUMBER_PATTERN],
             [['TPK_KEY', 'TAK_KEY', 'TDK_KEY'], 'match', 'pattern' => '/^[0-9A-F]{32}/'],
-            [['TMK_CHECK', 'TPK_CHECK', 'TAK_CHECK', 'TDK_CHECK'], 'match', 'pattern' => '/^[0-9A-F]{6}/'],
+            [['KEY_CHECK', 'TPK_CHECK', 'TAK_CHECK', 'TDK_CHECK'], 'match', 'pattern' => '/^[0-9A-F]{6}/'],
             [['TerminalID', 'KeyNum'], 'unique', 'targetAttribute' => ['TerminalID', 'KeyNum'], 'message' => 'The combination of TerminalID and KeyNum has already been taken.'],
         ];
     }
@@ -74,7 +78,7 @@ class arRegPos extends \yii\db\ActiveRecord {
             'Address' => 'Адрес установки',
             'MerchantID' => 'MerchantID',
             'KeyNum' => 'Серийный номер ключа',
-            'TMK_CHECK' => 'TMK_CHECK',
+            'KEY_CHECK' => 'KEY_CHECK',
             'TPK_KEY' => 'TPK_KEY',
             'TPK_CHECK' => 'TPK_CHECK',
             'TAK_KEY' => 'TAK_KEY',
@@ -91,6 +95,11 @@ class arRegPos extends \yii\db\ActiveRecord {
      */
     public static function find() {
         return new aqRegPos(get_called_class());
+    }
+
+    public function afterFind() {
+        parent::afterFind();
+        $this->KeyType = (substr($this->KeyNum, 0, 5) == 'O03S2' ? 'TMK' : 'KLK');
     }
 
     public static function findDateByBlock($block) {

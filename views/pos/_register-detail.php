@@ -47,7 +47,7 @@ echo DetailView::widget([
           'Address' => 'Адрес установки',
           'MerchantID' => 'MerchantID',
           'KeyNum' => 'Серийный номер ключа',
-          'TMK_CHECK' => 'TMK_CHECK',
+          'KEY_CHECK' => 'KEY_CHECK',
           'TPK_KEY' => 'TPK_KEY',
           'TPK_CHECK' => 'TPK_CHECK',
           'TAK_KEY' => 'TAK_KEY',
@@ -77,6 +77,7 @@ echo DetailView::widget([
         ],
         [
             'attribute' => 'TPK_KEY',
+            'visible' => $model->KeyType == 'TMK',
             'valueColOptions' => ['style' => 'font-family: monospace; font-size: 14px;'],
             'format' => 'raw',
             'value' => ClipboardAsset::buttonCopyText($model->TPK_KEY, $model->TerminalID . $model->KeyNum . 'TPK_KEY')
@@ -87,6 +88,7 @@ echo DetailView::widget([
         ],
         [
             'attribute' => 'TAK_KEY',
+            'visible' => $model->KeyType == 'TMK',
             'valueColOptions' => ['style' => 'font-family: monospace; font-size: 14px;'],
             'format' => 'raw',
             'value' => ClipboardAsset::buttonCopyText($model->TAK_KEY, $model->TerminalID . $model->KeyNum . 'TAK_KEY')
@@ -97,6 +99,7 @@ echo DetailView::widget([
         ],
         [
             'attribute' => 'TDK_KEY',
+            'visible' => $model->KeyType == 'TMK',
             'valueColOptions' => ['style' => 'font-family: monospace; font-size: 14px;'],
             'format' => 'raw',
             'value' => ClipboardAsset::buttonCopyText($model->TDK_KEY, $model->TerminalID . $model->KeyNum . 'TDK_KEY')
@@ -106,10 +109,12 @@ echo DetailView::widget([
          */
         ],
         [
-            'attribute' => 'TMK_CHECK',
+            'attribute' => 'KEY_CHECK',
+            'label' => $model->KeyType . '_CHECK',
             'valueColOptions' => ['style' => 'font-family: monospace; font-size: 14px;'],
             'format' => 'raw',
-            'value' => $model->TMK_CHECK . ' ' . Html::a('Hypercom', Url::to(['pos/hkcv', 'HKCVSearch[KCV]' => $model->TMK_CHECK]), [])
+            'value' => $model->KEY_CHECK . ' ' .
+            ($model->KeyType == 'TMK' ? Html::a('Hypercom', Url::to(['pos/hkcv', 'HKCVSearch[KCV]' => $model->KEY_CHECK]), []) : '')
         ],
         [
             'attribute' => 'KeyNum',
@@ -135,7 +140,7 @@ echo DetailView::widget([
                                 'data' => [
                                     'target' => Url::to(['addkey']),
                                     'keynum' => $model->KeyNum,
-                                    'keycheck' => $model->TMK_CHECK,
+                                    'keycheck' => $model->KEY_CHECK,
                                 ],
                                 'title' => 'Ввести ключ',
                             ]))
@@ -161,7 +166,7 @@ if (($model->keys == null) && arKey::CanAccess()) {
                     .load($(this).attr('data-target')
                             , {
                                 'Number': "<?= $model->KeyNum; ?>",
-                                'Check': "<?= $model->TMK_CHECK; ?>"
+                                'Check': "<?= $model->KEY_CHECK; ?>"
                             }
 
                     );

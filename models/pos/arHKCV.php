@@ -64,7 +64,7 @@ class arHKCV extends \yii\db\ActiveRecord {
     }
 
     public function getReg() {
-        return $this->hasMany(arRegPos::className(), ['TMK_CHECK' => 'KCV'])
+        return $this->hasMany(arRegPos::className(), ['KEY_CHECK' => 'KCV'])
                 ->orderBy('DateReg DESC');
     }
 

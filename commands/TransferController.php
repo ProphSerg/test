@@ -113,7 +113,7 @@ class TransferController extends Controller {
      * @param string $file Файл с регданными
      * @param string $sheet Название листа
      * @param string $field Соответствие колонки в файле полю в базе col1=field1,..,colN=fieldN. 
-     * Обязательные поля ClientN,Name,ContractN,TerminalID,Address,MerchantID,KeyNum,TMK_CHECK,TPK_KEY,TAK_KEY,TDK_KEY
+     * Обязательные поля ClientN,Name,ContractN,TerminalID,Address,MerchantID,KeyNum,KEY_CHECK,TPK_KEY,TAK_KEY,TDK_KEY
      * Рекомендуемые поля City,TPK_CHECK,TAK_CHECK,TDK_CHECK.
      */
     public function actionRegAdd($file, $sheet, array $field) {
@@ -151,8 +151,8 @@ class TransferController extends Controller {
                 $k->$f = $xls_sheet->getCell($c . $i)->getValue();
                 #echo "Cell({$c}{$i}): " . $xls_sheet->getCell($c . $i)->getValue();
             }
-            if ($k->TMK_CHECK === null || $k->TMK_CHECK == '') {
-                $k->TMK_CHECK = '000000';
+            if ($k->KEY_CHECK === null || $k->KEY_CHECK == '') {
+                $k->KEY_CHECK = '000000';
             }
             if ($k->validate() == false) {
                 #echo Convert::ValidaterError2Str($k);
