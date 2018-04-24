@@ -38,7 +38,7 @@ function printCheck($k, $p) {
         </h2>
         <h2 style="text-align: center">
             <b>
-                <span>Филиала ОАО «УРАЛСИБ» в г.Новосибирск</span>
+                <span>Филиала ПАО «УРАЛСИБ» в г.Новосибирск</span>
             </b>
         </h2>
 
