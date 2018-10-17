@@ -12,29 +12,26 @@ use Yii;
  * @property string $Model
  * @property string $Pattern
  */
-class arBodyPatt extends \yii\db\ActiveRecord
-{
+class arBodyPatt extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'BodyPatt';
     }
 
     /**
      * @return \yii\db\Connection the database connection used by this AR class.
      */
-    public static function getDb()
-    {
+    public static function getDb() {
         return Yii::$app->get('dbApi');
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['Name', 'Pattern'], 'required'],
             [['Name', 'Pattern'], 'string'],
@@ -44,12 +41,12 @@ class arBodyPatt extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'ID' => 'ID',
             'Name' => 'Name',
             'Pattern' => 'Pattern',
+            'Replace' => 'Replace',
         ];
     }
 
@@ -57,8 +54,8 @@ class arBodyPatt extends \yii\db\ActiveRecord
      * @inheritdoc
      * @return aqBodyPatt the active query used by this AR class.
      */
-    public static function find()
-    {
+    public static function find() {
         return new aqBodyPatt(get_called_class());
     }
+
 }
