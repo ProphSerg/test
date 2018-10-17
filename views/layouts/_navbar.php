@@ -16,10 +16,7 @@ NavBar::begin([
 	#'ContainerEnds' => '<div class="b-yellow-strip"></div><div class="b-green-strip"></div>',
 ]);
 
-$items = myMenuHelper::getAssignedMenuByName(Yii::$app->user->id, 'TopMenu');
-if (Yii::$app->user->isGuest) {
-	$items[] = ['label' => 'Login', 'url' => ['admin/user/login']];
-}
+$items = myMenuHelper::getAssignedMenuByName(1, 'TopMenu');
 #var_dump($items);
 
 echo Nav::widget([

@@ -34,10 +34,10 @@ class myMenuHelper extends MenuHelper {
 	}
 
 	public static function CallbackAssignedMenu($menu) {
-		#var_dump($menu);
 		if (preg_match('/^CODE:(.+)/u', $menu['name'], $match) > 0) {
 			return eval($match[1]);
 		}
+                
 		if (preg_match('/^CODE:(.+)/u', $menu['data'], $match) > 0) {
 			$data = eval($match[1]);
 			#var_dump($data);

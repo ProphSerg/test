@@ -9,7 +9,7 @@ use app\assets\AppAsset;
 use app\common\myMenuHelper;
 
 if (isset(Yii::$app->controller->ControllerMenu)) {
-	$items = myMenuHelper::getAssignedMenuByName(Yii::$app->user->id, Yii::$app->controller->ControllerMenu);
+	$items = myMenuHelper::getAssignedMenuByName(1, Yii::$app->controller->ControllerMenu);
 } elseif (isset($this->params['LeftMenuItemsURL'])) {
 	$items = $this->params['LeftMenuItemsURL'];
 }
